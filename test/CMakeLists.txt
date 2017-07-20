@@ -14,3 +14,4 @@ target_link_libraries(OccObjectTrackerTester
     "TKernel"
     "TKMath"
     )
+add_test(ObjTrackerTest OccObjectTrackerTester --log_level=test_suite)

@@ -9,4 +9,8 @@ namespace Trackers{
     TopoDS_Shape OccObjectTracker::getOCCObject() const{
         return this->occObject;
     }
+
+    std::string OccObjectTracker::getName() const{
+        return this->name;
+    }
 }

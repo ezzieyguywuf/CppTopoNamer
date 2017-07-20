@@ -8,6 +8,7 @@ namespace Trackers{
             ~OccObjectTracker(){};
 
             TopoDS_Shape getOCCObject() const;
+            std::string getName() const;
 
         private:
             TopoDS_Shape occObject;

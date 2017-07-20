@@ -22,4 +22,10 @@ BOOST_AUTO_TEST_CASE(GetOCC)
     BOOST_CHECK(fetchedObject.IsEqual(mockOccObject));
 }
 
+BOOST_AUTO_TEST_CASE(GetName)
+{
+    std::string fetchedName = tracker.getName();
+    BOOST_CHECK_EQUAL(fetchedName, "Object000");
+}
+
 BOOST_AUTO_TEST_SUITE_END()
