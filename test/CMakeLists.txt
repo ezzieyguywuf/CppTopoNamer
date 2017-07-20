@@ -4,9 +4,14 @@ include_directories("include")
 
 ADD_DEFINITIONS("-DBOOST_TEST_DYN_LINK")
 
-add_executable(OccObjectTrackerTester "OccObjectTrackerTester.cpp" "MockObjectMaker.cpp")
-target_link_libraries(OccObjectTrackerTester
+set (TESTS
+    OccObjectTrackerTester
+    EdgeTrackerTester
+    )
+
+set (LIBS
     "OccObjectTrackers"
+    "MockObjectMaker"
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
@@ -14,4 +19,11 @@ target_link_libraries(OccObjectTrackerTester
     "TKernel"
     "TKMath"
     )
-add_test(ObjTrackerTest OccObjectTrackerTester --log_level=test_suite)
+
+add_library(MockObjectMaker "MockObjectMaker.cpp")
+
+foreach (testName ${TESTS})
+    add_executable(${testName} "${testName}.cpp")
+    target_link_libraries(${testName} ${LIBS})
+    add_test("Test_${testName}" ${testName})
+endforeach(testName ${TESTS})

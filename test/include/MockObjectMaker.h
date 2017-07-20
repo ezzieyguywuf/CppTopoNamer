@@ -1,8 +1,9 @@
 #include <vector>
 #include <string>
 #include <TopoDS_Shape.hxx>
+#include <TopoDS_Edge.hxx>
 
-class BaseFakeOCCObject : public TopoDS_Shape{
+class BaseFakeOCCObject{
     public:
         BaseFakeOCCObject(unsigned int value);
         ~BaseFakeOCCObject(){};
@@ -14,7 +15,7 @@ class BaseFakeOCCObject : public TopoDS_Shape{
         unsigned int value;
 };
 
-class FakeOCCEdge : public BaseFakeOCCObject{
+class FakeOCCEdge : public BaseFakeOCCObject, public TopoDS_Edge{
     public:
         FakeOCCEdge(unsigned int value);
         ~FakeOCCEdge(){};
