@@ -157,11 +157,11 @@ BaseFakeOCCObject::BaseFakeOCCObject(unsigned int value)
     this->value = value;
 }
 
-bool BaseFakeOCCObject::isEqual(const BaseFakeOCCObject& check) const{
+bool BaseFakeOCCObject::IsEqual(const BaseFakeOCCObject& check) const{
     return this->getValue() == check.getValue();
 }
-bool BaseFakeOCCObject::isSame(const BaseFakeOCCObject& check) const{
-    return this->isEqual(check);
+bool BaseFakeOCCObject::IsSame(const BaseFakeOCCObject& check) const{
+    return this->IsEqual(check);
 }
 
 unsigned int BaseFakeOCCObject::getValue() const{
@@ -187,21 +187,21 @@ FakePartFillet::FakePartFillet(const FakeOCCShape& base, const FakeOCCFace& fill
     this->Shape = base;
 }
 
-int main(void){
-    // let's test this ho.
-    MockObjectMaker myMaker;
-    FakeOCCEdge edge1 = myMaker.OCCEdge();
-    FakeOCCEdge edge2 = myMaker.OCCEdge();
-    FakeOCCFace face1 = myMaker.OCCFace();
-    FakeOCCFace face2 = myMaker.OCCFace();
-    FakePartFeature box = myMaker.Box();
+//int main(void){
+    //// let's test this ho.
+    //MockObjectMaker myMaker;
+    //FakeOCCEdge edge1 = myMaker.OCCEdge();
+    //FakeOCCEdge edge2 = myMaker.OCCEdge();
+    //FakeOCCFace face1 = myMaker.OCCFace();
+    //FakeOCCFace face2 = myMaker.OCCFace();
+    //FakePartFeature box = myMaker.Box();
 
-    std::cout << "Hello, Wolfgang." << std::endl;
-    std::cout << "edge1 value = " << edge1.getValue() <<std::endl;
-    std::cout << "edge2 value = " << edge2.getValue() <<std::endl;
-    std::cout << "face1 value = " << face1.getValue() <<std::endl;
-    std::cout << "face2 value = " << face2.getValue() <<std::endl;
-    std::cout << "box.Shape.Faces[0] value = " << box.Shape.Faces[0].getValue() <<std::endl;
+    //std::cout << "Hello, Wolfgang." << std::endl;
+    //std::cout << "edge1 value = " << edge1.getValue() <<std::endl;
+    //std::cout << "edge2 value = " << edge2.getValue() <<std::endl;
+    //std::cout << "face1 value = " << face1.getValue() <<std::endl;
+    //std::cout << "face2 value = " << face2.getValue() <<std::endl;
+    //std::cout << "box.Shape.Faces[0] value = " << box.Shape.Faces[0].getValue() <<std::endl;
 
-    return 0;
-}
+    //return 0;
+//}

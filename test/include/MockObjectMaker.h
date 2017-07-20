@@ -1,13 +1,14 @@
 #include <vector>
 #include <string>
+#include <TopoDS_Shape.hxx>
 
-class BaseFakeOCCObject{
+class BaseFakeOCCObject : public TopoDS_Shape{
     public:
         BaseFakeOCCObject(unsigned int value);
         ~BaseFakeOCCObject(){};
 
-        bool isEqual(const BaseFakeOCCObject& check) const;
-        bool isSame(const BaseFakeOCCObject& check) const;
+        bool IsEqual(const BaseFakeOCCObject& check) const;
+        bool IsSame(const BaseFakeOCCObject& check) const;
         unsigned int getValue() const;
     private:
         unsigned int value;
@@ -66,7 +67,7 @@ class MockObjectMaker{
         FakePartFeature Cylinder();
 
     private:
-        // Will return a value to use for the isEqual and isSame comparison. This ensures
+        // Will return a value to use for the IsEqual and IsSame comparison. This ensures
         // that every time we ask for an OCCObject it is 'unique'
         unsigned int getValue(unsigned int which) const;
 
