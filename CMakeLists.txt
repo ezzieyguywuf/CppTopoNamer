@@ -3,12 +3,19 @@ set(CMAKE_CXX_STANDARD 11)
 
 project(CppTopoNamerTests)
 
+set(OCC_INCLUDE "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/inc")
+set(OCC_LIBRARIES "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd")
+set(FAKEIT_INCLUDE "/home/wolfie/Program/FreeCAD_dev/CppTopoNamer/FakeIt/include")
+set(FAKEIT_CONFIG_DIR "/home/wolfie/Program/FreeCAD_dev/CppTopoNamer/FakeIt/config/boost")
+
 include_directories(
     "include"
-    "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/inc"
+    ${OCC_INCLUDE}
+    ${FAKEIT_INCLUDE}
+    ${FAKEIT_CONFIG_DIR}
 )
 link_directories(
-    "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd"
+    ${OCC_LIBRARIES}
     )
 
 set(CTEST_ENVIRONMENT CTEST_OUTPUT_ON_FAILURE=1)
