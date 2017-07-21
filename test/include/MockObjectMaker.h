@@ -1,92 +1,100 @@
+#ifndef MOCK_OBJECT_MAKER
+#define MOCK_OBJECT_MAKER
+// This flag will indicate to our production code that it should use some of our mocked
+// classes
+#ifndef UNIT_TESTING
+#define UNIT_TESTING
+#endif
+
 #include <vector>
 #include <string>
-#include <TopoDS_Shape.hxx>
-#include <TopoDS_Edge.hxx>
-#include <TopoDS_Face.hxx>
 
-class BaseFakeOCCObject{
-    public:
-        BaseFakeOCCObject(unsigned int value);
-        ~BaseFakeOCCObject(){};
+#include <Mock_TopoDS_Shape.h>
+#include <Mock_TopoDS_Edge.h>
+#include <Mock_TopoDS_Face.h>
+#include <Box.h>
 
-        bool IsEqual(const BaseFakeOCCObject& check) const;
-        bool IsSame(const BaseFakeOCCObject& check) const;
-        unsigned int getValue() const;
-    private:
-        unsigned int value;
-};
+//#include <FakeIt.hpp>
 
-class FakeOCCEdge : public BaseFakeOCCObject, public TopoDS_Edge{
-    public:
-        FakeOCCEdge(unsigned int value);
-        ~FakeOCCEdge(){};
-};
+//class FakeOCCShape;
+//class FakePartFeature;
+//class FakePartFillet;
+//namespace mock{class TopExp_Explorer;}
 
-class FakeOCCFace : public BaseFakeOCCObject, public TopoDS_Face{
-    public:
-        FakeOCCFace(unsigned int value);
-        FakeOCCFace(unsigned int value, std::vector<FakeOCCEdge> Edges);
-        ~FakeOCCFace(){};
+namespace mock{
+    class MockObjectMaker{
+        public:
+            MockObjectMaker(){};
+            ~MockObjectMaker(){};
 
-        std::vector<FakeOCCEdge> Edges;
-};
+            TopoDS_Edge makeEdge();
+            TopoDS_Face makeFace();
+            TopoDS_Face makeFace(std::vector<TopoDS_Edge> Edges);
+            Box makeBox();
+            TopoDS_Shape makeFilletedBox();
+            TopoDS_Shape makeCylinder();
 
-class FakeOCCShape{
-    public:
-        FakeOCCShape(){};
-        ~FakeOCCShape(){};
+        private:
+            // Will return a value to use for the IsEqual and IsSame comparison. This ensures
+            // that every time we ask for an OCCObject it is 'unique'
+            unsigned int getValue(unsigned int which) const;
 
-        std::vector<FakeOCCFace> Faces;
-};
-
-class FakePartFeature{
-    public:
-        FakePartFeature(){};
-        ~FakePartFeature(){};
-
-        FakeOCCShape Shape;
-};
-
-class FakePartFillet : FakePartFeature{
-    public:
-        FakePartFillet(const FakeOCCShape& base, const FakeOCCFace& filletFace);
-        ~FakePartFillet(){};
-        FakeOCCFace getFilletFace();
-    private:
-        FakeOCCFace filletFace;
-};
-
-class MockObjectMaker{
-    public:
-        MockObjectMaker(){};
-        ~MockObjectMaker(){};
-
-        FakeOCCEdge OCCEdge();
-        FakeOCCFace OCCFace();
-        FakeOCCFace OCCFace(std::vector<FakeOCCEdge> Edges);
-        FakePartFeature Box();
-        FakePartFillet FilletedBox();
-        FakePartFeature Cylinder();
-
-    private:
-        // Will return a value to use for the IsEqual and IsSame comparison. This ensures
-        // that every time we ask for an OCCObject it is 'unique'
-        unsigned int getValue(unsigned int which) const;
-
-        struct BoxFaces{
-            static const unsigned int front   = 0;
-            static const unsigned int back    = 1;
-            static const unsigned int top     = 2;
-            static const unsigned int bottom  = 3;
-            static const unsigned int left    = 4;
-            static const unsigned int right   = 5;
-        }boxFaces;
+            struct BoxFaces{
+                static const unsigned int front   = 0;
+                static const unsigned int back    = 1;
+                static const unsigned int top     = 2;
+                static const unsigned int bottom  = 3;
+                static const unsigned int left    = 4;
+                static const unsigned int right   = 5;
+            }boxFaces;
 
 
-        static const unsigned int EDGE;
-        static const unsigned int FACE;
+            static const unsigned int EDGE;
+            static const unsigned int FACE;
 
-        static unsigned int EDGE_COUNT;
-        static unsigned int FACE_COUNT;
-};
+            static unsigned int EDGE_COUNT;
+            static unsigned int FACE_COUNT;
+    };
+}
 
+//namespace mock{
+    //class TopExp_Explorer{
+        //public:
+            //TopExp_Explorer(const FakeOCCFace& aFace, const TopAbs_ShapeEnum toFind);
+            //// TODO: add other constructors as needed, i.e. for FakeOCCShape
+            //bool More() const;
+            //void Next() const;
+            //FakeOCCShape Current() const;
+
+        //private:
+            //FakeOCCShape myShape;
+            //std::vector<FakeOCCShape> mySubShapes;
+            //unsigned int index;
+    //};
+//}
+
+//class FakeOCCShape{
+    //public:
+        //FakeOCCShape(){};
+        //~FakeOCCShape(){};
+
+        //std::vector<FakeOCCFace> Faces;
+//};
+
+//class FakePartFeature{
+    //public:
+        //FakePartFeature(){};
+        //~FakePartFeature(){};
+
+        //FakeOCCShape Shape;
+//};
+
+//class FakePartFillet : FakePartFeature{
+    //public:
+        //FakePartFillet(const FakeOCCShape& base, const FakeOCCFace& filletFace);
+        //~FakePartFillet(){};
+        //FakeOCCFace getFilletFace();
+    //private:
+        //FakeOCCFace filletFace;
+//};
+#endif //MOCK_OBJECT_MAKER

@@ -23,10 +23,17 @@ BOOST_AUTO_TEST_CASE(GetEdge)
     BOOST_CHECK(fetchedEdge.IsEqual(mockOccEdge));
 }
 
-BOOST_AUTO_TEST_CASE(AddFaceError)
+BOOST_AUTO_TEST_CASE(AddFace)
 {
     FakeOCCFace aFace = maker.OCCFace();
     aFace.Edges[0] = mockOccEdge;
+    BOOST_CHECK_THROW(tracker.addFace(aFace), std::invalid_argument);
+
+}
+
+BOOST_AUTO_TEST_CASE(AddFaceError)
+{
+    FakeOCCFace aFace = maker.OCCFace();
     BOOST_CHECK_THROW(tracker.addFace(aFace), std::invalid_argument);
 
 }
