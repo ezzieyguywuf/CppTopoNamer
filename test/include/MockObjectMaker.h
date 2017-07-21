@@ -2,6 +2,7 @@
 #include <string>
 #include <TopoDS_Shape.hxx>
 #include <TopoDS_Edge.hxx>
+#include <TopoDS_Face.hxx>
 
 class BaseFakeOCCObject{
     public:
@@ -21,7 +22,7 @@ class FakeOCCEdge : public BaseFakeOCCObject, public TopoDS_Edge{
         ~FakeOCCEdge(){};
 };
 
-class FakeOCCFace : public BaseFakeOCCObject{
+class FakeOCCFace : public BaseFakeOCCObject, public TopoDS_Face{
     public:
         FakeOCCFace(unsigned int value);
         FakeOCCFace(unsigned int value, std::vector<FakeOCCEdge> Edges);

@@ -1,4 +1,7 @@
 #include <OccObjectTrackers.h>
+#include <TopoDS.hxx>
+#include <TopExp_Explorer.hxx>
+#include <stdexcept>
 
 namespace Trackers{
     OccObjectTracker::OccObjectTracker(std::string name)
@@ -20,5 +23,27 @@ namespace Trackers{
     TopoDS_Edge EdgeTracker::getEdge() const
     {
         return this->occEdge;
+    }
+
+    void EdgeTracker::addFace(TopoDS_Face aFace)
+    {
+        if (this->checkEdges(aFace)){
+        }
+        else{
+            std::string msg = "aFace must contain an Edge that IsSame to this->occEdge";
+            throw std::invalid_argument(msg);
+        }
+    }
+
+    bool EdgeTracker::checkEdges(const TopoDS_Face& aFace) const
+    {
+        TopExp_Explorer Edges(aFace, TopAbs_EDGE);
+        for(;Edges.More();Edges.Next()){
+            const TopoDS_Edge anEdge = TopoDS::Edge(Edges.Current());
+            if (anEdge.IsSame(this->occEdge)){
+                return true;
+            }
+        }
+        return false;
     }
 }

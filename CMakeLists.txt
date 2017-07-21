@@ -11,8 +11,8 @@ link_directories(
     "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd"
     )
 
+set(CTEST_ENVIRONMENT CTEST_OUTPUT_ON_FAILURE=1)
 enable_testing()
 
 add_subdirectory("src")
 add_subdirectory("test")
-
