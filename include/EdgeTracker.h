@@ -1,22 +1,12 @@
-#include <TopoDS_Shape.hxx>
+#ifndef TOPONAMER_EDGE_TRACKER
+#define TOPONAMER_EDGE_TRACKER
+
+#include <BaseTracker.h>
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Edge.hxx>
-#include <string>
 
 namespace Trackers{
-    class OccObjectTracker{
-        // TODO: maybe delete this class, it is a holdover from my python implementation
-        public:
-            OccObjectTracker(std::string name);
-            ~OccObjectTracker(){};
-
-            std::string getName() const;
-
-        private:
-            std::string name;
-    };
-
-    class EdgeTracker : public OccObjectTracker{
+    class EdgeTracker : public BaseTracker{
         public:
             EdgeTracker(TopoDS_Edge anEdge, std::string name);
             ~EdgeTracker(){};
@@ -29,3 +19,5 @@ namespace Trackers{
             TopoDS_Edge occEdge;
     };
 }
+
+#endif /* ifndef TOPONAMER_EDGE_TRACKER */

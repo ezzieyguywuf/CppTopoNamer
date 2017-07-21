@@ -5,7 +5,7 @@ include_directories("include")
 ADD_DEFINITIONS("-DBOOST_TEST_DYN_LINK")
 
 set (TESTS
-    OccObjectTrackerTester
+    BaseTrackerTester
     EdgeTrackerTester
     )
 
@@ -14,7 +14,7 @@ set (LIBS
     "Mock_TopoDS_Edge"
     "Mock_TopoDS_Face"
     "MockObjectMaker"
-    "OccObjectTrackers"
+    "EdgeTracker"
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}

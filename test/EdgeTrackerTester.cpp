@@ -1,6 +1,6 @@
 #define BOOST_TEST_MODULE Fixtures
 #include <boost/test/unit_test.hpp>
-#include <OccObjectTrackers.h>
+#include <EdgeTracker.h>
 #include <MockObjectMaker.h>
 #include <stdexcept>
 

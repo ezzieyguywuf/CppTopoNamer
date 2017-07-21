@@ -1,27 +1,17 @@
-// This checks for whether we should use the real or mocked classes
-#ifdef UNIT_TESTING
-#include <Mock_TopExp_Explorer.hxx>
-#else
+//// This checks for whether we should use the real or mocked classes
+//#ifdef UNIT_TESTING
+//#include <Mock_TopExp_Explorer.hxx>
+//#else
 #include <TopExp_Explorer.hxx>
-#endif
+//#endif
 
-#include <OccObjectTrackers.h>
+#include <EdgeTracker.h>
 #include <TopoDS.hxx>
 #include <stdexcept>
 
 namespace Trackers{
-    OccObjectTracker::OccObjectTracker(std::string name)
-    {
-        this->name = name;
-    }
-
-    std::string OccObjectTracker::getName() const
-    {
-        return this->name;
-    }
-
     EdgeTracker::EdgeTracker(TopoDS_Edge anEdge, std::string name)
-        : OccObjectTracker(name)
+        : BaseTracker(name)
     {
         this->occEdge = anEdge;
     }

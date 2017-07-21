@@ -1,2 +1,3 @@
-add_library(OccObjectTrackers SHARED "OccObjectTrackers.cpp")
-target_link_libraries(OccObjectTrackers "TKBRep" "TKPrim" "TKMath")
+add_library(BaseTracker "BaseTracker.cpp")
+add_library(EdgeTracker SHARED "EdgeTracker.cpp")
+target_link_libraries(EdgeTracker "BaseTracker"  "TKBRep" "TKPrim" "TKMath")

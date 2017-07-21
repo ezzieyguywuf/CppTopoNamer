@@ -1,18 +1,18 @@
 #define BOOST_TEST_MODULE Fixtures
 #include <boost/test/unit_test.hpp>
-#include <OccObjectTrackers.h>
+#include <BaseTracker.h>
 #include <MockObjectMaker.h>
 
 struct Maker{
     mock::MockObjectMaker maker;
-    Trackers::OccObjectTracker tracker;
+    BaseTracker tracker;
     Maker() :
         tracker("Object000")
     {} ;
     ~Maker(){};
 };
 
-BOOST_FIXTURE_TEST_SUITE(OccObjectTracker, Maker)
+BOOST_FIXTURE_TEST_SUITE(BaseTrackerTests, Maker)
 
 BOOST_AUTO_TEST_CASE(GetName)
 {
