@@ -7,6 +7,7 @@ add_subdirectory(helpers)
 
 set (TESTS
     BaseTrackerTester
+    FaceTrackerTester
     EdgeTrackerTester
     )
 
@@ -16,6 +17,7 @@ set (LIBS
     "Mock_TopoDS_Face"
     "MockObjectMaker"
     "EdgeTracker"
+    "FaceTracker"
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
