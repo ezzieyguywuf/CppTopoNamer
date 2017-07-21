@@ -21,8 +21,9 @@ namespace Trackers{
         return this->occEdge;
     }
 
-    void EdgeTracker::addFace(TopoDS_Face aFace)
+    void EdgeTracker::addFace(const FaceTracker& aFaceTracker)
     {
+        TopoDS_Face aFace = aFaceTracker.getFace();
         if (this->checkEdges(aFace)){
         }
         else{
@@ -31,6 +32,17 @@ namespace Trackers{
         }
     }
 
+    bool EdgeTracker::isValid() const
+    {
+        if (this->myFaceNames.size() == 2){
+            return true;
+        }
+        return false;
+    }
+
+//---------------------------------------------------------------------------
+//         private methods
+//---------------------------------------------------------------------------
     bool EdgeTracker::checkEdges(const TopoDS_Face& aFace) const
     {
         TopExp_Explorer Edges(aFace, TopAbs_EDGE);
