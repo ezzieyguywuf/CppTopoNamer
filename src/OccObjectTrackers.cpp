@@ -1,6 +1,12 @@
+// This checks for whether we should use the real or mocked classes
+#ifdef UNIT_TESTING
+#include <Mock_TopExp_Explorer.hxx>
+#else
+#include <TopExp_Explorer.hxx>
+#endif
+
 #include <OccObjectTrackers.h>
 #include <TopoDS.hxx>
-#include <TopExp_Explorer.hxx>
 #include <stdexcept>
 
 namespace Trackers{

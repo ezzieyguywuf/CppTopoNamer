@@ -5,12 +5,12 @@
 #include <stdexcept>
 
 struct Maker{
-    MockObjectMaker maker;
-    FakeOCCEdge mockOccEdge;
+    mock::MockObjectMaker maker;
+    mock::TopoDS_Edge mockOccEdge;
     Trackers::EdgeTracker tracker;
     Maker() :
         mockOccEdge(0),
-        tracker(mockOccEdge, "Edge000")
+        tracker(mockOccEdge, std::string("Edge000"))
     {} ;
     ~Maker(){};
 };
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(GetEdge)
 
 BOOST_AUTO_TEST_CASE(AddFace)
 {
-    FakeOCCFace aFace = maker.OCCFace();
+    mock::TopoDS_Face aFace = maker.makeFace();
     aFace.Edges[0] = mockOccEdge;
     BOOST_CHECK_THROW(tracker.addFace(aFace), std::invalid_argument);
 
@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(AddFace)
 
 BOOST_AUTO_TEST_CASE(AddFaceError)
 {
-    FakeOCCFace aFace = maker.OCCFace();
+    mock::TopoDS_Face aFace = maker.makeFace();
     BOOST_CHECK_THROW(tracker.addFace(aFace), std::invalid_argument);
 
 }

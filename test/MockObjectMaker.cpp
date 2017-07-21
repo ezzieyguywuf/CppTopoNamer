@@ -2,42 +2,43 @@
 #include <stdexcept>
 #include <iostream>
 
-using namespace mock;
+using mock::MockObjectMaker;
+using mock::Box;
 
 unsigned int MockObjectMaker::EDGE_COUNT=0;
 unsigned int MockObjectMaker::FACE_COUNT=0;
 const unsigned int MockObjectMaker::EDGE=0;
 const unsigned int MockObjectMaker::FACE=1;
 
-TopoDS_Edge MockObjectMaker::makeEdge(){
+mock::TopoDS_Edge MockObjectMaker::makeEdge(){
     unsigned int value;
     value = this->getValue(EDGE);
-    TopoDS_Edge Edge(value);
+    mock::TopoDS_Edge Edge(value);
     return Edge;
 }
 
-TopoDS_Face MockObjectMaker::makeFace(){
-    std::vector<TopoDS_Edge> Edges;
+mock::TopoDS_Face MockObjectMaker::makeFace(){
+    std::vector<mock::TopoDS_Edge> Edges;
 
     for(int i=1; i<=4; i++){
-        TopoDS_Edge edge = this->makeEdge();
+        mock::TopoDS_Edge edge = this->makeEdge();
         Edges.push_back(edge);
     }
     return this->makeFace(Edges);
 }
 
-TopoDS_Face MockObjectMaker::makeFace(std::vector<TopoDS_Edge> Edges){
+mock::TopoDS_Face MockObjectMaker::makeFace(std::vector<mock::TopoDS_Edge> Edges){
     unsigned int value;
 
     value = this->getValue(FACE);
-    TopoDS_Face aFace = TopoDS_Face(value, Edges);
+    mock::TopoDS_Face aFace = mock::TopoDS_Face(value, Edges);
     return aFace;
 }
 
 Box MockObjectMaker::makeBox(){
     unsigned int value;
     unsigned int frt, bck, top, bot, lft, rgt;
-    std::vector<TopoDS_Face> Faces;
+    std::vector<mock::TopoDS_Face> Faces;
 
     frt = boxFaces.front;
     bck = boxFaces.back;
@@ -47,7 +48,7 @@ Box MockObjectMaker::makeBox(){
     rgt = boxFaces.right;
 
     for(int i=1; i<=6; i++){
-        TopoDS_Face aFace = this->makeFace();
+        mock::TopoDS_Face aFace = this->makeFace();
         Faces.push_back(aFace);
     }
 
@@ -181,21 +182,21 @@ unsigned int MockObjectMaker::getValue(unsigned int which) const{
     //return this->mySubShapes[this->index];
 //}
 
-int main(void){
-    // let's test this ho.
-    MockObjectMaker myMaker;
-    TopoDS_Edge edge1 = myMaker.makeEdge();
-    TopoDS_Edge edge2 = myMaker.makeEdge();
-    TopoDS_Face face1 = myMaker.makeFace();
-    TopoDS_Face face2 = myMaker.makeFace();
-    Box box = myMaker.makeBox();
+//int main(void){
+    //// let's test this ho.
+    //MockObjectMaker myMaker;
+    //mock::TopoDS_Edge edge1 = myMaker.makeEdge();
+    //mock::TopoDS_Edge edge2 = myMaker.makeEdge();
+    //mock::TopoDS_Face face1 = myMaker.makeFace();
+    //mock::TopoDS_Face face2 = myMaker.makeFace();
+    //Box box = myMaker.makeBox();
 
-    std::cout << "Hello, Wolfgang." << std::endl;
-    std::cout << "edge1 value = " << edge1.getValue() <<std::endl;
-    std::cout << "edge2 value = " << edge2.getValue() <<std::endl;
-    std::cout << "face1 value = " << face1.getValue() <<std::endl;
-    std::cout << "face2 value = " << face2.getValue() <<std::endl;
-    std::cout << "box.Faces[0] value = " << box.Faces[0].getValue() <<std::endl;
+    //std::cout << "Hello, Wolfgang." << std::endl;
+    //std::cout << "edge1 value = " << edge1.getValue() <<std::endl;
+    //std::cout << "edge2 value = " << edge2.getValue() <<std::endl;
+    //std::cout << "face1 value = " << face1.getValue() <<std::endl;
+    //std::cout << "face2 value = " << face2.getValue() <<std::endl;
+    //std::cout << "box.Faces[0] value = " << box.Faces[0].getValue() <<std::endl;
 
-    return 0;
-}
+    //return 0;
+//}

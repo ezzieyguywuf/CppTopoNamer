@@ -3,10 +3,13 @@
 
 #include <Mock_TopoDS_Shape.h>
 #include <Mock_TopoDS_Edge.h>
+
 #include <vector>
 
+#include <TopoDS_Face.hxx>
+
 namespace mock{
-    class TopoDS_Face : public TopoDS_Shape{
+    class TopoDS_Face : public TopoDS_Shape, public ::TopoDS_Face{
         public:
             TopoDS_Face(unsigned int value);
             TopoDS_Face(unsigned int value, std::vector<TopoDS_Edge> Edges);

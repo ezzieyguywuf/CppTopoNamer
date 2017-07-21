@@ -4,7 +4,7 @@
 #include <MockObjectMaker.h>
 
 struct Maker{
-    MockObjectMaker maker;
+    mock::MockObjectMaker maker;
     Trackers::OccObjectTracker tracker;
     Maker() :
         tracker("Object000")
