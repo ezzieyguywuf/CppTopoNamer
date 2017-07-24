@@ -4,12 +4,12 @@
 #include <MockObjectMaker.h>
 
 struct Maker{
-    mock::MockObjectMaker maker;
-    mock::TopoDS_Face mockOccFace;
+    MockObjectMaker maker;
+    mock::Face mockFace;
     Trackers::FaceTracker faceTracker;
     Maker() :
-        mockOccFace(0),
-        faceTracker(mockOccFace, std::string("Face000"))
+        mockFace(maker.makeFace()),
+        faceTracker(mockFace, mockFace.getName())
     {} ;
     ~Maker(){};
 };
@@ -18,8 +18,8 @@ BOOST_FIXTURE_TEST_SUITE(FaceTrackerSuite, Maker)
 
 BOOST_AUTO_TEST_CASE(GetFace)
 {
-    TopoDS_Face fetchedFace = faceTracker.getFace();
-    BOOST_CHECK(fetchedFace.IsEqual(mockOccFace));
+    Face fetchedFace = faceTracker.getFace();
+    BOOST_CHECK_EQUAL(fetchedFace, mockFace);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

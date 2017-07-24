@@ -1,14 +1,8 @@
 #include <FaceTracker.h>
 
-namespace Trackers{
-    FaceTracker::FaceTracker(TopoDS_Face aFace, std::string aName)
-        : BaseTracker(aName)
-    {
-        this->myFace = aFace;
-    }
+using Trackers::FaceTracker
 
-    TopoDS_Face FaceTracker::getFace() const
-    {
-        return this->myFace;
-    }
+FaceTracker::FaceTracker(Face aFace, std::string aName)
+    : BaseTracker(aFace, aName)
+{
 }

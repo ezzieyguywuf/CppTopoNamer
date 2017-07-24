@@ -1,8 +1,8 @@
 #ifndef TOPONAMER_BOX
 #define TOPONAMER_BOX
 
-#include <Mock_TopoDS_Shape.h>
-#include <Mock_TopoDS_Face.h>
+#include <Mock_Shape.h>
+#include <Mock_Face.h>
 
 #include <vector>
 

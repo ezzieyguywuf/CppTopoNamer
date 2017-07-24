@@ -6,24 +6,17 @@ ADD_DEFINITIONS("-DBOOST_TEST_DYN_LINK")
 add_subdirectory(helpers)
 
 set (TESTS
-    BaseTrackerTester
+    #BaseTrackerTester
     FaceTrackerTester
-    EdgeTrackerTester
+    #EdgeTrackerTester
     )
 
 set (LIBS
-    "Mock_TopoDS_Shape"
-    "Mock_TopoDS_Edge"
-    "Mock_TopoDS_Face"
     "MockObjectMaker"
-    "EdgeTracker"
     "FaceTracker"
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-    "TKBRep"
-    "TKernel"
-    "TKMath"
     )
 
 foreach (testName ${TESTS})
@@ -34,7 +27,7 @@ endforeach(testName ${TESTS})
 
 #add_executable(MockObjectMaker "MockObjectMaker.cpp")
 #target_link_libraries(MockObjectMaker
-    #Mock_TopoDS_Shape
-    #Mock_TopoDS_Edge
-    #Mock_TopoDS_Face
+    #Mock_Shape
+    #Mock_Edge
+    #Mock_Face
     #)

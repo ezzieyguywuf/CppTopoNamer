@@ -2,76 +2,81 @@
 #include <stdexcept>
 #include <iostream>
 
-using mock::MockObjectMaker;
-using mock::Box;
+#include <memory>
+#include <utility>
+#include <sstream>
 
-unsigned int MockObjectMaker::EDGE_COUNT=0;
-unsigned int MockObjectMaker::FACE_COUNT=0;
+//using mock::Box;
+using mock::Edge;
+using mock::Face;
+using mock::Shape;
+
 const unsigned int MockObjectMaker::EDGE=0;
 const unsigned int MockObjectMaker::FACE=1;
 
-mock::TopoDS_Edge MockObjectMaker::makeEdge(){
-    unsigned int value;
-    value = this->getValue(EDGE);
-    mock::TopoDS_Edge Edge(value);
-    return Edge;
+MockObjectMaker::MockObjectMaker()
+{
+    this->EDGE_COUNT = 0;
+    this->FACE_COUNT = 0;
 }
 
-mock::TopoDS_Face MockObjectMaker::makeFace(){
-    std::vector<mock::TopoDS_Edge> Edges;
+Edge MockObjectMaker::makeEdge(){
+    std::string name = this->getName(EDGE);
+    return Edge(value);
+}
+
+Face MockObjectMaker::makeFace(){
+    std::vector<std::unique_pointer<Edge>> Edges;
 
     for(int i=1; i<=4; i++){
-        mock::TopoDS_Edge edge = this->makeEdge();
-        Edges.push_back(edge);
+        std::unique_pointer<Edge> edge (new Edge(this->makeEdge()));
+        Edges.push_back(std::move(edge));
     }
     return this->makeFace(Edges);
 }
 
-mock::TopoDS_Face MockObjectMaker::makeFace(std::vector<mock::TopoDS_Edge> Edges){
-    unsigned int value;
-
-    value = this->getValue(FACE);
-    mock::TopoDS_Face aFace = mock::TopoDS_Face(value, Edges);
+Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
+    std::string name  = this->getName(FACE);
+    Face aFace = Face(name, Edges);
     return aFace;
 }
 
-Box MockObjectMaker::makeBox(){
-    unsigned int value;
-    unsigned int frt, bck, top, bot, lft, rgt;
-    std::vector<mock::TopoDS_Face> Faces;
+//Box MockObjectMaker::makeBox(){
+    //unsigned int frt, bck, top, bot, lft, rgt;
+    //std::vector<mock::TopoDS_Face> Faces;
 
-    frt = boxFaces.front;
-    bck = boxFaces.back;
-    top = boxFaces.top;
-    bot = boxFaces.bottom;
-    lft = boxFaces.left;
-    rgt = boxFaces.right;
+    //frt = boxFaces.front;
+    //bck = boxFaces.back;
+    //top = boxFaces.top;
+    //bot = boxFaces.bottom;
+    //lft = boxFaces.left;
+    //rgt = boxFaces.right;
 
-    for(int i=1; i<=6; i++){
-        mock::TopoDS_Face aFace = this->makeFace();
-        Faces.push_back(aFace);
-    }
+    //for(int i=1; i<=6; i++){
+        //mock::TopoDS_Face aFace = this->makeFace();
+        //Faces.push_back(aFace);
+    //}
 
-    Faces[top].Edges[0] = Faces[frt].Edges[0];
-    Faces[bot].Edges[0] = Faces[frt].Edges[1];
-    Faces[lft].Edges[0] = Faces[frt].Edges[2];
-    Faces[rgt].Edges[0] = Faces[frt].Edges[3];
+    //Faces[top].Edges[0] = Faces[frt].Edges[0];
+    //Faces[bot].Edges[0] = Faces[frt].Edges[1];
+    //Faces[lft].Edges[0] = Faces[frt].Edges[2];
+    //Faces[rgt].Edges[0] = Faces[frt].Edges[3];
 
-    Faces[top].Edges[1] = Faces[bck].Edges[0];
-    Faces[bot].Edges[1] = Faces[bck].Edges[1];
-    Faces[lft].Edges[1] = Faces[bck].Edges[2];
-    Faces[rgt].Edges[1] = Faces[bck].Edges[3];
+    //Faces[top].Edges[1] = Faces[bck].Edges[0];
+    //Faces[bot].Edges[1] = Faces[bck].Edges[1];
+    //Faces[lft].Edges[1] = Faces[bck].Edges[2];
+    //Faces[rgt].Edges[1] = Faces[bck].Edges[3];
 
-    Faces[lft].Edges[2] = Faces[top].Edges[2];
-    Faces[rgt].Edges[2] = Faces[top].Edges[3];
+    //Faces[lft].Edges[2] = Faces[top].Edges[2];
+    //Faces[rgt].Edges[2] = Faces[top].Edges[3];
 
-    Faces[lft].Edges[3] = Faces[bot].Edges[2];
-    Faces[rgt].Edges[3] = Faces[bot].Edges[3];
+    //Faces[lft].Edges[3] = Faces[bot].Edges[2];
+    //Faces[rgt].Edges[3] = Faces[bot].Edges[3];
 
-    Box mock_box = Box();
-    mock_box.Faces = Faces;
-    return mock_box;
-}
+    //Box mock_box = Box();
+    //mock_box.Faces = Faces;
+    //return mock_box;
+//}
 
 //FakePartFillet MockObjectMaker::FilletedBox(){
     //unsigned int frt, top, lft, rgt;
@@ -142,17 +147,23 @@ Box MockObjectMaker::makeBox(){
     //return mock_feature;
 //}
 
-unsigned int MockObjectMaker::getValue(unsigned int which) const{
+//---------------------------------------------------------------------------
+//          private methods
+//---------------------------------------------------------------------------
+
+std::string MockObjectMaker::getName(unsigned int which) const{
+    std::ostringstream oss;
     switch (which) {
         case EDGE:
             EDGE_COUNT++;
-            return EDGE_COUNT;
+            oss << "Edge" << EDGE_COUNT;
         case FACE:
             FACE_COUNT++;
-            return FACE_COUNT;
+            oss << "Face" << FACE_COUNT;
         default:
             throw std::invalid_argument("which must be EDGE or FACE");
     }
+    return oss.string()
 }
 
 //FakePartFillet::FakePartFillet(const FakeOCCShape& base, const FakeOCCFace& filletFace)
