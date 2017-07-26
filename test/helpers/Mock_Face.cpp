@@ -4,11 +4,11 @@
 using mock::Face;
 using mock::Edge;
 
-Face::Face (int value, std::vector<std::unique_pointer<Edge>> edges)
-    : value(value), myEdges(edges)
+Face::Face (int value, std::vector<Edge> edges)
+    : Shape(value), myEdges(edges)
 {}
 
-std::vector<std::unique_pointer<Edge>> getEdges() const
+std::vector<Edge> Face::getEdges() const
 {
     return this->myEdges;
 }

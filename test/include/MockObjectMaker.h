@@ -21,15 +21,14 @@ class MockObjectMaker{
 
         Edge makeEdge();
         Face makeFace();
-        Face makeFace(std::vector<TopoDS_Edge> Edges);
+        Face makeFace(std::vector<Edge> Edges);
         //Box makeBox();
         //Shape makeFilletedBox();
         //Shape makeCylinder();
 
     private:
-        // Builds a unique name to give each Edge and Face created using `makeEdge` and
-        // `makeFace`.
-        std::string getName(unsigned int which) const;
+        // creates a unique value for each Face, Edge, etc.
+        int getValue(unsigned int which) const;
 
         struct BoxFaces{
             static const unsigned int front   = 0;
@@ -46,6 +45,7 @@ class MockObjectMaker{
 
         static unsigned int EDGE_COUNT;
         static unsigned int FACE_COUNT;
-};
 
+
+};
 #endif //MOCK_OBJECT_MAKER

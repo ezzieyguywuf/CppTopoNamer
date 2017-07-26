@@ -6,14 +6,14 @@ Shape::Shape(int value)
     : value(value)
 {}
 
-bool Shape::operator==(std::unique_pointer<Shape> aShape) const
+bool Shape::operator==(const Shape& aShape) const
 {
-    return this->value == aShape->getValue();
+    return this->value == aShape.getValue();
 }
 
-bool Shape::IsFlipped(std::unique_pointer<Shape> aShape) const
+bool Shape::IsFlipped(const Shape& aShape) const
 {
-    return this == aShape;
+    return *this == aShape;
 }
 
 int Shape::getValue() const

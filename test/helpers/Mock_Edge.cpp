@@ -3,5 +3,5 @@
 using mock::Edge;
 
 Edge::Edge(int value)
-    : value(value)
+    : Shape(value)
 {}

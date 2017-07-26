@@ -19,11 +19,16 @@ set (LIBS
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
     )
 
-foreach (testName ${TESTS})
-    add_executable(${testName} "${testName}.cpp")
-    target_link_libraries(${testName} ${LIBS})
-    add_test("Test_${testName}" ${testName})
-endforeach(testName ${TESTS})
+add_executable(MockObjectMakerTester "TestMockObjectMaker.cpp")
+target_link_libraries(MockObjectMakerTester
+    MockObjectMaker
+)
+
+#foreach (testName ${TESTS})
+    #add_executable(${testName} "${testName}.cpp")
+    #target_link_libraries(${testName} ${LIBS})
+    #add_test("Test_${testName}" ${testName})
+#endforeach(testName ${TESTS})
 
 #add_executable(MockObjectMaker "MockObjectMaker.cpp")
 #target_link_libraries(MockObjectMaker

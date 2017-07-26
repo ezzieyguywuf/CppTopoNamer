@@ -1,5 +1,6 @@
 #ifndef MOCK_SHAPE_HEADER
 #define MOCK_SHAPE_HEADER
+
 #include <IShape.h>
 
 #include <memory>
@@ -9,10 +10,11 @@ namespace mock{
     {
         public:
             Shape(int value);
-            ~Shape(){};
 
-            bool operator==(std::unique_pointer<Shape> aShape) const;
-            bool IsFlipped(std::unique_pointer<Shape> aShape) const;
+            bool operator==(const Shape& aShape) const;
+            bool IsFlipped(const Shape& aShape) const;
+            bool operator==(const IShape& aShape) const {};
+            bool IsFlipped(const IShape& aShape) const {};
 
             int getValue() const;
         private:

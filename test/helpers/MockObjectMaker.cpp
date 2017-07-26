@@ -13,30 +13,30 @@ using mock::Shape;
 
 const unsigned int MockObjectMaker::EDGE=0;
 const unsigned int MockObjectMaker::FACE=1;
+unsigned int MockObjectMaker::EDGE_COUNT;
+unsigned int MockObjectMaker::FACE_COUNT;
 
 MockObjectMaker::MockObjectMaker()
 {
-    this->EDGE_COUNT = 0;
-    this->FACE_COUNT = 0;
 }
 
 Edge MockObjectMaker::makeEdge(){
-    std::string name = this->getName(EDGE);
-    return Edge(value);
+    int name = this->getValue(EDGE);
+    return Edge(name);
 }
 
 Face MockObjectMaker::makeFace(){
-    std::vector<std::unique_pointer<Edge>> Edges;
+    std::vector<Edge> Edges;
 
     for(int i=1; i<=4; i++){
-        std::unique_pointer<Edge> edge (new Edge(this->makeEdge()));
-        Edges.push_back(std::move(edge));
+        int val = this->getValue(EDGE);
+        Edges.push_back(Edge(val));
     }
     return this->makeFace(Edges);
 }
 
 Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
-    std::string name  = this->getName(FACE);
+    int name  = this->getValue(FACE);
     Face aFace = Face(name, Edges);
     return aFace;
 }
@@ -151,63 +151,15 @@ Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
 //          private methods
 //---------------------------------------------------------------------------
 
-std::string MockObjectMaker::getName(unsigned int which) const{
-    std::ostringstream oss;
+int MockObjectMaker::getValue(unsigned int which) const{
     switch (which) {
         case EDGE:
             EDGE_COUNT++;
-            oss << "Edge" << EDGE_COUNT;
+            return EDGE_COUNT;
         case FACE:
             FACE_COUNT++;
-            oss << "Face" << FACE_COUNT;
+            return FACE_COUNT;
         default:
             throw std::invalid_argument("which must be EDGE or FACE");
     }
-    return oss.string()
 }
-
-//FakePartFillet::FakePartFillet(const FakeOCCShape& base, const FakeOCCFace& filletFace)
-    //: filletFace(filletFace)
-//{
-    //this->Shape = base;
-//}
-
-//mock::TopExp_Explorer::TopExp_Explorer(const FakeOCCFace& aFace, const TopAbs_ShapeEnum toFind)
-//{
-    //this->myShape = aFace;
-    //this->mySubShapes = aFace.Edges;
-    //this->index = 0;
-//}
-
-//bool mock::TopExp_Explorer::More() const
-//{
-    //return this->index < this->mySubShapes.size();
-//}
-
-//void mock::TopExp_Explorer::Next() const
-//{
-    //this->index++;
-//}
-
-//FakeOCCShape mock::TopExp_Explorer::Current() const{
-    //return this->mySubShapes[this->index];
-//}
-
-//int main(void){
-    //// let's test this ho.
-    //MockObjectMaker myMaker;
-    //mock::TopoDS_Edge edge1 = myMaker.makeEdge();
-    //mock::TopoDS_Edge edge2 = myMaker.makeEdge();
-    //mock::TopoDS_Face face1 = myMaker.makeFace();
-    //mock::TopoDS_Face face2 = myMaker.makeFace();
-    //Box box = myMaker.makeBox();
-
-    //std::cout << "Hello, Wolfgang." << std::endl;
-    //std::cout << "edge1 value = " << edge1.getValue() <<std::endl;
-    //std::cout << "edge2 value = " << edge2.getValue() <<std::endl;
-    //std::cout << "face1 value = " << face1.getValue() <<std::endl;
-    //std::cout << "face2 value = " << face2.getValue() <<std::endl;
-    //std::cout << "box.Faces[0] value = " << box.Faces[0].getValue() <<std::endl;
-
-    //return 0;
-//}

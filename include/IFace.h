@@ -8,8 +8,10 @@
 class IFace : IShape
 {
     public:
-        std::vector<std::unique_pointer<IShape>> getSubShapes() const = 0;
+        virtual ~IFace() = 0;
+        std::vector<std::unique_ptr<IShape>> getSubShapes() const = 0;
         // convenience method, could use `getSubShapes`
-        std::vector<std::unique_pointer<IEdge>> getEdges() const = 0;
+        std::vector<std::unique_ptr<IEdge>> getEdges() const = 0;
 };
+IFace::~IFace(){}
 #endif /* ifndef IFACE_HEADER */
