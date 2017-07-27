@@ -2,8 +2,8 @@
 #define ISHAPE_HEADER
 
 #include <string>
-#include <memory>
 #include <vector>
+
 
 template <class TShape>
 class IShape

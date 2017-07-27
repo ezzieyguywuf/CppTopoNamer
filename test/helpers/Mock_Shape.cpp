@@ -1,6 +1,4 @@
-#include <Mock_Shape.h>
-
-using mock::Shape;
+#include <Shape.h>
 
 Shape::Shape(int value) 
     : value(value)

@@ -1,8 +1,5 @@
-#include <Mock_Face.h>
-#include <Mock_Edge.h>
-
-using mock::Face;
-using mock::Edge;
+#include <Face.h>
+#include <Edge.h>
 
 Face::Face (int value, std::vector<Edge> edges)
     : Shape(value), myEdges(edges), IShapeWithSubs(edges)

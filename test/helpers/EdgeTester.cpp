@@ -1,9 +1,9 @@
-#include <Mock_Edge.h>
+#include <Edge.h>
 #include <iostream>
 
 int main()
 {
-    mock::Edge edge1(1), edge2(1), edge3(2);
+    Edge edge1(1), edge2(1), edge3(2);
     bool val1, val2;
     val1 = edge1 == edge2;
     val2 = edge1 == edge3;

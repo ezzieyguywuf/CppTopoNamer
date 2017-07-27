@@ -2,3 +2,5 @@
 #add_library(FaceTracker SHARED "FaceTracker.cpp")
 #add_library(EdgeTracker SHARED "EdgeTracker.cpp")
 #target_link_libraries(EdgeTracker "BaseTracker"  "TKBRep" "TKPrim" "TKMath")
+
+#add_library(NamedShape SHARED "NamedShape.cpp")

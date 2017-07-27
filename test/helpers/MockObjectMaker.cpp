@@ -6,11 +6,6 @@
 #include <utility>
 #include <sstream>
 
-using mock::Box;
-using mock::Edge;
-using mock::Face;
-using mock::Shape;
-
 const unsigned int MockObjectMaker::EDGE=0;
 const unsigned int MockObjectMaker::FACE=1;
 unsigned int MockObjectMaker::EDGE_COUNT;
@@ -53,7 +48,7 @@ Box MockObjectMaker::makeBox(){
     rgt = boxFaces.right;
 
     for(int i=1; i<=6; i++){
-        mock::Face aFace = this->makeFace();
+        Face aFace = this->makeFace();
         Faces.push_back(aFace);
     }
 

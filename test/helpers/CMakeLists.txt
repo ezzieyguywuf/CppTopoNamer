@@ -1,3 +1,4 @@
+include_directories("../include")
 add_library(Mock_Shape "Mock_Shape.cpp")
 
 add_library(Mock_Edge "Mock_Edge.cpp")

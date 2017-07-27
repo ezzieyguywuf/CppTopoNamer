@@ -4,15 +4,10 @@
 #include <vector>
 #include <string>
 
-#include <Mock_Shape.h>
-#include <Mock_Edge.h>
-#include <Mock_Face.h>
-#include <Mock_Box.h>
-
-using mock::Shape;
-using mock::Edge;
-using mock::Face;
-using mock::Box;
+#include <Shape.h>
+#include <Edge.h>
+#include <Face.h>
+#include <Box.h>
 
 class MockObjectMaker{
     public:

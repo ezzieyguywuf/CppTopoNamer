@@ -1,6 +1,4 @@
-#include <Mock_Edge.h>
-
-using mock::Edge;
+#include <Edge.h>
 
 Edge::Edge(int value)
     : Shape(value)
