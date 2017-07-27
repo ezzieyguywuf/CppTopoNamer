@@ -6,7 +6,7 @@
 #include <utility>
 #include <sstream>
 
-//using mock::Box;
+using mock::Box;
 using mock::Edge;
 using mock::Face;
 using mock::Shape;
@@ -41,42 +41,40 @@ Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
     return aFace;
 }
 
-//Box MockObjectMaker::makeBox(){
-    //unsigned int frt, bck, top, bot, lft, rgt;
-    //std::vector<mock::TopoDS_Face> Faces;
+Box MockObjectMaker::makeBox(){
+    unsigned int frt, bck, top, bot, lft, rgt;
+    std::vector<Face> Faces;
 
-    //frt = boxFaces.front;
-    //bck = boxFaces.back;
-    //top = boxFaces.top;
-    //bot = boxFaces.bottom;
-    //lft = boxFaces.left;
-    //rgt = boxFaces.right;
+    frt = boxFaces.front;
+    bck = boxFaces.back;
+    top = boxFaces.top;
+    bot = boxFaces.bottom;
+    lft = boxFaces.left;
+    rgt = boxFaces.right;
 
-    //for(int i=1; i<=6; i++){
-        //mock::TopoDS_Face aFace = this->makeFace();
-        //Faces.push_back(aFace);
-    //}
+    for(int i=1; i<=6; i++){
+        mock::Face aFace = this->makeFace();
+        Faces.push_back(aFace);
+    }
 
-    //Faces[top].Edges[0] = Faces[frt].Edges[0];
-    //Faces[bot].Edges[0] = Faces[frt].Edges[1];
-    //Faces[lft].Edges[0] = Faces[frt].Edges[2];
-    //Faces[rgt].Edges[0] = Faces[frt].Edges[3];
+    Faces[top].myEdges[0] = Faces[frt].myEdges[0];
+    Faces[bot].myEdges[0] = Faces[frt].myEdges[1];
+    Faces[lft].myEdges[0] = Faces[frt].myEdges[2];
+    Faces[rgt].myEdges[0] = Faces[frt].myEdges[3];
 
-    //Faces[top].Edges[1] = Faces[bck].Edges[0];
-    //Faces[bot].Edges[1] = Faces[bck].Edges[1];
-    //Faces[lft].Edges[1] = Faces[bck].Edges[2];
-    //Faces[rgt].Edges[1] = Faces[bck].Edges[3];
+    Faces[top].myEdges[1] = Faces[bck].myEdges[0];
+    Faces[bot].myEdges[1] = Faces[bck].myEdges[1];
+    Faces[lft].myEdges[1] = Faces[bck].myEdges[2];
+    Faces[rgt].myEdges[1] = Faces[bck].myEdges[3];
 
-    //Faces[lft].Edges[2] = Faces[top].Edges[2];
-    //Faces[rgt].Edges[2] = Faces[top].Edges[3];
+    Faces[lft].myEdges[2] = Faces[top].myEdges[2];
+    Faces[rgt].myEdges[2] = Faces[top].myEdges[3];
 
-    //Faces[lft].Edges[3] = Faces[bot].Edges[2];
-    //Faces[rgt].Edges[3] = Faces[bot].Edges[3];
+    Faces[lft].myEdges[3] = Faces[bot].myEdges[2];
+    Faces[rgt].myEdges[3] = Faces[bot].myEdges[3];
 
-    //Box mock_box = Box();
-    //mock_box.Faces = Faces;
-    //return mock_box;
-//}
+    return Box(Faces);
+}
 
 //FakePartFillet MockObjectMaker::FilletedBox(){
     //unsigned int frt, top, lft, rgt;
@@ -104,10 +102,10 @@ Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
     //Face3 = box.Shape.Faces[lft];
     //Face4 = box.Shape.Faces[rgt];
 
-    //Face1.Edges[0] = filletFace.Edges[0];
-    //Face2.Edges[0] = filletFace.Edges[1];
-    //Face3.Edges.push_back(filletFace.Edges[2]);
-    //Face4.Edges.push_back(filletFace.Edges[3]);
+    //Face1.myEdges[0] = filletFace.myEdges[0];
+    //Face2.myEdges[0] = filletFace.myEdges[1];
+    //Face3.myEdges.push_back(filletFace.myEdges[2]);
+    //Face4.myEdges.push_back(filletFace.myEdges[3]);
 
     //box.Shape.Faces[frt] = Face1;
     //box.Shape.Faces[top] = Face2;

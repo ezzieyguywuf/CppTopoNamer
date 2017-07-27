@@ -3,16 +3,18 @@
 
 #include <Mock_Edge.h>
 #include <Mock_Shape.h>
+#include <IShapeWithSubs.h>
 #include <memory>
 
 namespace mock{
-class Face : public Shape
+class Face : public Shape, public IShapeWithSubs<Shape, Edge>
     {
         public:
             Face(int value, std::vector<Edge> edges);
-            std::vector<std::unique_ptr<IShape>> getSubShapes() const override {};
-            std::vector<Edge> getEdges() const;
-        private:
+
+            using Shape::operator=;
+            using Shape::IsFlipped;
+
             std::vector<Edge> myEdges;
     };
 };

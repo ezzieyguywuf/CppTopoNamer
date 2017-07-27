@@ -3,22 +3,19 @@
 
 #include <IShape.h>
 
-#include <memory>
-
-namespace mock{
-    class Shape : public IShape
+namespace mock
+{
+    class Shape : virtual public IShape<Shape>
     {
         public:
             Shape(int value);
 
-            bool operator==(const Shape& aShape) const;
-            bool IsFlipped(const Shape& aShape) const;
-            bool operator==(const IShape& aShape) const {};
-            bool IsFlipped(const IShape& aShape) const {};
+            bool operator==(const Shape& aShape) const override;
+            bool IsFlipped(const Shape& aShape) const override;
 
             int getValue() const;
         private:
             int value;
     };
 };
-#endif /* ifndef MOCK_SHAPE_HEADER */
+#endif //MOCK_SHAPE_HEADER

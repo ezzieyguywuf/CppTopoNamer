@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+template <class TShape>
 class IShape
 {
     public:
@@ -13,10 +14,9 @@ class IShape
 
         // Returns true if `aShape` shares a location, orientation, and underlying
         // geometry with `this`
-        virtual bool operator==(const IShape& aShape) const = 0;
+        virtual bool operator==(const TShape& aShape) const = 0;
         // Returns true if `aShape` shares a location as well as underlying geometry with
         // `this`. The two do not necessarily share an orientation
-        virtual bool IsFlipped(const IShape& aShape) const = 0;
-        virtual std::vector<std::unique_ptr<IShape>> getSubShapes() const = 0;
+        virtual bool IsFlipped(const TShape& aShape) const = 0;
 };
 #endif /* ifndef ISHAPE_HEADER */

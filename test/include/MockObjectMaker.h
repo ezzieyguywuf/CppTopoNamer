@@ -7,12 +7,12 @@
 #include <Mock_Shape.h>
 #include <Mock_Edge.h>
 #include <Mock_Face.h>
-//#include <Mock_Box.h>
+#include <Mock_Box.h>
 
 using mock::Shape;
 using mock::Edge;
 using mock::Face;
-//using mock::Box;
+using mock::Box;
 
 class MockObjectMaker{
     public:
@@ -22,7 +22,7 @@ class MockObjectMaker{
         Edge makeEdge();
         Face makeFace();
         Face makeFace(std::vector<Edge> Edges);
-        //Box makeBox();
+        Box makeBox();
         //Shape makeFilletedBox();
         //Shape makeCylinder();
 
