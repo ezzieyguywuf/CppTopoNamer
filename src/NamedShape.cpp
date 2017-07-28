@@ -14,3 +14,12 @@ NamedShape::NamedShape(const Shape oldShape, const std::string myName)
 std::string NamedShape::getName() const{
     return this->myName;
 }
+
+Shape NamedShape::getShape() const{
+    return this->myShape;
+}
+
+//NamedShape& NamedShape::operator=(NamedShape& nshape){
+    //this->myShape = nshape.myShape;
+    //this->myName  = nshape.myName;
+//}

@@ -1,5 +1,6 @@
 #include <Shape.h>
 
+const std::string Shape::REPR = "Shape";
 Shape::Shape(int value) 
     : value(value)
 {}
@@ -18,3 +19,8 @@ int Shape::getValue() const
 {
     return this->value;
 }
+
+//std::ostream& Shape::operator<< (std::ostream& stream, const Shape& shape){
+    //stream << "<" << shape.REPR << " object at address=" << this <<", value=" << shape.value << std::endl;
+    //return stream;
+//}

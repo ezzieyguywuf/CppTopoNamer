@@ -12,7 +12,10 @@ class NamedShape
         NamedShape(const Shape myShape, const std::string myName);
         ~NamedShape(){};
 
+        //NamedShape& operator=(NamedShape& nshape);
+
         std::string getName() const;
+        Shape getShape() const;
     private:
         const Shape myShape;
         const std::string myName;

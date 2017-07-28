@@ -18,5 +18,7 @@ class IShape
         // Returns true if `aShape` shares a location as well as underlying geometry with
         // `this`. The two do not necessarily share an orientation
         virtual bool IsFlipped(const TShape& aShape) const = 0;
+        //// Obtain a string representation of this Shape object
+        //virtual std::string getRepr() const = 0;
 };
 #endif /* ifndef ISHAPE_HEADER */

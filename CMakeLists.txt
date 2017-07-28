@@ -17,7 +17,7 @@ include_directories(
 )
 link_directories(
     ${OCC_LIBRARIES}
-    )
+)
 
 set(CTEST_ENVIRONMENT CTEST_OUTPUT_ON_FAILURE=1)
 enable_testing()

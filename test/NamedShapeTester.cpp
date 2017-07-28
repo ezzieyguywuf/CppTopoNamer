@@ -1,24 +1,26 @@
-#define BOOST_TEST_MODULE Fixtures
-#include <boost/test/unit_test.hpp>
+#include <gtest/gtest.h>
 #include <MockObjectMaker.h>
 #include <NamedShape.h>
 
-struct Maker{
-    MockObjectMaker maker;
-    Edge mockEdge;
-    Maker() : mockEdge(maker.makeEdge()) {} ;
-    ~Maker(){};
+class NamedShapeTest : public testing::Test{
+    protected:
+        NamedShapeTest()
+            : mockEdge(maker.makeEdge()),
+              namedShape(mockEdge, "Edge000"){};
+        virtual void SetUp()
+        {
+        }
+
+        MockObjectMaker maker;
+        Edge mockEdge;
+        NamedShape namedShape;
 };
 
-BOOST_FIXTURE_TEST_SUITE(NamedShapeSuite, Maker)
-
-BOOST_AUTO_TEST_CASE(addName)
-{
-    NamedShape myShape(mockEdge, "Edge000");
-    std::string name = myShape.getName();
-    BOOST_CHECK_EQUAL(name, "Edge000");
+TEST_F(NamedShapeTest, getName){
+    EXPECT_EQ(namedShape.getName(), "Edge000");
 }
 
-    //Face fetchedFace = faceTracker.getFace();
-    //BOOST_CHECK_EQUAL(fetchedFace, mockFace);
-BOOST_AUTO_TEST_SUITE_END()
+TEST_F(NamedShapeTest, getShape){
+    Shape fetchedShape = namedShape.getShape();
+    EXPECT_EQ(fetchedShape, mockEdge);
+}
