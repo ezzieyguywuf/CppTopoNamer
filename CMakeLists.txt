@@ -12,8 +12,8 @@ set(FAKEIT_CONFIG_DIR "/home/wolfie/Program/FreeCAD_dev/CppTopoNamer/FakeIt/conf
 include_directories(
     "include"
     ${OCC_INCLUDE}
-    ${FAKEIT_INCLUDE}
-    ${FAKEIT_CONFIG_DIR}
+    #${FAKEIT_INCLUDE}
+    #${FAKEIT_CONFIG_DIR}
 )
 link_directories(
     ${OCC_LIBRARIES}

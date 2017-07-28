@@ -9,9 +9,5 @@ NamedShape::NamedShape(const Shape aShape, const std::string aName)
     : INamedShape(aShape, aName)
 {
 }
-        
-bool NamedShape::isValid() const
-{
-    return false;
-}
 
+NamedShape::~NamedShape(){}

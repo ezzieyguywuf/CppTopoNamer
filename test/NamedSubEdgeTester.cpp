@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <MockObjectMaker.h>
-#include <NamedEdge.h>
+#include <NamedSubEdge.h>
+#include <NamedBaseFace.h>
 
 class NamedEdgeTest : public testing::Test{
     protected:
@@ -13,14 +14,16 @@ class NamedEdgeTest : public testing::Test{
 
         MockObjectMaker maker;
         Edge mockEdge;
-        NamedEdge namedEdge;
+        NamedSubEdge namedEdge;
 };
 
 TEST_F(NamedEdgeTest, isValid){
     EXPECT_EQ(namedEdge.isValid(), false);
 }
 
-TEST_F(NamedEdgeTest, addFace){
-    namedEdge.addParent("Face000");
+TEST_F(NamedEdgeTest, addParent){
+    Face mockFace = maker.makeFace();
+    NamedBaseFace aFace(mockFace, "Face000");
+    namedEdge.addParent(aFace);
     EXPECT_EQ(namedEdge.numParents(), 1);
 }
