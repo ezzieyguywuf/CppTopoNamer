@@ -10,7 +10,7 @@ set (TESTS
     #FaceTrackerTester
     #EdgeTrackerTester
     NamedShapeTester
-    #NamedEdgeTester
+    NamedEdgeTester
     )
 
 set (LIBS
@@ -18,6 +18,7 @@ set (LIBS
     "gtest_main"
     "MockObjectMaker"
     "NamedShape_MockImpl"
+    "NamedEdge"
     #"FaceTracker"
     #${Boost_FILESYSTEM_LIBRARY}
     #${Boost_SYSTEM_LIBRARY}
@@ -28,6 +29,10 @@ set (LIBS
 add_library(INamedShape "../src/INamedShape.cpp")
 target_include_directories(INamedShape BEFORE PUBLIC "./include")
 target_link_libraries(INamedShape "Mock_Shape")
+
+add_library(NamedEdge "../src/NamedEdge.cpp")
+target_include_directories(NamedEdge BEFORE PUBLIC "./include")
+target_link_libraries(NamedEdge "NamedShape_MockImpl")
 foreach (testName ${TESTS})
     add_executable(${testName} "${testName}.cpp")
     target_link_libraries(${testName} ${LIBS})

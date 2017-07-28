@@ -21,6 +21,8 @@ class INamedShape
     private:
         const Shape myShape;
         const std::string myName;
+
+    protected:
         const std::vector<std::string> myParentNames;
 };
 
