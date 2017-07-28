@@ -29,3 +29,5 @@ target_link_libraries(MockObjectMakerTester
     MockObjectMaker
 )
 
+add_library(NamedShape_MockImpl "NamedShape_MockImpl.cpp")
+target_link_libraries(NamedShape_MockImpl "INamedShape")

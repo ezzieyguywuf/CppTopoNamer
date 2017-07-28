@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 #include <MockObjectMaker.h>
-#include <NamedShape.h>
+#include <NamedShape_MockImpl.h>
 
 class NamedShapeTest : public testing::Test{
     protected:
         NamedShapeTest()
             : mockEdge(maker.makeEdge()),
-              namedShape(mockEdge, "Edge000"){};
+              namedShape(mockEdge, "Shape000"){};
         virtual void SetUp()
         {
         }
@@ -17,7 +17,7 @@ class NamedShapeTest : public testing::Test{
 };
 
 TEST_F(NamedShapeTest, getName){
-    EXPECT_EQ(namedShape.getName(), "Edge000");
+    EXPECT_EQ(namedShape.getName(), "Shape000");
 }
 
 TEST_F(NamedShapeTest, getShape){
