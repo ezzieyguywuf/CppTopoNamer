@@ -19,6 +19,14 @@ Shape INamedShape::getShape() const{
     return this->myShape;
 }
 
+void INamedShape::addParent(std::string aName){
+    this->myParentNames.push_back(aName);
+}
+
+unsigned int INamedShape::numParents() const{
+    return this->myParentNames.size();
+}
+
 //INamedShape& INamedShape::operator=(INamedShape& nshape){
     //this->myShape = nshape.myShape;
     //this->myName  = nshape.myName;

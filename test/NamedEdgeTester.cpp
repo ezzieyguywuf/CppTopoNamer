@@ -19,3 +19,8 @@ class NamedEdgeTest : public testing::Test{
 TEST_F(NamedEdgeTest, isValid){
     EXPECT_EQ(namedEdge.isValid(), false);
 }
+
+TEST_F(NamedEdgeTest, addFace){
+    namedEdge.addParent("Face000");
+    EXPECT_EQ(namedEdge.numParents(), 1);
+}

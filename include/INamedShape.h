@@ -18,12 +18,16 @@ class INamedShape
         // Implementation must determine how many parent names are needed in order to be
         // considered valid.
         virtual bool isValid() const = 0;
+        // The number of parents names that we have.
+        unsigned int numParents() const;
+        // Add a parent name
+        void addParent(std::string parentName);
     private:
         const Shape myShape;
         const std::string myName;
 
     protected:
-        const std::vector<std::string> myParentNames;
+        std::vector<std::string> myParentNames;
 };
 
 #endif // INamedSHape_HEADER

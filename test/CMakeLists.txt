@@ -32,7 +32,7 @@ target_link_libraries(INamedShape "Mock_Shape")
 
 add_library(NamedEdge "../src/NamedEdge.cpp")
 target_include_directories(NamedEdge BEFORE PUBLIC "./include")
-target_link_libraries(NamedEdge "NamedShape_MockImpl")
+target_link_libraries(NamedEdge "INamedShape")
 foreach (testName ${TESTS})
     add_executable(${testName} "${testName}.cpp")
     target_link_libraries(${testName} ${LIBS})

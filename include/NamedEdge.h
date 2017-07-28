@@ -3,7 +3,7 @@
 
 #include <INamedShape.h>
 
-class NamedEdge : INamedShape
+class NamedEdge : public INamedShape
 {
     public:
         NamedEdge(const Shape myShape);
