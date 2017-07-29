@@ -9,8 +9,7 @@ class IShapeWithSubs : virtual public IShape<TShape>
 {
     public:
         IShapeWithSubs(std::vector<TSubShape> shapes) : mySubs(shapes){};
-        virtual std::vector<TSubShape> getSubShapes() const
-        {
+        virtual std::vector<TSubShape> getSubShapes() const {
             return this->mySubs;
         };
 

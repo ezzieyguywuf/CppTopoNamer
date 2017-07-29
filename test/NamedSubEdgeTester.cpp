@@ -8,8 +8,8 @@ class NamedEdgeTest : public testing::Test{
         NamedEdgeTest()
             : mockEdge(maker.makeEdge()),
               namedEdge(mockEdge, "Edge000"),
-              f1(maker.makeFace(), "Face000"),
-              f2(maker.makeFace(), "Face001"),
+              f1(maker.makeFace(mockEdge), "Face000"),
+              f2(maker.makeFace(mockEdge), "Face001"),
               f3(maker.makeFace(), "Face002")
         {};
         virtual void SetUp()
@@ -27,6 +27,9 @@ TEST_F(NamedEdgeTest, isValid){
 }
 
 TEST_F(NamedEdgeTest, addParent){
+    namedEdge.addParent(f3);
+    EXPECT_ANY_THROW(namedEdge.addParent(f1));
+
     namedEdge.addParent(f1);
     EXPECT_EQ(namedEdge.numParents(), 1);
 

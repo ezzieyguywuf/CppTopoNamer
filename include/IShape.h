@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-
 template <class TShape>
 class IShape
 {

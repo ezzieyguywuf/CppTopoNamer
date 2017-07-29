@@ -30,6 +30,18 @@ Face MockObjectMaker::makeFace(){
     return this->makeFace(Edges);
 }
 
+Face MockObjectMaker::makeFace(Edge anEdge){
+    Face aFace = this->makeFace();
+    aFace.myEdges[0] = anEdge;
+    return aFace;
+}
+
+Face MockObjectMaker::makeFace(Edge anEdge, int which){
+    Face aFace = this->makeFace();
+    aFace.myEdges[which] = anEdge;
+    return aFace;
+}
+
 Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
     int name  = this->getValue(FACE);
     Face aFace = Face(name, Edges);

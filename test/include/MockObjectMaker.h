@@ -16,6 +16,8 @@ class MockObjectMaker{
 
         Edge makeEdge();
         Face makeFace();
+        Face makeFace(Edge anEdge);
+        Face makeFace(Edge anEdge, int index);
         Face makeFace(std::vector<Edge> Edges);
         Box makeBox();
         //Shape makeFilletedBox();

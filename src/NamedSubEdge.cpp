@@ -25,6 +25,6 @@ void NamedSubEdge::addParent(const INamedShape& parent)
         this->myParentNames.push_back((&parent)->getName());
     }
     else{
-        THROWM(Base::RuntimeError, "Too many parent Faces were added: an Edge can only be made up of up to two Faces.");
+        THROWM(Base::RuntimeError, "Too many parent Faces were added: an Edge can only be made up of up to two Faces.")
     }
 }
