@@ -7,7 +7,11 @@ class NamedEdgeTest : public testing::Test{
     protected:
         NamedEdgeTest()
             : mockEdge(maker.makeEdge()),
-              namedEdge(mockEdge, "Edge000"){};
+              namedEdge(mockEdge, "Edge000"),
+              f1(maker.makeFace(), "Face000"),
+              f2(maker.makeFace(), "Face001"),
+              f3(maker.makeFace(), "Face002")
+        {};
         virtual void SetUp()
         {
         }
@@ -15,6 +19,7 @@ class NamedEdgeTest : public testing::Test{
         MockObjectMaker maker;
         Edge mockEdge;
         NamedSubEdge namedEdge;
+        NamedBaseFace f1, f2, f3;
 };
 
 TEST_F(NamedEdgeTest, isValid){
@@ -22,8 +27,11 @@ TEST_F(NamedEdgeTest, isValid){
 }
 
 TEST_F(NamedEdgeTest, addParent){
-    Face mockFace = maker.makeFace();
-    NamedBaseFace aFace(mockFace, "Face000");
-    namedEdge.addParent(aFace);
+    namedEdge.addParent(f1);
     EXPECT_EQ(namedEdge.numParents(), 1);
+
+    namedEdge.addParent(f2);
+    EXPECT_EQ(namedEdge.numParents(), 2);
+
+    EXPECT_ANY_THROW(namedEdge.addParent(f3));
 }
