@@ -26,4 +26,5 @@ add_mock(NamedSubEdge "INamedSubShape")
 #--------------------------------------------------
 
 test_executable("NamedShapeTester" "NamedShape_MockImpl")
+test_executable("NamedBaseFaceTester" "NamedBaseFace")
 test_executable("NamedSubEdgeTester" "NamedSubEdge" "NamedBaseFace")
