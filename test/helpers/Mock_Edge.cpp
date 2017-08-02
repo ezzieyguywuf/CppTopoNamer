@@ -15,3 +15,7 @@ bool Edge::isFlipped(const Edge& anEdge) const
 {
     return (*this) == anEdge;
 }
+
+int Edge::getVal() const{
+    return this->val;
+}

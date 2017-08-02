@@ -17,6 +17,7 @@ namespace Mock{
             bool operator==(const Edge& anEdge) const override;
             bool isFlipped(const Edge& anEdge) const override;
 
+            int getVal() const;
         private:
             int val;
     };

@@ -12,10 +12,10 @@ class IFace{
     public:
         ~IFace(){};
         bool operator==(const IFace& aFace) const;
-        vector<unsigned int> getEdgeIndices() const;
+        const vector<unique_ptr<IEdge>>& getEdges() const;
     protected:
         virtual bool checkEquals_(const IFace& aFace) const = 0;
-        virtual vector<unsigned int> myEdgeIndices() const = 0 ;
+        virtual const vector<unique_ptr<IEdge>>& getEdgeVector() const = 0 ;
 };
 
 template <class T>
@@ -36,8 +36,8 @@ bool IFace::operator==(const IFace& aFace) const
     return this->checkEquals_(aFace);
 }
 
-vector<unsigned int> IFace::getEdgeIndices() const{
-    return this->myEdgeIndices();
+const vector<unique_ptr<IEdge>>& IFace::getEdges() const{
+    return this->getEdgeVector();
 }
 
 template <class T>
