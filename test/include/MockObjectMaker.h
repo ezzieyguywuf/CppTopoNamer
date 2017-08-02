@@ -4,22 +4,23 @@
 #include <vector>
 #include <string>
 
-#include <Shape.h>
-#include <Edge.h>
-#include <Face.h>
-#include <Box.h>
+//#include <Shape.h>
+#include <IEdge.h>
+#include <IFace.h>
+#include <memory>
+//#include <Box.h>
 
 class MockObjectMaker{
     public:
         MockObjectMaker();
         ~MockObjectMaker(){};
 
-        Edge makeEdge();
-        Face makeFace();
-        Face makeFace(Edge anEdge);
-        Face makeFace(Edge anEdge, int index);
-        Face makeFace(std::vector<Edge> Edges);
-        Box makeBox();
+        std::unique_ptr<IEdge> makeEdge();
+        //std::unique_ptr<IFace> makeFace();
+        //std::unique_ptr<IFace> makeFace(Edge anEdge);
+        //std::unique_ptr<IFace> makeFace(Edge anEdge, int index);
+        //std::unique_ptr<IFace> makeFace(std::vector<Edge> Edges);
+        //Box makeBox();
         //Shape makeFilletedBox();
         //Shape makeCylinder();
 
