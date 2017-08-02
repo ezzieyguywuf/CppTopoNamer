@@ -1,5 +1,7 @@
-#include <Edge.h>
+#include <Mock_Edge.h>
 #include <iostream>
+
+using Mock::Edge;
 
 int main()
 {
@@ -8,7 +10,7 @@ int main()
     val1 = edge1 == edge2;
     val2 = edge1 == edge3;
     std::cout << std::boolalpha;
-    std::cout << "edge1==edge2 = " << val1 << std::endl;
-    std::cout << "edge1==edge3 = " << val2 << std::endl;
+    std::cout << "edge1==edge2 = " << val1 << ", expected TRUE"  << std::endl;
+    std::cout << "edge1==edge3 = " << val2 << ", expected FALSE" << std::endl;
     return 0;
 }

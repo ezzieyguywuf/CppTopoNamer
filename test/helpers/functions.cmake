@@ -1,5 +1,6 @@
 function(make_library Name)
-    add_library(${Name} "${Name}.cpp")
+    add_library(${Name} SHARED "${Name}.cpp")
+    target_include_directories(${Name} BEFORE PUBLIC "../include")
     target_link_libraries(${Name} ${ARGN})
 endfunction(make_library)
 

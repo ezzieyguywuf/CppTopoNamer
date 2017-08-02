@@ -1,5 +1,5 @@
 function(add_mock Name)
-    add_library(${Name} "../src/${Name}.cpp")
+    add_library(${Name} SHARED "../src/${Name}.cpp")
     # This ensures that our mocked headers are found before the production headers
     target_include_directories(${Name} BEFORE PUBLIC "include")
     target_link_libraries(${Name} ${ARGN})
@@ -13,6 +13,7 @@ function(test_executable TestName)
         ${ARGN})
     target_include_directories(${TestName} BEFORE PUBLIC
         ${gtest_SOURCE_DIR}/include
-        ${gtest_SOURE_DIR})
+        ${gtest_SOURE_DIR}
+        include)
     add_test("Test_${TestName}" ${TestName})
 endfunction(test_executable)

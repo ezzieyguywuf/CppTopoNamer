@@ -1,5 +1,17 @@
-#include <Edge.h>
+#include <Mock_Edge.h>
+
+using Mock::Edge;
 
 Edge::Edge(int value)
-    : Shape(value)
+    : val(value)
 {}
+
+bool Edge::operator==(const Edge& anEdge) const
+{
+    return this->val == anEdge.val;
+}
+
+bool Edge::isFlipped(const Edge& anEdge) const
+{
+    return (*this) == anEdge;
+}
