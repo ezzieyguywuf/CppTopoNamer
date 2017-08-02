@@ -22,36 +22,36 @@ int main()
     edges.push_back(std::move(std::unique_ptr<IEdge>(edge2)));
     edges.push_back(std::move(std::unique_ptr<IEdge>(edge3)));
 
-    std::vector<unsigned int> ind1 = {0, 1};
-    std::vector<unsigned int> ind2 = {1, 2};
+    std::vector<Edge> edges1, edges2;
+    edges1.push_back(*edge1);
+    edges1.push_back(*edge2);
+    //edges2.push_back(*edge2);
+    //edges2.push_back(*edge3);
 
-    Face* face1 = new Face(1, ind1);
-    Face* face2 = new Face(2, ind2);
+    Face* face1 = new Face(1, edges1);
+    //Face* face2 = new Face(2, edges2);
 
     // client 
     const edgeVector& allEdges = edges;
     IFace& aFace = *face1;
-    IFace& bFace = *face2;
+    //IFace& bFace = *face2;
     IEdge& aEdge = *edge1;
     IEdge& bEdge = *edge2;
     IEdge& cEdge = *edge3;
-    std::vector<unsigned int> ind;
-    ind = aFace.getEdgeIndices();
+    const edgeVector& checkEdges = aFace.getEdges();
 
-    std::cout << "Checks for aFace" << std::endl;
-    
-    std::cout << "*allEdges[ind[0]] == aEdge -> ";
-    std::cout << (*allEdges[ind[0]] == aEdge ? "true" : "false");
+    std::cout << "(*edges[0]) == (*checkEdges[0]) -> ";
+    std::cout << ((*edges[0]) == (*checkEdges[0]) ? "true" : "false");
     std::cout << " || Expecting -> " << "true";
     std::cout << std::endl; 
 
-    std::cout << "*allEdges[ind[1]] == aEdge -> ";
-    std::cout << (*allEdges[ind[1]] == aEdge ? "true" : "false");
+    std::cout << "(*edges[1]) == (*checkEdges[0]) -> ";
+    std::cout << ((*edges[1]) == (*checkEdges[0]) ? "true" : "false");
     std::cout << " || Expecting -> " << "false";
     std::cout << std::endl; 
 
-    std::cout << "*allEdges[ind[1]] == bEdge -> ";
-    std::cout << (*allEdges[ind[1]] == bEdge ? "true" : "false");
+    std::cout << "(*edges[2]) == (*checkEdges[0]) -> ";
+    std::cout << ((*edges[2]) == (*checkEdges[0]) ? "true" : "false");
     std::cout << " || Expecting -> " << "true";
     std::cout << std::endl; 
     return 0;
