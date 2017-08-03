@@ -2,7 +2,6 @@
 #define ISolid_HEADER
 
 #include <IFace.h>
-#include <IEdge.h>
 #include <vector>
 #include <memory>
 
@@ -12,29 +11,16 @@ using std::unique_ptr;
 class ISolid
 {
     public:
-        // add a Face to the solid and return the index of the Face within the solid. This
-        // index should always refer to the same Face.
-        int addFace(const unique_ptr<IEdge>>& edge);
-        //vector<int> addFaces(const vector<unique_ptr<IFace>>& faces);
+        ~ISolid(){};
+        const vector<unique_ptr<IFace>>& getFaces() const;
 
     private:
-        virtual int newFace(const vector<unique_ptr<IEdge>>& edges) = 0;
+        virtual const vector<unique_ptr<IFace>>& getFaceVector() const = 0;
 };
 
-int ISolid::addFace(const vector<unique_ptr<IEdge>>& edges)
+const vector<unique_ptr<IFace>>& ISolid::getFaces() const
 {
-    this->newFace(edges);
+    return this->getFaceVector();
 }
-
-//int ISolid::addFaces(const vector<unique_ptr<IEdge>>& edges)
-//{
-    //vector<int> indices;
-    //int i;
-    //for (const auto& edge : edges) {
-        //i = this->newFace(edge);
-        //indices.push_back(i);
-    //}
-    //return indices;
-//}
 
 #endif //ISolid_HEADER

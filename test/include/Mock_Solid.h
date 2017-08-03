@@ -2,6 +2,9 @@
 #define Solid_HEADER
 
 #include <ISolid.h>
+#include <IFace.h>
+#include <Mock_Face.h>
+
 #include <vector>
 #include <memory>
 
@@ -12,13 +15,13 @@ namespace Mock{
     class Solid : public ISolid
     {
         public:
-            Solid(vector<unique_ptr<IEdge>>& edges);
+            Solid(vector<Face> faces);
             ~Solid(){};
 
-            int addFace(const vector<unique_ptr<IEdge>>& anEdge) override;
+            const vector<unique_ptr<IFace>>& getFaceVector() const override;
 
         private:
-            vector<unique_ptr<IEdge>>& allEdges;
+            vector<unique_ptr<IFace>> myFaces;
     };
 }
 
