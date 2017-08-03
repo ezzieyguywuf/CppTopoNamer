@@ -38,21 +38,16 @@ int main()
     int topIndex = MockObjectMaker::BoxFaces.at("top");
     const std::vector<std::unique_ptr<IEdge>>& frtEdges = boxFaces[frtIndex]->getEdges();
     const std::vector<std::unique_ptr<IEdge>>& topEdges = boxFaces[topIndex]->getEdges();
-    const std::unique_ptr<IEdge>& frtEdge = frtEdges[0];
-    const std::unique_ptr<IEdge>& topEdge = topEdges[0];
 
     
-    std::cout << "frtEdge == topEdge -> ";
-    std::cout << (frtEdge == topEdge ? "true" : "false");
+    std::cout << "*frtEdges[0] == *topEdges[0] -> ";
+    std::cout << (*frtEdges[0] == *topEdges[0] ? "true" : "false");
     std::cout << " || Expecting -> " << "true";
     std::cout << std::endl; 
 
-    //std::cout << "myFace value = " << myFace.getValue() << std::endl;
-    
-    //std::cout << "myBox.myFaces[0] value = " << myBox.myFaces[0].getValue() << std::endl;
-    //std::cout << "myBox.myFaces[1] value = " << myBox.myFaces[1].getValue() << std::endl;
-    //std::cout << "myBox.myFaces[2] value = " << myBox.myFaces[2].getValue() << std::endl;
-    //std::cout << "myBox.myFaces[0].myEdges[0] value = " << myBox.myFaces[0].myEdges[0].getValue() << std::endl;
-    //std::cout << "myBox.myFaces[0].myEdges[1] value = " << myBox.myFaces[0].myEdges[1].getValue() << std::endl;
-    //std::cout << "myBox.myFaces[0].myEdges[2] value = " << myBox.myFaces[0].myEdges[2].getValue() << std::endl;
+    std::cout << "*frtEdges[0] == *topEdges[1] -> ";
+    std::cout << (*frtEdges[0] == *topEdges[1] ? "true" : "false");
+    std::cout << " || Expecting -> " << "false";
+    std::cout << std::endl; 
+
 }
