@@ -7,7 +7,7 @@ using std::unique_ptr;
 using std::vector;
 
 Face::Face (int value, vector<Mock::Edge> edges)
-    : myValue(value) , myEdges(edges)
+    : myValue(value) 
 {
     for (auto edge : edges)
     {
@@ -36,6 +36,5 @@ int Face::getValue() const{
 
 void Face::changeEdge(int which, Mock::Edge newEdge)
 {
-    myEdges[which] = newEdge;
     shareEdges[which] = unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal()));
 }

@@ -27,7 +27,6 @@ namespace Mock{
             void changeEdge(int index, Mock::Edge newEdge);
         private:
             int myValue;
-            vector<Mock::Edge> myEdges;
             vector<unique_ptr<IEdge>> shareEdges;
     };
 };
