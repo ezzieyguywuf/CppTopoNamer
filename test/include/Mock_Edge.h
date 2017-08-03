@@ -12,6 +12,8 @@ namespace Mock{
     {
         public:
             Edge(int val);
+            Edge(const Edge& anEdge);
+            Edge operator=(const Edge& anEdge);
             ~Edge(){};
 
             bool operator==(const Edge& anEdge) const override;

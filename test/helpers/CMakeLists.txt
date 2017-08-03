@@ -6,9 +6,8 @@ include("functions.cmake")
 #make_library(Mock_Shape)
 make_library(Mock_Edge)
 make_library(Mock_Face "Mock_Edge")
-make_library(Mock_Solid "Mock_Face" "Mock_Edge")
-#make_library(Mock_Box "Mock_Shape" "Mock_Face")
-make_library(MockObjectMaker "Mock_Face")
+make_library(Mock_Solid "Mock_Face")
+make_library(MockObjectMaker "Mock_Solid")
 #make_library(NamedShape_MockImpl "INamedShape")
 
 # these are not real unit tests. Rather, they are small executables that test the various

@@ -20,6 +20,8 @@ namespace Mock{
 
             const vector<unique_ptr<IFace>>& getFaceVector() const override;
 
+            const unique_ptr<IFace>& getFace(int which) const;
+
         private:
             vector<unique_ptr<IFace>> myFaces;
     };

@@ -16,6 +16,7 @@ namespace Mock{
         public:
             Face(int myValue, vector<Mock::Edge> edges);
             Face (const Face& aFace);
+            Face operator=(const Face& aFace);
             ~Face(){};
 
             // overrides from IFace_
@@ -26,10 +27,12 @@ namespace Mock{
             // unique to Mock::Face
             int getValue() const;
             void changeEdge(int index, Mock::Edge newEdge);
+            Mock::Edge getEdge(int index);
         private:
             int myValue;
             vector<Mock::Edge> myEdges;
             vector<unique_ptr<IEdge>> shareEdges;
+            void buildSharedEdges();
     };
 };
 #endif //Face_HEADER

@@ -3,15 +3,15 @@
 
 #include <vector>
 #include <string>
+#include <memory>
+#include <map>
 
-//#include <Shape.h>
 #include <IEdge.h>
 #include <IFace.h>
-#include <memory>
-//#include <Box.h>
-
+#include <ISolid.h>
 #include <Mock_Edge.h>
 #include <Mock_Face.h>
+#include <Mock_Solid.h>
 
 class MockObjectMaker{
     public:
@@ -23,23 +23,17 @@ class MockObjectMaker{
         //std::unique_ptr<IFace> makeFace(Edge anEdge);
         //std::unique_ptr<IFace> makeFace(Edge anEdge, int index);
         std::unique_ptr<IFace> makeFace(std::vector<Mock::Edge> Edges);
-        //Box makeBox();
+        std::unique_ptr<ISolid> makeBox();
         //Shape makeFilletedBox();
         //Shape makeCylinder();
 
+        static const std::map<std::string, int> BoxFaces; 
     private:
+        Mock::Face makeMockFace();
+        Mock::Edge makeMockEdge();
+        std::vector<Mock::Edge> makeMockEdges();
         // creates a unique value for each Face, Edge, etc.
         int getValue(unsigned int which) const;
-
-        struct BoxFaces{
-            static const unsigned int front   = 0;
-            static const unsigned int back    = 1;
-            static const unsigned int top     = 2;
-            static const unsigned int bottom  = 3;
-            static const unsigned int left    = 4;
-            static const unsigned int right   = 5;
-        }boxFaces;
-
 
         static const unsigned int EDGE;
         static const unsigned int FACE;

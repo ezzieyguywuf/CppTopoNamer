@@ -18,3 +18,6 @@ const vector<unique_ptr<IFace>>& Solid::getFaceVector() const
 {
     return myFaces;
 }
+const unique_ptr<IFace>& Solid::getFace(int which) const{
+    return myFaces[which];
+}

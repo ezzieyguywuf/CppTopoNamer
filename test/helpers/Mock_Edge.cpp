@@ -6,6 +6,16 @@ Edge::Edge(int value)
     : val(value)
 {}
 
+Edge::Edge(const Edge& anEdge)
+    : val(anEdge.val)
+{
+}
+
+Edge Edge::operator=(const Edge& anEdge)
+{
+    val = anEdge.val;
+}
+
 bool Edge::operator==(const Edge& anEdge) const
 {
     return this->val == anEdge.val;

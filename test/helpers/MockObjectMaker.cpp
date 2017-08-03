@@ -11,6 +11,14 @@ const unsigned int MockObjectMaker::EDGE=0;
 const unsigned int MockObjectMaker::FACE=1;
 unsigned int MockObjectMaker::EDGE_COUNT;
 unsigned int MockObjectMaker::FACE_COUNT;
+const std::map<std::string, int> MockObjectMaker::BoxFaces = {
+    {"front", 0},
+    {"back", 1},
+    {"top", 2},
+    {"bottom", 3},
+    {"left", 4},
+    {"right", 5}
+}; 
 
 MockObjectMaker::MockObjectMaker()
 {
@@ -22,13 +30,7 @@ std::unique_ptr<IEdge> MockObjectMaker::makeEdge(){
 }
 
 std::unique_ptr<IFace> MockObjectMaker::makeFace(){
-    std::vector<Mock::Edge> Edges;
-
-    for(int i=1; i<=4; i++){
-        int val = this->getValue(EDGE);
-        Edges.push_back(Mock::Edge(val));
-    }
-    return this->makeFace(Edges);
+    return this->makeFace(this->makeMockEdges());
 }
 
 //Face MockObjectMaker::makeFace(Edge anEdge){
@@ -49,40 +51,40 @@ std::unique_ptr<IFace> MockObjectMaker::makeFace(std::vector<Mock::Edge> Edges){
     return std::unique_ptr<IFace>(aFace);
 }
 
-//Box MockObjectMaker::makeBox(){
-    //unsigned int frt, bck, top, bot, lft, rgt;
-    //std::vector<Face> Faces;
+std::unique_ptr<ISolid> MockObjectMaker::makeBox(){
+    unsigned int frt, bck, top, bot, lft, rgt;
+    std::vector<Mock::Face> Faces;
 
-    //frt = boxFaces.front;
-    //bck = boxFaces.back;
-    //top = boxFaces.top;
-    //bot = boxFaces.bottom;
-    //lft = boxFaces.left;
-    //rgt = boxFaces.right;
+    frt = BoxFaces.at("front");
+    bck = BoxFaces.at("back");
+    top = BoxFaces.at("top");
+    bot = BoxFaces.at("bottom");
+    lft = BoxFaces.at("left");
+    rgt = BoxFaces.at("right");
 
-    //for(int i=1; i<=6; i++){
-        //Face aFace = this->makeFace();
-        //Faces.push_back(aFace);
-    //}
+    for(int i=1; i<=6; i++){
+        Mock::Face aFace = this->makeMockFace();
+        Faces.push_back(aFace);
+    }
 
-    //Faces[top].myEdges[0] = Faces[frt].myEdges[0];
-    //Faces[bot].myEdges[0] = Faces[frt].myEdges[1];
-    //Faces[lft].myEdges[0] = Faces[frt].myEdges[2];
-    //Faces[rgt].myEdges[0] = Faces[frt].myEdges[3];
+    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
+    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
+    Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
+    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
 
-    //Faces[top].myEdges[1] = Faces[bck].myEdges[0];
-    //Faces[bot].myEdges[1] = Faces[bck].myEdges[1];
-    //Faces[lft].myEdges[1] = Faces[bck].myEdges[2];
-    //Faces[rgt].myEdges[1] = Faces[bck].myEdges[3];
+    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
+    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
+    Faces[lft].changeEdge(1, Faces[bck].getEdge(2));
+    Faces[rgt].changeEdge(1, Faces[bck].getEdge(3));
 
-    //Faces[lft].myEdges[2] = Faces[top].myEdges[2];
-    //Faces[rgt].myEdges[2] = Faces[top].myEdges[3];
+    Faces[lft].changeEdge(2, Faces[top].getEdge(2));
+    Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
 
-    //Faces[lft].myEdges[3] = Faces[bot].myEdges[2];
-    //Faces[rgt].myEdges[3] = Faces[bot].myEdges[3];
+    Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
+    Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
 
-    //return Box(Faces);
-//}
+    return std::unique_ptr<ISolid>(new Mock::Solid(Faces));
+}
 
 //FakePartFillet MockObjectMaker::FilletedBox(){
     //unsigned int frt, top, lft, rgt;
@@ -169,3 +171,25 @@ int MockObjectMaker::getValue(unsigned int which) const{
             throw std::invalid_argument("which must be EDGE or FACE");
     }
 }
+
+Mock::Face MockObjectMaker::makeMockFace(){
+    int name = this->getValue(FACE);
+    Mock::Face outFace(name, this->makeMockEdges());
+    return outFace;
+}
+
+Mock::Edge MockObjectMaker::makeMockEdge(){
+    int name = this->getValue(EDGE);
+    return Mock::Edge(name);
+}
+
+std::vector<Mock::Edge> MockObjectMaker::makeMockEdges(){
+    std::vector<Mock::Edge> outEdges;
+    for (int i=0; i<4 ; i++)
+    {
+        int name = this->getValue(EDGE);
+        outEdges.push_back(Mock::Edge(name));
+    }
+    return outEdges;
+}
+

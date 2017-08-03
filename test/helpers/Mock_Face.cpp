@@ -9,16 +9,20 @@ using std::vector;
 Face::Face (int value, vector<Mock::Edge> edges)
     : myValue(value) , myEdges(edges)
 {
-    for (auto edge : edges)
-    {
-        shareEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(edge.getVal()))));
-    }
+    this->buildSharedEdges();
 }
 
 Face::Face (const Face& aFace)
+    : myValue(aFace.myValue), myEdges(aFace.myEdges)
+{
+    this->buildSharedEdges();
+}
+
+Face Face::operator=(const Face& aFace)
 {
     myEdges = aFace.myEdges;
     myValue = aFace.myValue;
+    this->buildSharedEdges();
 }
 
 bool Face::operator==(const Face& aFace) const
@@ -43,5 +47,18 @@ int Face::getValue() const{
 void Face::changeEdge(int which, Mock::Edge newEdge)
 {
     myEdges[which] = newEdge;
-    shareEdges[which] = unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal()));
+    unique_ptr<IEdge> newIEdge = unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal()));
+    //shareEdges[which] = std::move(newIEdge);
+}
+
+Mock::Edge Face::getEdge(int index)
+{
+    return myEdges[index];
+}
+void Face::buildSharedEdges()
+{
+    for (auto edge : myEdges)
+    {
+        shareEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(edge.getVal()))));
+    }
 }
