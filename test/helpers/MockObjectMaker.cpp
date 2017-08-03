@@ -21,15 +21,15 @@ std::unique_ptr<IEdge> MockObjectMaker::makeEdge(){
     return std::unique_ptr<IEdge>(new Mock::Edge(name));
 }
 
-//Face MockObjectMaker::makeFace(){
-    //std::vector<Edge> Edges;
+std::unique_ptr<IFace> MockObjectMaker::makeFace(){
+    std::vector<Mock::Edge> Edges;
 
-    //for(int i=1; i<=4; i++){
-        //int val = this->getValue(EDGE);
-        //Edges.push_back(Edge(val));
-    //}
-    //return this->makeFace(Edges);
-//}
+    for(int i=1; i<=4; i++){
+        int val = this->getValue(EDGE);
+        Edges.push_back(Mock::Edge(val));
+    }
+    return this->makeFace(Edges);
+}
 
 //Face MockObjectMaker::makeFace(Edge anEdge){
     //Face aFace = this->makeFace();
@@ -43,11 +43,11 @@ std::unique_ptr<IEdge> MockObjectMaker::makeEdge(){
     //return aFace;
 //}
 
-//Face MockObjectMaker::makeFace(std::vector<Edge> Edges){
-    //int name  = this->getValue(FACE);
-    //Face aFace = Face(name, Edges);
-    //return aFace;
-//}
+std::unique_ptr<IFace> MockObjectMaker::makeFace(std::vector<Mock::Edge> Edges){
+    int name  = this->getValue(FACE);
+    Mock::Face* aFace = new Mock::Face(name, Edges);
+    return std::unique_ptr<IFace>(aFace);
+}
 
 //Box MockObjectMaker::makeBox(){
     //unsigned int frt, bck, top, bot, lft, rgt;

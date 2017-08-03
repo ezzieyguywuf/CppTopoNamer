@@ -6,13 +6,21 @@
 int main()
 {
     MockObjectMaker myMaker;
-    //Face myFace = myMaker.makeFace();
     std::unique_ptr<IEdge> myEdge = myMaker.makeEdge();
     IEdge* checkEdge = new Mock::Edge(1);
+    std::unique_ptr<IFace> myFace = myMaker.makeFace();
+    std::vector<Mock::Edge> edges;
+    edges.push_back(Mock::Edge(2));
+    IFace* checkFace = new Mock::Face(1, edges);
 
     
     std::cout << "(*myEdge == *checkEdge) -> ";
     std::cout << ((*myEdge == *checkEdge) ? "true" : "false");
+    std::cout << std::endl; 
+
+    
+    std::cout << "(*myFace == *checkFace) -> ";
+    std::cout << ((*myFace == *checkFace) ? "true" : "false");
     std::cout << std::endl; 
 
     //Box myBox   = myMaker.makeBox();

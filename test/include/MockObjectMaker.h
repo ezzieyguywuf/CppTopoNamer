@@ -10,16 +10,19 @@
 #include <memory>
 //#include <Box.h>
 
+#include <Mock_Edge.h>
+#include <Mock_Face.h>
+
 class MockObjectMaker{
     public:
         MockObjectMaker();
         ~MockObjectMaker(){};
 
         std::unique_ptr<IEdge> makeEdge();
-        //std::unique_ptr<IFace> makeFace();
+        std::unique_ptr<IFace> makeFace();
         //std::unique_ptr<IFace> makeFace(Edge anEdge);
         //std::unique_ptr<IFace> makeFace(Edge anEdge, int index);
-        //std::unique_ptr<IFace> makeFace(std::vector<Edge> Edges);
+        std::unique_ptr<IFace> makeFace(std::vector<Mock::Edge> Edges);
         //Box makeBox();
         //Shape makeFilletedBox();
         //Shape makeCylinder();
