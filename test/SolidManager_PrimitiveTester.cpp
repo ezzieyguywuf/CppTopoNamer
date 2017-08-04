@@ -22,9 +22,11 @@ class SolidManagerTester : public testing::Test{
         const unique_ptr<ISolid>& myBox;
 };
 
-TEST_F(SolidManagerTester, getFaceIndex){
+TEST_F(SolidManagerTester, getIndex){
     const vector<unique_ptr<IFace>>& boxFaces = myBox->getFaces();
     EXPECT_EQ(myManager->getIndex(boxFaces[0]), 0);
     EXPECT_EQ(myManager->getIndex(boxFaces[1]), 1);
     EXPECT_EQ(myManager->getIndex(boxFaces[3]), 3);
+
+    EXPECT_EQ(myManager->getIndex(boxFaces[0]->getEdges()[0]), 0);
 }
