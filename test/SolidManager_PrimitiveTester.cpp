@@ -9,24 +9,19 @@
 using std::vector;
 using std::unique_ptr;
 
-//class SolidManagerTester : public testing::Test{
-    //protected:
-        //SolidManagerTester()
-            //: myManager(maker.makeBox()), myBox(myManager.getSolid())
-        //{
-        //};
+class SolidManagerTester : public testing::Test{
+    protected:
+        SolidManagerTester()
+            : myManager(maker.makeBox()), myBox(myManager.getSolid())
+        {
+        };
         
-        //MockObjectMaker maker;
-        //SolidManager::Primitive myManager;
-        //const unique_ptr<ISolid>& myBox;
-//};
+        MockObjectMaker maker;
+        SolidManager::Primitive myManager;
+        const unique_ptr<ISolid>& myBox;
+};
 
-//TEST_F(SolidManagerTester, getFaceIndex){
-TEST(SolidManagerTester, getFaceIndex){
-    MockObjectMaker maker;
-    std::unique_ptr<ISolid> boxPtr = maker.makeBox();
-    SolidManager::Primitive myManager(std::move(boxPtr));
-    const unique_ptr<ISolid>& myBox = myManager.getSolid();
+TEST_F(SolidManagerTester, getFaceIndex){
     const vector<unique_ptr<IFace>>& boxFaces = myBox->getFaces();
     EXPECT_EQ(myManager.getFaceIndex(boxFaces[0]), 0);
     EXPECT_EQ(myManager.getFaceIndex(boxFaces[1]), 1);
