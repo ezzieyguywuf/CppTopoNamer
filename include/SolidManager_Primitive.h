@@ -17,7 +17,7 @@ class Primitive : public ISolidManager
             Primitive(unique_ptr<ISolid> aSolid);
             unsigned int getFaceIndex(const unique_ptr<IFace>& aFace) const override;
             unsigned int getEdgeIndex(const unique_ptr<IEdge>& anEdge) const override;
-            const unique_ptr<ISolid>& getSolid() const;
+            const unique_ptr<ISolid>& getSolid() const override;
 
         private:
             unique_ptr<ISolid> mySolid;

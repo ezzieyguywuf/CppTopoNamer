@@ -12,18 +12,19 @@ using std::unique_ptr;
 class SolidManagerTester : public testing::Test{
     protected:
         SolidManagerTester()
-            : myManager(maker.makeBox()), myBox(myManager.getSolid())
+            : myManager(new SolidManager::Primitive(std::move(maker.makeBox()))),
+              myBox(myManager->getManagedSolid())
         {
         };
         
         MockObjectMaker maker;
-        SolidManager::Primitive myManager;
+        ISolidManager* myManager;
         const unique_ptr<ISolid>& myBox;
 };
 
 TEST_F(SolidManagerTester, getFaceIndex){
     const vector<unique_ptr<IFace>>& boxFaces = myBox->getFaces();
-    EXPECT_EQ(myManager.getFaceIndex(boxFaces[0]), 0);
-    EXPECT_EQ(myManager.getFaceIndex(boxFaces[1]), 1);
-    EXPECT_EQ(myManager.getFaceIndex(boxFaces[3]), 3);
+    EXPECT_EQ(myManager->getIndex(boxFaces[0]), 0);
+    EXPECT_EQ(myManager->getIndex(boxFaces[1]), 1);
+    EXPECT_EQ(myManager->getIndex(boxFaces[3]), 3);
 }
