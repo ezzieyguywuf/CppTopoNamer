@@ -16,6 +16,10 @@ namespace Mock{
     {
         public:
             Solid(vector<Face> faces);
+            Solid(const Solid& aSolid);
+            Solid(Solid&& aSolid);
+            Solid operator=(const Solid& aSolid);
+            Solid operator=(Solid&& aSolid);
             ~Solid(){};
 
             const vector<unique_ptr<IFace>>& getFaceVector() const override;

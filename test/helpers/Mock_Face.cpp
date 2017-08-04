@@ -7,22 +7,59 @@ using std::unique_ptr;
 using std::vector;
 
 Face::Face (int value, vector<Mock::Edge> edges)
-    : myValue(value) , myEdges(edges)
+    : myValue(value)
 {
-    this->buildSharedEdges();
+    for (auto edge : edges)
+    {
+        myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(edge.getVal()))));
+    }
 }
 
 Face::Face (const Face& aFace)
-    : myValue(aFace.myValue), myEdges(aFace.myEdges)
+    : myValue(aFace.myValue)
 {
-    this->buildSharedEdges();
+    for (const auto& edge : aFace.myEdges)
+    {
+        const IEdge* tmpIEdge = edge.get();
+        const Mock::Edge*  tmpMockEdge = static_cast<const Mock::Edge*>(tmpIEdge);
+        myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(*tmpMockEdge))));
+    }
+}
+
+Face::Face(Face&& aFace)
+    : myValue(aFace.myValue), myEdges(std::move(aFace.myEdges))
+{
+    aFace.myValue = 0;
+    aFace.myEdges.clear();
 }
 
 Face Face::operator=(const Face& aFace)
 {
-    myEdges = aFace.myEdges;
+    myEdges.clear();
+    for (const auto& edge : aFace.myEdges)
+    {
+        const IEdge* tmpIEdge = edge.get();
+        const Mock::Edge*  tmpMockEdge = static_cast<const Mock::Edge*>(tmpIEdge);
+        myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(*tmpMockEdge))));
+    }
     myValue = aFace.myValue;
-    this->buildSharedEdges();
+    return *this;
+}
+
+Face Face::operator=(Face&& aFace)
+{
+    if (this != & aFace)
+    {
+        myValue = 0;
+        myEdges.clear();
+
+        myValue = aFace.myValue;
+        myEdges = std::move(aFace.myEdges);
+
+        aFace.myValue = 0;
+        aFace.myEdges.clear();
+    }
+    return *this;
 }
 
 bool Face::operator==(const Face& aFace) const
@@ -37,7 +74,7 @@ bool Face::isFlipped(const Face& aFace) const
 
 const vector<unique_ptr<IEdge>>& Face::getEdgeVector() const
 {
-    return shareEdges;
+    return myEdges;
 }
 
 int Face::getValue() const{
@@ -46,19 +83,13 @@ int Face::getValue() const{
 
 void Face::changeEdge(int which, Mock::Edge newEdge)
 {
-    myEdges[which] = newEdge;
-    unique_ptr<IEdge> newIEdge = unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal()));
-    //shareEdges[which] = std::move(newIEdge);
+    myEdges[which] = std::move(unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal())));
 }
 
 Mock::Edge Face::getEdge(int index)
 {
-    return myEdges[index];
-}
-void Face::buildSharedEdges()
-{
-    for (auto edge : myEdges)
-    {
-        shareEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(edge.getVal()))));
-    }
+    IEdge* tmpIEdge = myEdges[index].get();
+    Mock::Edge*  tmpMockEdge = static_cast<Mock::Edge*>(tmpIEdge);
+    Mock::Edge outEdge(*tmpMockEdge);
+    return outEdge;
 }

@@ -15,15 +15,12 @@ add_subdirectory(helpers)
 # ProductionCodeName MUST be the same as the file to be mocked less .cpp. For example, if the
 # production code is in MyShape.cpp, then ProductionCodeName MUST be MyShape.
 
-#add_mock(IFace)
-#add_mock(NamedFace "Mock_Face" "Mock_Edge")
-#add_mock(NamedFace "Mock_ShapeWithSubs")
-#add_mock(NamedEdge "Mock_ShapeWithSubs")
+add_mock(SolidManager_Primitive "Mock_Solid")
 
 #--------------------------------------------------
 #   Build tests
 #--------------------------------------------------
 
-#test_executable("NamedShapeTester" "NamedShape_MockImpl")
-#test_executable("NamedFaceTester" "NamedBaseFace")
-#test_executable("NamedEdgeTester" "NamedSubEdge" "NamedBaseFace")
+test_executable("SolidManager_PrimitiveTester" "SolidManager_Primitive")
+add_executable(simpleSolidManager "../scratch/simpleSolidManager.cpp")
+target_link_libraries(simpleSolidManager "SolidManager_Primitive" "MockObjectMaker")

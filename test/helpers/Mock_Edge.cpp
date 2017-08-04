@@ -11,9 +11,25 @@ Edge::Edge(const Edge& anEdge)
 {
 }
 
+Edge::Edge(Edge&& anEdge)
+    : val(anEdge.val)
+{
+    anEdge.val = 0;
+}
+
 Edge Edge::operator=(const Edge& anEdge)
 {
     val = anEdge.val;
+}
+
+Edge Edge::operator=(Edge&& anEdge)
+{
+    if (this != &anEdge)
+    {
+        val = anEdge.val;
+        anEdge.val = 0;
+    }
+    return *this;
 }
 
 bool Edge::operator==(const Edge& anEdge) const
