@@ -23,7 +23,7 @@ Primitive::Primitive(unique_ptr<ISolid> aSolid)
 unsigned int Primitive::getFaceIndex(const unique_ptr<IFace>& aFace) const
 {
     const vector<unique_ptr<IFace>>& realFaceVector = mySolid->getFaces();
-    for (int i; i < realFaceVector.size(); ++i)
+    for (int i = 0 ; i < realFaceVector.size(); ++i)
     {
         unsigned int checkIndex = faceIndices[i];
         if (aFace == realFaceVector[checkIndex]){
