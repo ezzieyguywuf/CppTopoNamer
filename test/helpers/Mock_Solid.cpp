@@ -2,7 +2,6 @@
 #include <IFace.h>
 #include <algorithm>
 
-#include <iostream>
 using Mock::Solid;
 using Mock::Edge;
 using std::vector;
@@ -99,7 +98,6 @@ void Solid::addEdges(const vector<unique_ptr<IEdge>>& edges)
         if (! this->checkEdge(edge))
         {
             Mock::Edge* tmpEdge = static_cast<Mock::Edge*>(edge.get());
-            std::cout << "adding edgeval = " << tmpEdge->getVal() << std::endl;
             myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(tmpEdge->getVal()))));
             myEdgeVals.push_back(tmpEdge->getVal());
         }

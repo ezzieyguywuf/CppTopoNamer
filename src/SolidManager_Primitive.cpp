@@ -39,7 +39,7 @@ unsigned int Primitive::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
     for (int i = 0; i < realEdgeVector.size() ; ++i)
     {
         unsigned int checkIndex = edgeIndices[i];
-        if (anEdge == realEdgeVector[checkIndex])
+        if (*anEdge == *(realEdgeVector[checkIndex]))
         {
             return i;
         }
