@@ -67,21 +67,21 @@ std::unique_ptr<ISolid> MockObjectMaker::makeBox(){
         Faces.push_back(aFace);
     }
 
+    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
+    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
     Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
+    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
+
+    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
+    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
     Faces[lft].changeEdge(1, Faces[bck].getEdge(2));
+    Faces[rgt].changeEdge(1, Faces[bck].getEdge(3));
+
     Faces[lft].changeEdge(2, Faces[top].getEdge(2));
     Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
 
-    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
-    Faces[rgt].changeEdge(1, Faces[bck].getEdge(3));
     Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
     Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
-
-    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
-    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
-
-    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
-    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
 
     return std::unique_ptr<ISolid>(new Mock::Solid(Faces));
 }
