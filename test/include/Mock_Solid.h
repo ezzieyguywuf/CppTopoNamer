@@ -29,6 +29,8 @@ namespace Mock{
 
         private:
             bool checkEdge(const unique_ptr<IEdge>& anEdge) const;
+            void addEdges(const vector<unique_ptr<IEdge>>& edges);
+            void addFace(const Mock::Face& aFace);
             vector<unique_ptr<IFace>> myFaces;
             vector<unique_ptr<IEdge>> myEdges;
     };

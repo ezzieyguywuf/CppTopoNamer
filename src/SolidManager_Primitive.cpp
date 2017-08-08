@@ -35,6 +35,15 @@ unsigned int Primitive::getFaceIndex(const unique_ptr<IFace>& aFace) const
 
 unsigned int Primitive::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
 {
+    const vector<unique_ptr<IEdge>>& realEdgeVector = mySolid->getEdges();
+    for (int i = 0; i < realEdgeVector.size() ; ++i)
+    {
+        unsigned int checkIndex = edgeIndices[i];
+        if (anEdge == realEdgeVector[checkIndex])
+        {
+            return i;
+        }
+    }
     return -1;
 }
 

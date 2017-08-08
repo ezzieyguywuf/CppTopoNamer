@@ -11,15 +11,7 @@ Solid::Solid(vector<Face> faces)
 {
     for (auto face : faces)
     {
-        myFaces.push_back(std::move(unique_ptr<IFace>(new Mock::Face(face))));
-        for (const auto& edge : face.getEdges())
-        {
-            if (std::find(myEdges.begin(), myEdges.end(), edge) == myEdges.end())
-            {
-                Mock::Edge* tmpEdge = static_cast<Mock::Edge*>(edge.get());
-                myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(tmpEdge->getVal()))));
-            }
-        }
+        this->addFace(face);
     }
 }
 
@@ -29,23 +21,24 @@ Solid::Solid(const Solid& aSolid)
     {
         const IFace* tmpIFace = faceptr.get();
         const Face* tmpFace = static_cast<const Face*>(tmpIFace);
-        myFaces.push_back(std::move(unique_ptr<IFace>(new Mock::Face(*tmpFace))));
+        this->addFace(*tmpFace);
     }
 }
 
 Solid::Solid(Solid&& aSolid)
-    : myFaces(std::move(aSolid.myFaces))
+    : myFaces(std::move(aSolid.myFaces)), myEdges(std::move(aSolid.myEdges))
 {
 }
 
 Solid Solid::operator=(const Solid& aSolid)
 {
     myFaces.clear();
+    myEdges.clear();
     for (const auto& faceptr : aSolid.myFaces)
     {
         const IFace* tmpIFacePtr = faceptr.get();
         const Face* tmpFacePtr = static_cast<const Face*>(tmpIFacePtr);
-        myFaces.push_back(std::move(unique_ptr<IFace>(new Mock::Face(*tmpFacePtr))));
+        this->addFace(*tmpFacePtr);
     }
     return *this;
 }
@@ -55,6 +48,7 @@ Solid Solid::operator=(Solid&& aSolid)
     if (this != &aSolid)
     {
         myFaces = std::move(aSolid.myFaces);
+        myEdges = std::move(aSolid.myEdges);
     }
     return *this;
 }
@@ -81,10 +75,28 @@ bool Solid::checkEdge(const unique_ptr<IEdge>& anEdge) const
 {
     for (const auto& edge : myEdges)
     {
-        if (edge != anEdge)
+        if (edge == anEdge)
         {
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
+}
+
+void Solid::addEdges(const vector<unique_ptr<IEdge>>& edges)
+{
+    for (const auto& edge : edges)
+    {
+        if (! this->checkEdge(edge))
+        {
+            Mock::Edge* tmpEdge = static_cast<Mock::Edge*>(edge.get());
+            myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(tmpEdge->getVal()))));
+        }
+    }
+}
+
+void Solid::addFace(const Face& aFace)
+{
+    myFaces.push_back(std::move(unique_ptr<IFace>(new Mock::Face(aFace))));
+    this->addEdges(aFace.getEdges());
 }
