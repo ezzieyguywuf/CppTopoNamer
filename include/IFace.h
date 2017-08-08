@@ -12,6 +12,7 @@ class IFace{
     public:
         ~IFace(){};
         bool operator==(const IFace& aFace) const;
+        bool operator!=(const IFace& aFace) const;
         const vector<unique_ptr<IEdge>>& getEdges() const;
     protected:
         virtual bool checkEquals_(const IFace& aFace) const = 0;
@@ -34,6 +35,11 @@ class IFace_ : public IFace
 bool IFace::operator==(const IFace& aFace) const
 {
     return this->checkEquals_(aFace);
+}
+
+bool IFace::operator!=(const IFace& aFace) const
+{
+    return !(this->checkEquals_(aFace));
 }
 
 const vector<unique_ptr<IEdge>>& IFace::getEdges() const{

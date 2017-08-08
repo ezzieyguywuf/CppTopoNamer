@@ -9,15 +9,15 @@ Primitive::Primitive(unique_ptr<ISolid> aSolid)
 {
     unsigned int i=0;
     const vector<unique_ptr<IFace>>& faces = mySolid->getFaces();
-    //const vector<unique_ptr<IEdge>> edges = mySolid->getEdges();
+    const vector<unique_ptr<IEdge>>& edges  = mySolid->getEdges();
 
     for (i = 0; i < faces.size(); ++i) {
         faceIndices.push_back(i);
     }
 
-    //for (i = 0; i < edges.size(); ++i) {
-        //edgeIndices.push_back(i);
-    //}
+    for (i = 0; i < edges.size(); ++i) {
+        edgeIndices.push_back(i);
+    }
 }
 
 unsigned int Primitive::getFaceIndex(const unique_ptr<IFace>& aFace) const

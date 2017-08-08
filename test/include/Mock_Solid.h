@@ -23,11 +23,14 @@ namespace Mock{
             ~Solid(){};
 
             const vector<unique_ptr<IFace>>& getFaceVector() const override;
+            const vector<unique_ptr<IEdge>>& getEdgeVector() const override;
 
             const unique_ptr<IFace>& getFace(int which) const;
 
         private:
+            bool checkEdge(const unique_ptr<IEdge>& anEdge) const;
             vector<unique_ptr<IFace>> myFaces;
+            vector<unique_ptr<IEdge>> myEdges;
     };
 }
 

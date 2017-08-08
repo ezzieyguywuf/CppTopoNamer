@@ -1,5 +1,6 @@
 #include <Mock_Solid.h>
 #include <IFace.h>
+#include <algorithm>
 
 using Mock::Solid;
 using Mock::Edge;
@@ -11,6 +12,14 @@ Solid::Solid(vector<Face> faces)
     for (auto face : faces)
     {
         myFaces.push_back(std::move(unique_ptr<IFace>(new Mock::Face(face))));
+        for (const auto& edge : face.getEdges())
+        {
+            if (std::find(myEdges.begin(), myEdges.end(), edge) == myEdges.end())
+            {
+                Mock::Edge* tmpEdge = static_cast<Mock::Edge*>(edge.get());
+                myEdges.push_back(std::move(unique_ptr<IEdge>(new Mock::Edge(tmpEdge->getVal()))));
+            }
+        }
     }
 }
 
@@ -54,6 +63,28 @@ const vector<unique_ptr<IFace>>& Solid::getFaceVector() const
 {
     return myFaces;
 }
+
+const vector<unique_ptr<IEdge>>& Solid::getEdgeVector() const
+{
+    return myEdges;
+}
+
 const unique_ptr<IFace>& Solid::getFace(int which) const{
     return myFaces[which];
+}
+
+// -------------------------------------------------------------
+//                private methods
+// -------------------------------------------------------------
+
+bool Solid::checkEdge(const unique_ptr<IEdge>& anEdge) const
+{
+    for (const auto& edge : myEdges)
+    {
+        if (edge != anEdge)
+        {
+            return false;
+        }
+    }
+    return true;
 }
