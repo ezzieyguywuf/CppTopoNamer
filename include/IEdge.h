@@ -51,13 +51,13 @@ bool IEdge_<T>::checkEquality_(const IEdge& anEdge) const
     //bool check1 = (other != nullptr);
     // if check2 == false then although other IS a T, it does not == this
     //bool check2 = (static_cast<const T&>(*this) == *other)
-    return (other != nullptr) && (static_cast<const T&>(*this) == *other);
+    return (other != nullptr) && (*(static_cast<const T*>(this)) == *other);
 }
 
 template <class T>
 bool IEdge_<T>::checkFlipped_(const IEdge& anEdge) const
 {
     const T* other = dynamic_cast<const T*>(&anEdge);
-    return (other != nullptr) && (static_cast<const T&>(*this).isFlipped(*other));
+    return (other != nullptr) && (static_cast<const T*>(this)->isFlipped(*other));
 }
 #endif //IEdge_HEADER

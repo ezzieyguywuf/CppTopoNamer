@@ -50,4 +50,18 @@ int main()
     std::cout << " || Expecting -> " << "false";
     std::cout << std::endl; 
 
+    int i=0, j=0;
+    for (const auto& face : myBox->getFaces())
+    {
+        std::cout << "-----face number = " << i << " -----"<< std::endl;
+        ++i;
+        j=0;
+        for (const auto& edge : face->getEdges())
+        {
+            const Mock::Edge* tmpEdge = static_cast<const Mock::Edge*>(edge.get());
+            std::cout << "edge #" << j;
+            std::cout << ", val = " << tmpEdge->getVal() << std::endl;
+            ++j;
+        }
+    }
 }

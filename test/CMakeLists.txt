@@ -22,5 +22,10 @@ add_mock(SolidManager_Primitive "Mock_Solid")
 #--------------------------------------------------
 
 test_executable("SolidManager_PrimitiveTester" "SolidManager_Primitive")
+# various scratch test programs
 add_executable(simpleSolidManager "../scratch/simpleSolidManager.cpp")
 target_link_libraries(simpleSolidManager "SolidManager_Primitive" "MockObjectMaker")
+
+add_executable(simpleFaceTester "../scratch/simpleFaceTester.cpp")
+target_link_libraries(simpleFaceTester "Mock_Face")
+

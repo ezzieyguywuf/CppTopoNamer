@@ -33,6 +33,7 @@ namespace Mock{
             void addFace(const Mock::Face& aFace);
             vector<unique_ptr<IFace>> myFaces;
             vector<unique_ptr<IEdge>> myEdges;
+            vector<unsigned int> myEdgeVals;
     };
 }
 
