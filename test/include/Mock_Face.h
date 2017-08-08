@@ -28,7 +28,8 @@ namespace Mock{
 
             // unique to Mock::Face
             int getValue() const;
-            void changeEdge(int index, Mock::Edge newEdge);
+            void changeEdge(int index, const Mock::Edge& newEdge);
+            void changeEdge(int index, const unique_ptr<IEdge>& newEdge);
             Mock::Edge getEdge(int index);
         private:
             int myValue;

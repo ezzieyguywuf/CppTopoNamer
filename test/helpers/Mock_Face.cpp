@@ -82,9 +82,15 @@ int Face::getValue() const{
 }
 
 
-void Face::changeEdge(int which, Mock::Edge newEdge)
+void Face::changeEdge(int which, const Mock::Edge& newEdge)
 {
     myEdges[which] = std::move(unique_ptr<IEdge>(new Mock::Edge(newEdge.getVal())));
+}
+
+void Face::changeEdge(int index, const unique_ptr<IEdge>& newIEdge)
+{
+    const Mock::Edge* newEdge = static_cast<const Mock::Edge*>(&newIEdge);
+    this->changeEdge(index, *newEdge);
 }
 
 Mock::Edge Face::getEdge(int index)

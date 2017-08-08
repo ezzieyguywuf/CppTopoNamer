@@ -47,6 +47,11 @@ unsigned int Primitive::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
     return -1;
 }
 
+const unique_ptr<IEdge>& Primitive::getEdgeByIndex(const unsigned int index) const
+{
+    return mySolid->getEdges()[index];
+}
+
 const unique_ptr<ISolid>& Primitive::getSolid() const
 {
     return this->mySolid;
