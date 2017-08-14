@@ -56,3 +56,10 @@ const unique_ptr<ISolid>& Primitive::getSolid() const
 {
     return this->mySolid;
 }
+
+void Primitive::modifyUnderlyingSolid(
+        unique_ptr<ISolid> newSolid,
+        const vector<pair<unsigned int, unique_ptr<IFace>>>& modifiedFaces) const
+{
+
+}

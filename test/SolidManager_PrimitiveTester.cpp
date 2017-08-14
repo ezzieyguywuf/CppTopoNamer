@@ -60,14 +60,14 @@ TEST_F(SolidManagerTester, getEdge){
     EXPECT_TRUE(*myManager->getEdge(8) == *boxFaces[top]->getEdges()[2]);
 }
 
-TEST_F(SolidManagerTester, changeFace)
-{
-    const Mock::Face* oldFrontFace = static_cast<const Mock::Face*>(myBox->getFaces()[0]);
-    const Mock::Face* oldTopFace = static_cast<const Mock::Face*>(myBox->getFaces()[1]);
-    Mock::Face newFrontFace(oldFrontFace); 
-    Mock::Face newTopFace(oldTopFace); 
-    const unique_ptr<IFace>& newEdge = maker.makeEdge();
-    newFrontFace.changeEdge(0, newEdge);
-    newTopFace.changeEdge(0, newEdge);
-    myManager->modifyFace(0, newFace);
-}
+//TEST_F(SolidManagerTester, changeFace)
+//{
+    //const Mock::Face* oldFrontFace = static_cast<const Mock::Face*>(myBox->getFaces()[0].get());
+    //const Mock::Face* oldTopFace = static_cast<const Mock::Face*>(myBox->getFaces()[1].get());
+    //Mock::Face newFrontFace(*oldFrontFace); 
+    //Mock::Face newTopFace(*oldTopFace); 
+    //unique_ptr<IEdge> newEdge = maker.makeEdge();
+    //newFrontFace.changeEdge(0, newEdge);
+    //newTopFace.changeEdge(0, newEdge);
+    //myManager->updateSolid(newSolid, modifiedFaces);
+//}
