@@ -10,38 +10,33 @@ Primitive::Primitive(unique_ptr<ISolid> aSolid)
     unsigned int i=0;
 
     for (i = 0; i < mySolid->getFaces().size(); ++i) {
-        faceIndices.push_back(i);
+        faces.insert(std::make_pair(i, i));
     }
 
     for (i = 0; i < mySolid->getEdges().size(); ++i) {
-        edgeIndices.push_back(i);
+        edges.insert(std::make_pair(i, i));
     }
 }
 
 unsigned int Primitive::getFaceIndex(const unique_ptr<IFace>& aFace) const
 {
-    const vector<unique_ptr<IFace>>& realFaceVector = mySolid->getFaces();
-    for (int i = 0 ; i < realFaceVector.size(); ++i)
-    {
-        unsigned int checkIndex = faceIndices[i];
-        if (aFace == realFaceVector[checkIndex]){
-            return i;
-        }
+    for (auto pair : faces){
+        const unique_ptr<IFace>& checkFace = mySolid->getFaces()[pair.second];
+        if (*checkFace == *aFace)
+            return pair.first;
     }
+    // TODO: throw an error? warn user?
     return -1;
 }
 
 unsigned int Primitive::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
 {
-    const vector<unique_ptr<IEdge>>& realEdgeVector = mySolid->getEdges();
-    for (int i = 0; i < realEdgeVector.size() ; ++i)
-    {
-        unsigned int checkIndex = edgeIndices[i];
-        if (*anEdge == *(realEdgeVector[checkIndex]))
-        {
-            return i;
-        }
+    for (auto pair : edges){
+        const unique_ptr<IEdge>& checkEdge = mySolid->getEdges()[pair.second];
+        if (*checkEdge == *anEdge)
+            return pair.first;
     }
+    // TODO: throw an error? warn user?
     return -1;
 }
 
@@ -57,7 +52,7 @@ const unique_ptr<ISolid>& Primitive::getSolid() const
 
 void Primitive::modifyUnderlyingSolid(
         unique_ptr<ISolid> newSolid,
-        const vector<pair<unsigned int, unique_ptr<IFace>>>& modifiedFaces) const
+        const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const
 {
 
 }

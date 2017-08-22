@@ -21,7 +21,7 @@ class ISolidManager
         const unique_ptr<ISolid>& getManagedSolid() const;
         void updateSolid(
                 unique_ptr<ISolid> newSolid, 
-                const vector<pair<unsigned int, unique_ptr<IFace>>>& modifiedFaces) const;
+                const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const;
 
     private:
         virtual unsigned int getFaceIndex(const unique_ptr<IFace>& aFace) const = 0;
@@ -30,7 +30,7 @@ class ISolidManager
         virtual const unique_ptr<ISolid>& getSolid() const = 0;
         virtual void modifyUnderlyingSolid(
                 unique_ptr<ISolid> newSolid,
-                const vector<pair<unsigned int, unique_ptr<IFace>>>& modifiedFaces) const = 0;
+                const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const = 0;
 };
 
 unsigned int ISolidManager::getIndex(const unique_ptr<IFace>& aFace) const
@@ -55,7 +55,7 @@ const unique_ptr<ISolid>& ISolidManager::getManagedSolid() const
 
 void ISolidManager::updateSolid(
         unique_ptr<ISolid> newSolid, 
-        const vector<pair<unsigned int,unique_ptr<IFace>>>& modifiedFaces) const
+        const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const
 {
     this->modifyUnderlyingSolid(std::move(newSolid), modifiedFaces);
 }
