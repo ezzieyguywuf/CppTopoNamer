@@ -8,14 +8,12 @@ Primitive::Primitive(unique_ptr<ISolid> aSolid)
     : mySolid(std::move(aSolid))
 {
     unsigned int i=0;
-    const vector<unique_ptr<IFace>>& faces = mySolid->getFaces();
-    const vector<unique_ptr<IEdge>>& edges  = mySolid->getEdges();
 
-    for (i = 0; i < faces.size(); ++i) {
+    for (i = 0; i < mySolid->getFaces().size(); ++i) {
         faceIndices.push_back(i);
     }
 
-    for (i = 0; i < edges.size(); ++i) {
+    for (i = 0; i < mySolid->getEdges().size(); ++i) {
         edgeIndices.push_back(i);
     }
 }
