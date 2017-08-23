@@ -4,6 +4,7 @@
 #include <ISolid.h>
 #include <IFace.h>
 #include <IEdge.h>
+#include <SolidManager_Types.h>
 
 #include <memory>
 #include <vector>
@@ -11,42 +12,43 @@
 
 using std::vector;
 using std::pair;
+using SolidManager::EdgeIndex;
 
 class ISolidManager
 {
     public:
-        unsigned int getIndex(const unique_ptr<IFace>& aFace) const;
-        unsigned int getIndex(const unique_ptr<IEdge>& anEdge) const;
-        const unique_ptr<IEdge>& getEdge(const unsigned int index) const;
+        SolidManager::FaceIndex getIndex(const unique_ptr<IFace>& aFace) const;
+        SolidManager::EdgeIndex getIndex(const unique_ptr<IEdge>& anEdge) const;
+        //const unique_ptr<IEdge>& getEdge(const EdgeIndex index) const;
         const unique_ptr<ISolid>& getManagedSolid() const;
         void updateSolid(
                 unique_ptr<ISolid> newSolid, 
                 const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const;
 
     private:
-        virtual unsigned int getFaceIndex(const unique_ptr<IFace>& aFace) const = 0;
-        virtual unsigned int getEdgeIndex(const unique_ptr<IEdge>& anEdge) const = 0;
-        virtual const unique_ptr<IEdge>& getEdgeByIndex(const unsigned int index) const = 0;
+        virtual SolidManager::FaceIndex getFaceIndex(const unique_ptr<IFace>& aFace) const = 0;
+        virtual SolidManager::EdgeIndex getEdgeIndex(const unique_ptr<IEdge>& anEdge) const = 0;
+        //virtual const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const = 0;
         virtual const unique_ptr<ISolid>& getSolid() const = 0;
         virtual void modifyUnderlyingSolid(
                 unique_ptr<ISolid> newSolid,
                 const vector<pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const = 0;
 };
 
-unsigned int ISolidManager::getIndex(const unique_ptr<IFace>& aFace) const
+SolidManager::FaceIndex ISolidManager::getIndex(const unique_ptr<IFace>& aFace) const
 {
     return this->getFaceIndex(aFace);
 }
 
-unsigned int ISolidManager::getIndex(const unique_ptr<IEdge>& anEdge) const
+SolidManager::EdgeIndex ISolidManager::getIndex(const unique_ptr<IEdge>& anEdge) const
 {
     return this->getEdgeIndex(anEdge);
 }
 
-const unique_ptr<IEdge>& ISolidManager::getEdge(const unsigned int index) const
-{
-    return this->getEdgeByIndex(index);
-}
+//const unique_ptr<IEdge>& ISolidManager::getEdge(const EdgeIndex index) const
+//{
+    //return this->getEdgeByIndex(index);
+//}
 
 const unique_ptr<ISolid>& ISolidManager::getManagedSolid() const
 {
