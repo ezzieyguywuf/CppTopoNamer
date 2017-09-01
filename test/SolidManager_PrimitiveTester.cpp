@@ -63,20 +63,23 @@ TEST_F(SolidManagerTester, getEdge){
 
 TEST_F(SolidManagerTester, changeFaces)
 {
-    // all the faces should be new, but in the same position.
+    // all the faces should be new, but in the same position. This simulates FreeCAD,
+    // which creates an entirely new TopoDS_Solid for all operations, include changing the
+    // height of a box.
     auto data = maker.increaseBoxHeight(myBox);
     unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
     vector<pair<SolidManager::FaceIndex, SolidManager::FaceIndex>> 
         newFaces = std::get<1>(data);
 
-    // get an index, then update our managed solid
+    // get an index, then update our SolidManager with the new solid and list of changed
+    // faces
     const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     SolidManager::FaceIndex index = myManager->getIndex(origFront);
     unique_ptr<ISolid> newSolid(std::move(newBox));
     myManager->updateSolid(std::move(newSolid), newFaces);
 
-    // finally, check the return value from the updated manager
-    EXPECT_EQ(*newFront, *(myManager->getFace(index)));
+    // finally, check the return value from the updated SolidManager
     EXPECT_NE(*origFront, *(myManager->getFace(index)));
+    EXPECT_EQ(*newFront, *(myManager->getFace(index)));
 }
