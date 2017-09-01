@@ -86,4 +86,8 @@ void Primitive::modifyUnderlyingSolid(
         const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) 
 {
     mySolid = std::move(newSolid);
+    for (const auto& indices : modifiedFaces)
+    {
+        faces[indices.first] = indices.second.get();
+    }
 }
