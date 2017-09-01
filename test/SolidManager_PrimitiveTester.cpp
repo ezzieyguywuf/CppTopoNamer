@@ -61,7 +61,7 @@ TEST_F(SolidManagerTester, getEdge){
     EXPECT_EQ(*myManager->getEdge(8) , *boxFaces[top]->getEdges()[2]);
 }
 
-TEST_F(SolidManagerTester, changeFaces)
+TEST_F(SolidManagerTester, changeFaces_checkFaces)
 {
     // all the faces should be new, but in the same position. This simulates FreeCAD,
     // which creates an entirely new TopoDS_Solid for all operations, include changing the
@@ -76,10 +76,34 @@ TEST_F(SolidManagerTester, changeFaces)
     const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     SolidManager::FaceIndex index = myManager->getIndex(origFront);
-    unique_ptr<ISolid> newSolid(std::move(newBox));
-    myManager->updateSolid(std::move(newSolid), newFaces);
+    myManager->updateSolid(std::move(newBox), newFaces);
 
     // finally, check the return value from the updated SolidManager
     EXPECT_NE(*origFront, *(myManager->getFace(index)));
     EXPECT_EQ(*newFront, *(myManager->getFace(index)));
+}
+
+TEST_F(SolidManagerTester, changeFaces_checkEdges)
+{
+    // all the faces should be new, but in the same position. This simulates FreeCAD,
+    // which creates an entirely new TopoDS_Solid for all operations, include changing the
+    // height of a box.
+    auto data = maker.increaseBoxHeight(myBox);
+    unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
+    vector<pair<SolidManager::FaceIndex, SolidManager::FaceIndex>> 
+        newFaces = std::get<1>(data);
+
+    // get an index, then update our SolidManager with the new solid and list of changed
+    // faces. The zeroeth edge ont he front face should be the edge shared by the front
+    // and top faces. This is based on how MockObjectMaker works.
+    const unique_ptr<IEdge>& origEdge = 
+        myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")]->getEdges()[0];
+    const unique_ptr<IEdge>& newEdge = 
+        newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")]->getEdges()[0];
+    SolidManager::EdgeIndex index = myManager->getIndex(origEdge);
+    myManager->updateSolid(std::move(newBox), newFaces);
+
+    // finally, check the return value from the updated SolidManager
+    EXPECT_NE(*origEdge, *(myManager->getEdge(index)));
+    EXPECT_EQ(*newEdge, *(myManager->getEdge(index)));
 }

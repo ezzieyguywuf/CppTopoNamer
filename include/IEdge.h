@@ -11,6 +11,7 @@ class IEdge
         ~IEdge(){};
 
         bool operator==(const IEdge& anEdge) const;
+        bool operator!=(const IEdge& anEdge) const;
         bool isFlipped(const IEdge& anEdge) const;
         
     protected:
@@ -38,6 +39,12 @@ bool IEdge::operator==(const IEdge& anEdge) const
 {
     return this->checkEquality_(anEdge);
 }
+
+bool IEdge::operator!=(const IEdge& anEdge) const
+{
+    return !(this->checkEquality_(anEdge));
+}
+
 bool IEdge::isFlipped(const IEdge& anEdge) const
 {
     return this->checkFlipped_(anEdge);
