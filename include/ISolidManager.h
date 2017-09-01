@@ -24,7 +24,7 @@ class ISolidManager
         const unique_ptr<IFace>& getFace(const FaceIndex index) const;
         const unique_ptr<ISolid>& getManagedSolid() const;
         void updateSolid(
-                unique_ptr<ISolidManager> newSolid, 
+                unique_ptr<ISolid> newSolid, 
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces);
 
     private:
@@ -34,7 +34,7 @@ class ISolidManager
         virtual const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const = 0;
         virtual const unique_ptr<ISolid>& getSolid() const = 0;
         virtual void modifyUnderlyingSolid(
-                unique_ptr<ISolidManager> newSolid,
+                unique_ptr<ISolid> newSolid,
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) = 0;
 };
 
@@ -64,7 +64,7 @@ const unique_ptr<ISolid>& ISolidManager::getManagedSolid() const
 }
 
 void ISolidManager::updateSolid(
-        unique_ptr<ISolidManager> newSolid, 
+        unique_ptr<ISolid> newSolid, 
         const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces)
 {
     this->modifyUnderlyingSolid(std::move(newSolid), modifiedFaces);

@@ -82,8 +82,8 @@ const unique_ptr<ISolid>& Primitive::getSolid() const
 }
 
 void Primitive::modifyUnderlyingSolid(
-        unique_ptr<ISolidManager> newSolid,
+        unique_ptr<ISolid> newSolid,
         const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) 
 {
-
+    mySolid = std::move(newSolid);
 }

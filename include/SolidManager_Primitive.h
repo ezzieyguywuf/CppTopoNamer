@@ -25,7 +25,7 @@ namespace SolidManager{
                 const unique_ptr<IFace>& getFaceByIndex(const FaceIndex index) const override;
                 const unique_ptr<ISolid>& getSolid() const override;
                 void modifyUnderlyingSolid(
-                        unique_ptr<ISolidManager> newSolid,
+                        unique_ptr<ISolid> newSolid,
                         // each pair should be (old-face, new-face). the old-face index
                         // will point to mySolid. The new-face index will point to
                         // newSolid.mySolid

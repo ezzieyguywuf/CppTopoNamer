@@ -73,8 +73,8 @@ TEST_F(SolidManagerTester, changeFaces)
     const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     SolidManager::FaceIndex index = myManager->getIndex(origFront);
-    unique_ptr<ISolidManager> newManager(new SolidManager::Primitive(std::move(newBox)));
-    myManager->updateSolid(std::move(newManager), newFaces);
+    unique_ptr<ISolid> newSolid(std::move(newBox));
+    myManager->updateSolid(std::move(newSolid), newFaces);
 
     // finally, check the return value from the updated manager
     EXPECT_EQ(*newFront, *(myManager->getFace(index)));
