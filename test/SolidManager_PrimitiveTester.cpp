@@ -78,4 +78,5 @@ TEST_F(SolidManagerTester, changeFaces)
 
     // finally, check the return value from the updated manager
     EXPECT_EQ(*newFront, *(myManager->getFace(index)));
+    EXPECT_NE(*origFront, *(myManager->getFace(index)));
 }
