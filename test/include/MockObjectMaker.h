@@ -3,27 +3,43 @@
 
 #include <vector>
 #include <string>
-#include <memory>
+#include <memory> // for unique_ptr
 #include <map>
+#include <tuple>
+#include <utility> // for std::pair
 
 #include <IEdge.h>
 #include <IFace.h>
 #include <ISolid.h>
+#include <ISolidManager.h>
 #include <Mock_Edge.h>
 #include <Mock_Face.h>
 #include <Mock_Solid.h>
+
+using std::tuple;
+using std::unique_ptr;
+using std::vector;
+using std::pair;
+using SolidManager::FaceIndex;
 
 class MockObjectMaker{
     public:
         MockObjectMaker();
         ~MockObjectMaker(){};
 
-        std::unique_ptr<IEdge> makeEdge();
-        std::unique_ptr<IFace> makeFace();
-        //std::unique_ptr<IFace> makeFace(Edge anEdge);
-        //std::unique_ptr<IFace> makeFace(Edge anEdge, int index);
-        std::unique_ptr<IFace> makeFace(std::vector<Mock::Edge> Edges);
-        std::unique_ptr<ISolid> makeBox();
+        unique_ptr<IEdge> makeEdge();
+        unique_ptr<IFace> makeFace();
+        //unique_ptr<IFace> makeFace(Edge anEdge);
+        //unique_ptr<IFace> makeFace(Edge anEdge, int index);
+        unique_ptr<IFace> makeFace(std::vector<Mock::Edge> Edges);
+        unique_ptr<ISolid> makeBox();
+        // As a result of this operation, origBox should have the same number of Faces,
+        // however each Face should be different (per the current FreeCAD implementation)
+        tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
+            increaseBoxHeight(const unique_ptr<ISolid>& origBox);
+        //unique_ptr<ISolid> filletBox(
+                //const unique_ptr<ISolid>& aBox,
+                //const unique_ptr<IEdge>& anEdge);
         //Shape makeFilletedBox();
         //Shape makeCylinder();
 

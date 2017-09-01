@@ -24,9 +24,11 @@ namespace SolidManager{
                 const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const override;
                 const unique_ptr<ISolid>& getSolid() const override;
                 void modifyUnderlyingSolid(
-                        unique_ptr<ISolid> newSolid,
-                        // each pair should be (old-face, new-face)
-                        const std::vector<std::pair<unique_ptr<IFace>, unique_ptr<IFace>>>& modifiedFaces) const override;
+                        unique_ptr<ISolidManager> newSolid,
+                        // each pair should be (old-face, new-face). the old-face index
+                        // will point to mySolid. The new-face index will point to
+                        // newSolid.mySolid
+                        const std::vector<std::pair<FaceIndex, FaceIndex>>& modifiedFaces) override;
 
             private:
                 unique_ptr<ISolid> mySolid;

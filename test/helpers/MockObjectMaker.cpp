@@ -86,6 +86,42 @@ std::unique_ptr<ISolid> MockObjectMaker::makeBox(){
     return std::unique_ptr<ISolid>(new Mock::Solid(Faces));
 }
 
+tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
+    MockObjectMaker::increaseBoxHeight(const unique_ptr<ISolid>& origBox)
+{
+    unsigned int frt, bck, top, bot, lft, rgt;
+    std::vector<Mock::Face> Faces;
+
+    frt = BoxFaces.at("front");
+    bck = BoxFaces.at("back");
+    top = BoxFaces.at("top");
+    bot = BoxFaces.at("bottom");
+    lft = BoxFaces.at("left");
+    rgt = BoxFaces.at("right");
+
+    const Mock::Solid& tmpSolid = static_cast<const Mock::Solid&>(*origBox);
+    // since all the faces should be new anyway, just make a new box
+    unique_ptr<ISolid> newSolid(std::move(this->makeBox()));
+    const auto& origFaces = origBox->getFaces();
+    const auto& newFaces  = newSolid->getFaces();
+    // We'll swap around some of the faces, just to challenge the toponamer.
+    vector<pair<FaceIndex, FaceIndex>> modifiedFaces = {
+        {FaceIndex(frt), FaceIndex(bck)},
+        {FaceIndex(bck), FaceIndex(frt)},
+        {FaceIndex(lft), FaceIndex(rgt)},
+        {FaceIndex(top), FaceIndex(top)},
+        {FaceIndex(bot), FaceIndex(bot)}
+    };
+    return 
+        tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
+        (std::move(newSolid), modifiedFaces);
+}
+//std::unique_ptr<ISolid> MockObjectMaker::filletBox(
+        //const std::unique_ptr<ISolid>& aBox,
+        //const std::unique_ptr<IEdge>& anEdge)
+//{
+//}
+
 //FakePartFillet MockObjectMaker::FilletedBox(){
     //unsigned int frt, top, lft, rgt;
 
