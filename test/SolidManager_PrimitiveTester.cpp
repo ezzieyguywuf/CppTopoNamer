@@ -8,6 +8,7 @@
 
 using std::vector;
 using std::unique_ptr;
+using std::pair;
 
 class SolidManagerTester : public testing::Test{
     protected:
@@ -53,16 +54,28 @@ TEST_F(SolidManagerTester, getEdge){
     const int back = MockObjectMaker::BoxFaces.at("back");
     const int front = MockObjectMaker::BoxFaces.at("front");
 
-    EXPECT_TRUE(*myManager->getEdge(0) == *boxFaces[front]->getEdges()[0]);
-    EXPECT_TRUE(*myManager->getEdge(1) == *boxFaces[front]->getEdges()[1]);
-    EXPECT_TRUE(*myManager->getEdge(4) == *boxFaces[back]->getEdges()[0]);
-    EXPECT_TRUE(*myManager->getEdge(5) == *boxFaces[back]->getEdges()[1]);
-    EXPECT_TRUE(*myManager->getEdge(8) == *boxFaces[top]->getEdges()[2]);
+    EXPECT_EQ(*myManager->getEdge(0) , *boxFaces[front]->getEdges()[0]);
+    EXPECT_EQ(*myManager->getEdge(1) , *boxFaces[front]->getEdges()[1]);
+    EXPECT_EQ(*myManager->getEdge(4) , *boxFaces[back]->getEdges()[0]);
+    EXPECT_EQ(*myManager->getEdge(5) , *boxFaces[back]->getEdges()[1]);
+    EXPECT_EQ(*myManager->getEdge(8) , *boxFaces[top]->getEdges()[2]);
 }
 
 TEST_F(SolidManagerTester, changeFaces)
 {
+    // all the faces should be new, but in the same position.
     auto data = maker.increaseBoxHeight(myBox);
-    std::unique_ptr<ISolidManager> newManager(new SolidManager::Primitive(std::move(std::get<0>(data))));
-    myManager->updateSolid(std::move(newManager), std::get<1>(data));
+    unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
+    vector<pair<SolidManager::FaceIndex, SolidManager::FaceIndex>> 
+        newFaces = std::get<1>(data);
+
+    // get an index, then update our managed solid
+    const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
+    const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
+    SolidManager::FaceIndex index = myManager->getIndex(origFront);
+    unique_ptr<ISolidManager> newManager(new SolidManager::Primitive(std::move(newBox)));
+    myManager->updateSolid(std::move(newManager), newFaces);
+
+    // finally, check the return value from the updated manager
+    EXPECT_EQ(*newFront, *(myManager->getFace(index)));
 }

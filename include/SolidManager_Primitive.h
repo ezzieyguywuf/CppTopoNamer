@@ -22,6 +22,7 @@ namespace SolidManager{
                 FaceIndex getFaceIndex(const unique_ptr<IFace>& aFace) const override;
                 EdgeIndex getEdgeIndex(const unique_ptr<IEdge>& anEdge) const override;
                 const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const override;
+                const unique_ptr<IFace>& getFaceByIndex(const FaceIndex index) const override;
                 const unique_ptr<ISolid>& getSolid() const override;
                 void modifyUnderlyingSolid(
                         unique_ptr<ISolidManager> newSolid,

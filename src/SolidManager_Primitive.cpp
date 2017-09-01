@@ -70,6 +70,12 @@ const unique_ptr<IEdge>& Primitive::getEdgeByIndex(const EdgeIndex index) const
     throw std::runtime_error("For some reason, our two faces do not share an Edge");
 }
 
+const unique_ptr<IFace>& Primitive::getFaceByIndex(const FaceIndex index) const
+{
+    return mySolid->getFaces()[faces.at(index)];
+    //throw std::runtime_error("For some reason, our two faces do not share an Face");
+}
+
 const unique_ptr<ISolid>& Primitive::getSolid() const
 {
     return this->mySolid;

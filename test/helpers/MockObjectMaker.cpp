@@ -106,9 +106,10 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
     const auto& newFaces  = newSolid->getFaces();
     // We'll swap around some of the faces, just to challenge the toponamer.
     vector<pair<FaceIndex, FaceIndex>> modifiedFaces = {
-        {FaceIndex(frt), FaceIndex(bck)},
-        {FaceIndex(bck), FaceIndex(frt)},
-        {FaceIndex(lft), FaceIndex(rgt)},
+        {FaceIndex(frt), FaceIndex(frt)},
+        {FaceIndex(bck), FaceIndex(bck)},
+        {FaceIndex(lft), FaceIndex(lft)},
+        {FaceIndex(rgt), FaceIndex(rgt)},
         {FaceIndex(top), FaceIndex(top)},
         {FaceIndex(bot), FaceIndex(bot)}
     };
