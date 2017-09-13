@@ -15,5 +15,5 @@ function(test_executable TestName)
         ${gtest_SOURCE_DIR}/include
         ${gtest_SOURE_DIR}
         include)
-    add_test("Test_${TestName}" ${TestName})
+    add_test(NAME "Test_${TestName}" COMMAND $<TARGET_FILE:${TestName}>)
 endfunction(test_executable)
