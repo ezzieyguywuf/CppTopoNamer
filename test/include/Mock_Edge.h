@@ -1,7 +1,7 @@
 #ifndef Edge_HEADER
 #define Edge_HEADER
 
-#include <IEdge.h>
+#include <Topology/IEdge.h>
 
 namespace Mock{
     // An implementation of the IEdge interface. Notice that we inherit from IEdge_

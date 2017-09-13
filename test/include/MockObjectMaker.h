@@ -8,10 +8,10 @@
 #include <tuple>
 #include <utility> // for std::pair
 
-#include <IEdge.h>
-#include <IFace.h>
-#include <ISolid.h>
-#include <ISolidManager.h>
+#include <Topology/IEdge.h>
+#include <Topology/IFace.h>
+#include <Topology/ISolid.h>
+#include <Topology/ISolidManager.h>
 #include <Mock_Edge.h>
 #include <Mock_Face.h>
 #include <Mock_Solid.h>
@@ -20,7 +20,7 @@ using std::tuple;
 using std::unique_ptr;
 using std::vector;
 using std::pair;
-using SolidManager::FaceIndex;
+using Manager::FaceIndex;
 
 class MockObjectMaker{
     public:

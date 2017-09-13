@@ -7,20 +7,17 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 
 project(CppTopoNamerTests)
 
-#set(OCC_INCLUDE "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/inc")
-#set(OCC_LIBRARIES "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd")
-#set(FAKEIT_INCLUDE "/home/wolfie/Program/FreeCAD_dev/CppTopoNamer/FakeIt/include")
-#set(FAKEIT_CONFIG_DIR "/home/wolfie/Program/FreeCAD_dev/CppTopoNamer/FakeIt/config/boost")
+set(OCC_INCLUDE "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/inc")
+set(OCC_LIBRARIES "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd")
 
 include_directories(
     "include"
-    #${OCC_INCLUDE}
-    #${FAKEIT_INCLUDE}
-    #${FAKEIT_CONFIG_DIR}
+    ${OCC_INCLUDE}
 )
-#link_directories(
-    #${OCC_LIBRARIES}
-#)
+
+link_directories(
+    ${OCC_LIBRARIES}
+)
 
 set(CTEST_ENVIRONMENT CTEST_OUTPUT_ON_FAILURE=1)
 enable_testing()

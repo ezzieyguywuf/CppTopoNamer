@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <SolidManager_Primitive.h>
+#include <Managers/PrimitiveSolid.h>
 #include <MockObjectMaker.h>
-#include <ISolid.h>
+#include <Topology/ISolid.h>
 #include <memory>
 #include <vector>
 #include <iostream>
@@ -13,7 +13,7 @@ using std::pair;
 class SolidManagerTester : public testing::Test{
     protected:
         SolidManagerTester()
-            : myManager(new SolidManager::Primitive(std::move(maker.makeBox()))),
+            : myManager(new Manager::PrimitiveSolid(std::move(maker.makeBox()))),
               myBox(myManager->getManagedSolid())
         {
         };
@@ -68,14 +68,14 @@ TEST_F(SolidManagerTester, changeFaces_checkFaces)
     // height of a box.
     auto data = maker.increaseBoxHeight(myBox);
     unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
-    vector<pair<SolidManager::FaceIndex, SolidManager::FaceIndex>> 
+    vector<pair<Manager::FaceIndex, Manager::FaceIndex>> 
         newFaces = std::get<1>(data);
 
     // get an index, then update our SolidManager with the new solid and list of changed
     // faces
     const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
-    SolidManager::FaceIndex index = myManager->getIndex(origFront);
+    Manager::FaceIndex index = myManager->getIndex(origFront);
     myManager->updateSolid(std::move(newBox), newFaces);
 
     // finally, check the return value from the updated SolidManager
@@ -90,7 +90,7 @@ TEST_F(SolidManagerTester, changeFaces_checkEdges)
     // height of a box.
     auto data = maker.increaseBoxHeight(myBox);
     unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
-    vector<pair<SolidManager::FaceIndex, SolidManager::FaceIndex>> 
+    vector<pair<Manager::FaceIndex, Manager::FaceIndex>> 
         newFaces = std::get<1>(data);
 
     // get an index, then update our SolidManager with the new solid and list of changed
@@ -100,7 +100,7 @@ TEST_F(SolidManagerTester, changeFaces_checkEdges)
         myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")]->getEdges()[0];
     const unique_ptr<IEdge>& newEdge = 
         newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")]->getEdges()[0];
-    SolidManager::EdgeIndex index = myManager->getIndex(origEdge);
+    Manager::EdgeIndex index = myManager->getIndex(origEdge);
     myManager->updateSolid(std::move(newBox), newFaces);
 
     // finally, check the return value from the updated SolidManager

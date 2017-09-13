@@ -1,8 +1,8 @@
 #ifndef Face_HEADER
 #define Face_HEADER
 
-#include <IFace.h>
-#include <IEdge.h>
+#include <Topology/IFace.h>
+#include <Topology/IEdge.h>
 #include <Mock_Edge.h>
 #include <vector>
 #include <memory>

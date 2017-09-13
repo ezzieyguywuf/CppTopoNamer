@@ -1,8 +1,8 @@
 #ifndef Solid_HEADER
 #define Solid_HEADER
 
-#include <ISolid.h>
-#include <IFace.h>
+#include <Topology/ISolid.h>
+#include <Topology/IFace.h>
 #include <Mock_Face.h>
 
 #include <vector>

@@ -1,7 +1,7 @@
 #include <Mock_Edge.h>
 #include <Mock_Face.h>
-#include <IEdge.h>
-#include <IFace.h>
+#include <Topology/IEdge.h>
+#include <Topology/IFace.h>
 #include <vector>
 #include <iostream>
 #include <memory>

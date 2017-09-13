@@ -1,5 +1,5 @@
 #include <Mock_Solid.h>
-#include <IFace.h>
+#include <Topology/IFace.h>
 #include <algorithm>
 
 using Mock::Solid;
