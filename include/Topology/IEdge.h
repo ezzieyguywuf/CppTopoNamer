@@ -7,12 +7,12 @@ class IEdge
     // (this)[http:://www.gotw.ca/publications/mill18.htm] article does a good job
     // explaining this pattern and why it is a good idea to use.
     public:
-        IEdge(){};
-        ~IEdge(){};
+        inline IEdge(){};
+        inline ~IEdge(){};
 
-        bool operator==(const IEdge& anEdge) const;
-        bool operator!=(const IEdge& anEdge) const;
-        bool isFlipped(const IEdge& anEdge) const;
+        inline bool operator==(const IEdge& anEdge) const;
+        inline bool operator!=(const IEdge& anEdge) const;
+        inline bool isFlipped(const IEdge& anEdge) const;
         
     protected:
         virtual bool checkEquality_(const IEdge& anEdge) const = 0;

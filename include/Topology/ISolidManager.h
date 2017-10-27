@@ -18,12 +18,12 @@ using Manager::FaceIndex;
 class ISolidManager
 {
     public:
-        FaceIndex getIndex(const unique_ptr<IFace>& aFace) const;
-        EdgeIndex getIndex(const unique_ptr<IEdge>& anEdge) const;
-        const unique_ptr<IEdge>& getEdge(const EdgeIndex index) const;
-        const unique_ptr<IFace>& getFace(const FaceIndex index) const;
-        const unique_ptr<ISolid>& getManagedSolid() const;
-        void updateSolid(
+        inline FaceIndex getIndex(const unique_ptr<IFace>& aFace) const;
+        inline EdgeIndex getIndex(const unique_ptr<IEdge>& anEdge) const;
+        inline const unique_ptr<IEdge>& getEdge(const EdgeIndex index) const;
+        inline const unique_ptr<IFace>& getFace(const FaceIndex index) const;
+        inline const unique_ptr<ISolid>& getManagedSolid() const;
+        inline void updateSolid(
                 unique_ptr<ISolid> newSolid, 
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces);
 

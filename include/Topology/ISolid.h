@@ -11,9 +11,9 @@ using std::unique_ptr;
 class ISolid
 {
     public:
-        ~ISolid(){};
-        const vector<unique_ptr<IFace>>& getFaces() const;
-        const vector<unique_ptr<IEdge>>& getEdges() const;
+        inline ~ISolid(){};
+        inline const vector<unique_ptr<IFace>>& getFaces() const;
+        inline const vector<unique_ptr<IEdge>>& getEdges() const;
 
     private:
         virtual const vector<unique_ptr<IFace>>& getFaceVector() const = 0;

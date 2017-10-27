@@ -10,10 +10,10 @@ using std::vector;
 
 class IFace{
     public:
-        ~IFace(){};
-        bool operator==(const IFace& aFace) const;
-        bool operator!=(const IFace& aFace) const;
-        const vector<unique_ptr<IEdge>>& getEdges() const;
+        inline ~IFace(){};
+        inline bool operator==(const IFace& aFace) const;
+        inline bool operator!=(const IFace& aFace) const;
+        inline const vector<unique_ptr<IEdge>>& getEdges() const;
     protected:
         virtual bool checkEquals_(const IFace& aFace) const = 0;
         virtual const vector<unique_ptr<IEdge>>& getEdgeVector() const = 0 ;

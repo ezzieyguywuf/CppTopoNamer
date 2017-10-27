@@ -10,10 +10,10 @@ using std::vector;
 using std::unique_ptr;
 using std::pair;
 
-class SolidManagerTester : public testing::Test{
+class PrimitiveSolidTester : public testing::Test{
     protected:
-        SolidManagerTester()
-            : myManager(new Manager::PrimitiveSolid(std::move(maker.makeBox()))),
+        PrimitiveSolidTester()
+            : myManager(new Manager::PrimitiveSolid(maker.makeBox())),
               myBox(myManager->getManagedSolid())
         {
         };
@@ -23,7 +23,7 @@ class SolidManagerTester : public testing::Test{
         const unique_ptr<ISolid>& myBox;
 };
 
-TEST_F(SolidManagerTester, getIndex){
+TEST_F(PrimitiveSolidTester, getIndex){
     // Faces added in following order: front, back, top, bottom, left, right
     const vector<unique_ptr<IFace>>& boxFaces = myBox->getFaces();
     EXPECT_EQ(myManager->getIndex(boxFaces[0]).get(), 0);
@@ -46,7 +46,7 @@ TEST_F(SolidManagerTester, getIndex){
     EXPECT_EQ(myManager->getIndex(boxFaces[back]->getEdges()[1]).get(), 5);
 }
 
-TEST_F(SolidManagerTester, getEdge){
+TEST_F(PrimitiveSolidTester, getEdge){
     // Faces added in following order: front, back, top, bottom, left, right
     const vector<unique_ptr<IFace>>& boxFaces = myBox->getFaces();
 
@@ -61,7 +61,7 @@ TEST_F(SolidManagerTester, getEdge){
     EXPECT_EQ(*myManager->getEdge(8) , *boxFaces[top]->getEdges()[2]);
 }
 
-TEST_F(SolidManagerTester, changeFaces_checkFaces)
+TEST_F(PrimitiveSolidTester, changeFaces_checkFaces)
 {
     // all the faces should be new, but in the same position. This simulates FreeCAD,
     // which creates an entirely new TopoDS_Solid for all operations, include changing the
@@ -71,19 +71,19 @@ TEST_F(SolidManagerTester, changeFaces_checkFaces)
     vector<pair<Manager::FaceIndex, Manager::FaceIndex>> 
         newFaces = std::get<1>(data);
 
-    // get an index, then update our SolidManager with the new solid and list of changed
+    // get an index, then update our PrimitiveSolid with the new solid and list of changed
     // faces
     const unique_ptr<IFace>& origFront = myBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     const unique_ptr<IFace>& newFront  = newBox->getFaces()[MockObjectMaker::BoxFaces.at("front")];
     Manager::FaceIndex index = myManager->getIndex(origFront);
     myManager->updateSolid(std::move(newBox), newFaces);
 
-    // finally, check the return value from the updated SolidManager
+    // finally, check the return value from the updated PrimitiveSolid
     EXPECT_NE(*origFront, *(myManager->getFace(index)));
     EXPECT_EQ(*newFront, *(myManager->getFace(index)));
 }
 
-TEST_F(SolidManagerTester, changeFaces_checkEdges)
+TEST_F(PrimitiveSolidTester, changeFaces_checkEdges)
 {
     // all the faces should be new, but in the same position. This simulates FreeCAD,
     // which creates an entirely new TopoDS_Solid for all operations, include changing the
@@ -93,7 +93,7 @@ TEST_F(SolidManagerTester, changeFaces_checkEdges)
     vector<pair<Manager::FaceIndex, Manager::FaceIndex>> 
         newFaces = std::get<1>(data);
 
-    // get an index, then update our SolidManager with the new solid and list of changed
+    // get an index, then update our PrimitiveSolid with the new solid and list of changed
     // faces. The zeroeth edge ont he front face should be the edge shared by the front
     // and top faces. This is based on how MockObjectMaker works.
     const unique_ptr<IEdge>& origEdge = 
@@ -103,7 +103,7 @@ TEST_F(SolidManagerTester, changeFaces_checkEdges)
     Manager::EdgeIndex index = myManager->getIndex(origEdge);
     myManager->updateSolid(std::move(newBox), newFaces);
 
-    // finally, check the return value from the updated SolidManager
+    // finally, check the return value from the updated PrimitiveSolid
     EXPECT_NE(*origEdge, *(myManager->getEdge(index)));
     EXPECT_EQ(*newEdge, *(myManager->getEdge(index)));
 }
