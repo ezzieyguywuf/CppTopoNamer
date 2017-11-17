@@ -6,13 +6,13 @@ OccEdge::OccEdge(TopoDS_Edge aEdge)
 }
 
 OccEdge::OccEdge(const OccEdge& aEdge)
+    : myEdge(aEdge.myEdge)
 {
-    myEdge = aEdge.myEdge;
 }
 
 OccEdge::OccEdge(OccEdge&& aEdge)
+    : myEdge(aEdge.myEdge)
 {
-        myEdge = aEdge.myEdge;
         aEdge.myEdge.Nullify();
 }
 

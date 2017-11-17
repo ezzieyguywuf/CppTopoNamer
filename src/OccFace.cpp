@@ -9,8 +9,8 @@
 using std::unique_ptr;
 
 OccFace::OccFace(TopoDS_Face aFace)
+    : myFace(aFace)
 {
-    myFace = aFace;
     for(TopExp_Explorer exp(myFace, TopAbs_EDGE); exp.More(); exp.Next())
     {
         TopoDS_Edge currentEdge = TopoDS::Edge(exp.Current());
