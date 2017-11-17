@@ -25,8 +25,9 @@ namespace Manager{
             FaceIndex(){};
             FaceIndex(unsigned int anIndex)
                 : Index(anIndex){};
-            FaceIndex(const FaceIndex& aFace){
-                index = aFace.index;
+            FaceIndex(const FaceIndex& aFace)
+                : Index(aFace.index)
+            {
             }
             FaceIndex operator=(const FaceIndex& aFace){
                 index = aFace.index;
@@ -38,8 +39,9 @@ namespace Manager{
             EdgeIndex(){};
             EdgeIndex(unsigned int anIndex)
                 : Index(anIndex){};
-            EdgeIndex(const EdgeIndex& aEdge){
-                index = aEdge.index;
+            EdgeIndex(const EdgeIndex& aEdge)
+                : Index(aEdge.index)
+            {
             }
             EdgeIndex operator=(const EdgeIndex& anEdge){
                 index = anEdge.index;
