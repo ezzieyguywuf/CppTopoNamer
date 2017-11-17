@@ -10,3 +10,6 @@ target_link_libraries(OccEdge "TKBRep" "TKPrim" "TKMath")
 
 add_library(OccFace "OccFace.cpp")
 target_link_libraries(OccFace "OccEdge")
+
+add_library(OccSolid "OccSolid.cpp")
+target_link_libraries(OccSolid "OccFace")
