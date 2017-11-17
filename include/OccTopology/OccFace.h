@@ -29,6 +29,7 @@ class OccFace : public IFace_<OccFace>
 
         // unique to OccFace
         //void updateFace(TopoDS_Face aFace);
+        const TopoDS_Face& getFace() const;
 
     private:
         TopoDS_Face myFace;

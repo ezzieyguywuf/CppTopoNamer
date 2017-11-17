@@ -68,3 +68,9 @@ const vector<unique_ptr<IEdge>>& OccFace::getEdgeVector() const
 {
     return myEdges;
 }
+
+// ---------------- PRIVATE METHODS ----------------
+const TopoDS_Face& OccFace::getFace() const
+{
+    return this->myFace;
+}
