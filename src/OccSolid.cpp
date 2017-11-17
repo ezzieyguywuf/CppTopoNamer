@@ -68,6 +68,15 @@ OccSolid OccSolid::operator=(OccSolid&& aSolid){
     return *this;
 }
 
+const vector<unique_ptr<IFace>>& OccSolid::getFaceVector() const
+{
+    return this->myFaces;
+}
+const vector<unique_ptr<IEdge>>& OccSolid::getEdgeVector() const
+{
+    return this->myEdges;
+}
+
 // --------------- PRIVATE METHODS ----------------
 void OccSolid::updateMyEdges()
 {
