@@ -39,6 +39,19 @@ OccSolid::OccSolid(OccSolid&& aSolid)
     aSolid.myEdges.clear();
 }
 OccSolid OccSolid::operator=(const OccSolid& aSolid){
+    mySolid = aSolid.mySolid;
+    myFaces.clear();
+    myEdges.clear();
+    for (const auto& aFace : aSolid.myFaces)
+    {
+        const OccFace& occFace = static_cast<const OccFace&>(*aFace.get());
+        myFaces.push_back(std::move(std::unique_ptr<OccFace>(new OccFace(occFace))));
+    }
+    for (const auto& anEdge: aSolid.myEdges)
+    {
+        const OccEdge& occEdge = static_cast<const OccEdge&>(*anEdge.get());
+        myEdges.push_back(std::move(unique_ptr<OccEdge>(new OccEdge(occEdge.getEdge()))));
+    }
 }
 OccSolid OccSolid::operator=(OccSolid&& aSolid){
     if (this != &aSolid){
