@@ -31,6 +31,7 @@ OccFace::OccFace(OccFace&& aFace)
     : myFace(aFace.myFace), myEdges(std::move(aFace.myEdges))
 {
     aFace.myFace.Nullify();
+    aFace.myEdges.clear();
 }
 
 OccFace OccFace::operator=(const OccFace& aFace)
@@ -47,10 +48,14 @@ OccFace OccFace::operator=(const OccFace& aFace)
 
 OccFace OccFace::operator=(OccFace&& aFace)
 {
-    myFace = aFace.myFace;
-    myEdges.clear();
-    myEdges = std::move(aFace.myEdges);
-    aFace.myFace.Nullify();
+    if (this != &aFace){
+        myFace.Nullify();
+        myFace = aFace.myFace;
+        myEdges.clear();
+        myEdges = std::move(aFace.myEdges);
+        aFace.myFace.Nullify();
+        aFace.myEdges.clear();
+    }
     return *this;
 }
 
