@@ -30,14 +30,14 @@ OccSolid OccSolid::operator=(OccSolid&& aSolid){
 // --------------- PRIVATE METHODS ----------------
 void OccSolid::updateMyEdges()
 {
-    for (auto&& aFace : myFaces)
+    for (const auto& aFace : myFaces)
     {
-        for (auto && anEdge : aFace->getEdges())
+        for (const auto& anEdge : aFace->getEdges())
         {
             if (std::find(myEdges.begin(), myEdges.end(), anEdge) == myEdges.end())
             {
                 // if true, then anEdge is not in the vector
-                OccEdge* anOccEdge = static_cast<OccEdge*>(anEdge.get());
+                const OccEdge* anOccEdge = static_cast<const OccEdge*>(anEdge.get());
                 myEdges.push_back(std::move(std::unique_ptr<IEdge>(new OccEdge(*anOccEdge))));
                 delete(anOccEdge);
             }
