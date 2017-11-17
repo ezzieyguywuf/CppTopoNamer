@@ -31,7 +31,12 @@ OccSolid::OccSolid(const OccSolid& aSolid)
         myFaces.push_back(std::move(unique_ptr<IFace>(new OccFace(occFace.getFace()))));
     }
 }
-OccSolid::OccSolid(OccSolid&& aSolid){
+OccSolid::OccSolid(OccSolid&& aSolid)
+    : mySolid(aSolid.mySolid), myFaces(std::move(aSolid.myFaces)), myEdges(std::move(aSolid.myEdges))
+{
+    aSolid.mySolid.Nullify();
+    aSolid.myFaces.clear();
+    aSolid.myEdges.clear();
 }
 OccSolid OccSolid::operator=(const OccSolid& aSolid){
 }
