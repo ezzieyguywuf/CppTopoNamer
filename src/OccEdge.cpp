@@ -12,11 +12,8 @@ OccEdge::OccEdge(const OccEdge& aEdge)
 
 OccEdge::OccEdge(OccEdge&& aEdge)
 {
-    if (this !=  &aEdge){
-        myEdge.Nullify();
         myEdge = aEdge.myEdge;
         aEdge.myEdge.Nullify();
-    }
 }
 
 OccEdge OccEdge::operator=(const OccEdge& aEdge)
@@ -27,9 +24,11 @@ OccEdge OccEdge::operator=(const OccEdge& aEdge)
 
 OccEdge OccEdge::operator=(OccEdge&& aEdge)
 {
-    myEdge.Nullify();
-    myEdge = aEdge.myEdge;
-    aEdge.myEdge.Nullify();
+    if (this !=  &aEdge){
+        myEdge.Nullify();
+        myEdge = aEdge.myEdge;
+        aEdge.myEdge.Nullify();
+    }
     return *this;
 }
 
