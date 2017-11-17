@@ -18,7 +18,18 @@ OccSolid::OccSolid(TopoDS_Solid aSolid)
     }
     this->updateMyEdges();
 }
-OccSolid::OccSolid(const OccSolid& aSolid){
+OccSolid::OccSolid(const OccSolid& aSolid)
+    : mySolid(aSolid.mySolid)
+{
+    for (const auto& edge : aSolid.myEdges){
+        const OccEdge& occEdge = static_cast<OccEdge&>(*edge.get());
+        myEdges.push_back(std::move(unique_ptr<IEdge>(new OccEdge(occEdge.getEdge()))));
+    }
+
+    for (const auto& face : aSolid.myFaces){
+        const OccFace& occFace = static_cast<OccFace&>(*face.get());
+        myFaces.push_back(std::move(unique_ptr<IFace>(new OccFace(occFace.getFace()))));
+    }
 }
 OccSolid::OccSolid(OccSolid&& aSolid){
 }
