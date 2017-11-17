@@ -36,6 +36,18 @@ OccSolid::OccSolid(OccSolid&& aSolid){
 OccSolid OccSolid::operator=(const OccSolid& aSolid){
 }
 OccSolid OccSolid::operator=(OccSolid&& aSolid){
+    if (this != &aSolid){
+        mySolid.Nullify();
+        mySolid = aSolid.mySolid;
+        myFaces.clear();
+        myFaces = std::move(aSolid.myFaces);
+        myEdges.clear();
+        myEdges = std::move(aSolid.myEdges);
+        aSolid.mySolid.Nullify();
+        aSolid.myFaces.clear();
+        aSolid.myEdges.clear();
+    }
+    return *this;
 }
 
 // --------------- PRIVATE METHODS ----------------
