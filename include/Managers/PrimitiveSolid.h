@@ -19,6 +19,7 @@ namespace Manager{
     class PrimitiveSolid : public ISolidManager
     {
         public:
+            PrimitiveSolid();
             PrimitiveSolid(unique_ptr<ISolid> aSolid);
             FaceIndex getFaceIndex(const unique_ptr<IFace>& aFace) const override;
             EdgeIndex getEdgeIndex(const unique_ptr<IEdge>& anEdge) const override;
@@ -31,6 +32,8 @@ namespace Manager{
                     // will point to mySolid. The new-face index will point to
                     // newSolid.mySolid
                     const std::vector<std::pair<FaceIndex, FaceIndex>>& modifiedFaces) override;
+
+            bool isValid() const;
 
         private:
             unique_ptr<ISolid> mySolid;

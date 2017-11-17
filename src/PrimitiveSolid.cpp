@@ -91,3 +91,13 @@ void PrimitiveSolid::modifyUnderlyingSolid(
         faces[indices.first] = indices.second.get();
     }
 }
+
+bool isValid() const{
+    if (mySolid == nullptr ||
+        faces.empty() ||
+        edges.empty())
+    {
+        return false;
+    }
+    return true;
+}
