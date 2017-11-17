@@ -1,17 +1,15 @@
 #include <OccTopology/OccSolid.h>
 
-OccSolid(TopoDS_Solid aSolid)
+OccSolid::OccSolid(TopoDS_Solid aSolid)
     : mySolid(aSolid)
 {
 
 }
-OccSolid(const OccSolid& aSolid){
+OccSolid::OccSolid(const OccSolid& aSolid){
 }
-OccSolid(OccSolid&& aSolid){
+OccSolid::OccSolid(OccSolid&& aSolid){
 }
-OccSolid operator=(const OccSolid& aSolid){
+OccSolid OccSolid::operator=(const OccSolid& aSolid){
 }
-OccSolid operator=(OccSolid&& aSolid){
-}
-OccSolid(){}{
+OccSolid OccSolid::operator=(OccSolid&& aSolid){
 }
