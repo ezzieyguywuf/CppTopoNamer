@@ -28,6 +28,10 @@ class OccSolid : public ISolid
 
     private:
         TopoDS_Solid mySolid;
+        // Note: this method is a good candidate for opitimization. It currently loops
+        // through every myEdges to check for duplicates, there must be more efficient
+        // ways to do this.
+        void updateMyEdges();
         vector<unique_ptr<IFace>> myFaces;
         vector<unique_ptr<IEdge>> myEdges;
 };
