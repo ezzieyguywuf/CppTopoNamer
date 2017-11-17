@@ -92,7 +92,7 @@ void PrimitiveSolid::modifyUnderlyingSolid(
     }
 }
 
-bool isValid() const{
+bool PrimitiveSolid::isValid() const{
     if (mySolid == nullptr ||
         faces.empty() ||
         edges.empty())
