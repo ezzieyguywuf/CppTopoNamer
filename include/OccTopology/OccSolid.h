@@ -16,12 +16,15 @@ using std::unique_ptr;
 class OccSolid : public ISolid
 {
     public:
+        OccSolid(){};
+        ~OccSolid(){};
         OccSolid(TopoDS_Solid aSolid);
         OccSolid(const OccSolid& aSolid);
         OccSolid(OccSolid&& aSolid);
         OccSolid operator=(const OccSolid& aSolid);
         OccSolid operator=(OccSolid&& aSolid);
-        OccSolid(){};
+
+        bool isValid() const;
 
         const vector<unique_ptr<IFace>>& getFaceVector() const;
         const vector<unique_ptr<IEdge>>& getEdgeVector() const;

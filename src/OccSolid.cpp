@@ -68,6 +68,14 @@ OccSolid OccSolid::operator=(OccSolid&& aSolid){
     return *this;
 }
 
+bool OccSolid::isValid() const
+{
+    if (mySolid.IsNull()){
+        return false;
+    }
+    return true;
+}
+
 const vector<unique_ptr<IFace>>& OccSolid::getFaceVector() const
 {
     return this->myFaces;
