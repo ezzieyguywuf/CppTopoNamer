@@ -1,22 +1,34 @@
 #ifndef SolidManager_Types_HEADER
 #define SolidManager_Types_HEADER
 
+#include <stdexcept>
+
 namespace Manager{
     class Index{
         public:
-            Index(){};
+            Index()
+                : valid(false){};
             Index(unsigned int anIndex)
-                : index(anIndex){};
+                : index(anIndex), valid(true){};
             virtual ~Index() = 0;
             unsigned int get() const{
+                if (not valid)
+                {
+                    throw std::runtime_error("Index is not valid");
+                }
                 return index;
             }
             bool operator <(const Index& anIndex) const{
+                if (not valid)
+                {
+                    throw std::runtime_error("Index is not valid");
+                }
                 return index < anIndex.get();
             }
 
         protected:
             unsigned int index;
+            bool valid;
     };
     inline Index::~Index(){};
 
@@ -31,6 +43,7 @@ namespace Manager{
             }
             FaceIndex operator=(const FaceIndex& aFace){
                 index = aFace.index;
+                valid = true;
                 return *this;
             }
     };
@@ -45,6 +58,7 @@ namespace Manager{
             }
             EdgeIndex operator=(const EdgeIndex& anEdge){
                 index = anEdge.index;
+                valid = true;
                 return *this;
             }
     };
