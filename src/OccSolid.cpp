@@ -88,13 +88,22 @@ const vector<unique_ptr<IEdge>>& OccSolid::getEdgeVector() const
 // --------------- PRIVATE METHODS ----------------
 void OccSolid::updateMyEdges()
 {
+    bool found;
     for (const auto& aFace : myFaces)
     {
         for (const auto& anEdge : aFace->getEdges())
         {
-            if (std::find(myEdges.begin(), myEdges.end(), anEdge) == myEdges.end())
+            found = false;
+            for (const auto& checkEdge : myEdges)
             {
-                // if true, then anEdge is not in the vector
+                if (checkEdge->isFlipped(*anEdge))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (not found)
+            {
                 const OccEdge* anOccEdge = static_cast<const OccEdge*>(anEdge.get());
                 myEdges.push_back(std::move(std::unique_ptr<IEdge>(new OccEdge(*anOccEdge))));
                 delete(anOccEdge);
