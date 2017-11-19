@@ -18,6 +18,9 @@ namespace Manager{
                 }
                 return index;
             }
+            bool isNull() const{
+                return valid;
+            }
             bool operator <(const Index& anIndex) const{
                 if (not valid)
                 {
