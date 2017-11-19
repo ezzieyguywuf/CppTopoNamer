@@ -85,16 +85,21 @@ const vector<unique_ptr<IEdge>>& OccSolid::getEdgeVector() const
     return this->myEdges;
 }
 
+const TopoDS_Solid& OccSolid::getSolid() const
+{
+    return this->mySolid;
+}
+
 // --------------- PRIVATE METHODS ----------------
 void OccSolid::updateMyEdges()
 {
     bool found;
-    for (const auto& aFace : myFaces)
+    for (const std::unique_ptr<IFace>& aFace : myFaces)
     {
-        for (const auto& anEdge : aFace->getEdges())
+        for (const std::unique_ptr<IEdge>& anEdge : aFace->getEdges())
         {
             found = false;
-            for (const auto& checkEdge : myEdges)
+            for (const std::unique_ptr<IEdge>& checkEdge : myEdges)
             {
                 if (checkEdge->isFlipped(*anEdge))
                 {
@@ -106,7 +111,6 @@ void OccSolid::updateMyEdges()
             {
                 const OccEdge* anOccEdge = static_cast<const OccEdge*>(anEdge.get());
                 myEdges.push_back(std::move(std::unique_ptr<IEdge>(new OccEdge(*anOccEdge))));
-                delete(anOccEdge);
             }
         }
     }

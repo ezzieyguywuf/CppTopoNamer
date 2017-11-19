@@ -1,5 +1,6 @@
 #include <OccTopology/OccFace.h>
 #include <OccTopology/OccEdge.h>
+#include <iostream>
 
 #include <TopoDS.hxx>
 #include <TopExp_Explorer.hxx>

@@ -1,4 +1,5 @@
 #include <OccTopology/OccEdge.h>
+#include <iostream>
 
 OccEdge::OccEdge(TopoDS_Edge aEdge)
 {

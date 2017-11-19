@@ -1,5 +1,6 @@
 #include <Managers/PrimitiveSolid.h>
 #include <stdexcept>
+#include <iostream>
 
 using Manager::PrimitiveSolid;
 using Manager::FaceIndex;
@@ -17,13 +18,16 @@ PrimitiveSolid::PrimitiveSolid(unique_ptr<ISolid> aSolid)
     }
 
     std::vector<FaceIndex> foundFaces;
-    for (const auto& Edge : mySolid->getEdges()) {
+    for (const std::unique_ptr<IEdge>& Edge : mySolid->getEdges()) {
         foundFaces.clear();
-        for (const auto& keyValue : faces) {
-            const auto& Face = mySolid->getFaces()[keyValue.second];
-            for (const auto& FaceEdge : Face->getEdges()){
-                if (*Edge == *FaceEdge){
+        for (const std::pair<const Manager::FaceIndex, unsigned int>& keyValue : faces) {
+            const std::unique_ptr<IFace>& Face = mySolid->getFaces()[keyValue.second];
+            i = 0;
+            for (const std::unique_ptr<IEdge>& FaceEdge : Face->getEdges()){
+                i += 1;
+                if (Edge->isFlipped(*FaceEdge)){
                     foundFaces.push_back(keyValue.first);
+                    break;
                 }
             }
         }

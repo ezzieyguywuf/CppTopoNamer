@@ -59,7 +59,9 @@ namespace Manager{
             // the underlying topology in mySolid.
             //
             // Unlike `faces`, `edges` does not refer directly to mySolid->getEdges().
-            // Rather, `edges` stores a pair of integers which
+            // Rather, `edges` stores a pair of integers which refer to two faces in
+            // mySolid->getFaces(). These two faces must each share a common edge: that
+            // Edge will be the edge refered to by EdgeIndex.
             std::map<EdgeIndex, std::pair<FaceIndex, FaceIndex>> edges;
     };
 }

@@ -29,6 +29,9 @@ class OccSolid : public ISolid
         const vector<unique_ptr<IFace>>& getFaceVector() const;
         const vector<unique_ptr<IEdge>>& getEdgeVector() const;
 
+        // These are unique to OccSolid
+        const TopoDS_Solid& getSolid() const;
+
     private:
         TopoDS_Solid mySolid;
         // Note: this method is a good candidate for opitimization. It currently loops
