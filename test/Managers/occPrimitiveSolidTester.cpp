@@ -25,7 +25,11 @@ class PrimitiveSolidTester : public testing::Test{
 };
 
 TEST_F(PrimitiveSolidTester, occ_getIndex){
-    Manager::FaceIndex anIndex(0);
-    EXPECT_EQ(anIndex, myOccManager->getIndex(myOccBox->getFaces()[0]));
+    Manager::FaceIndex anIndex0(0);
+    Manager::FaceIndex anIndex1(3);
+    Manager::FaceIndex anIndex2(5);
+    EXPECT_EQ(anIndex0, myOccManager->getIndex(myOccBox->getFaces()[0]));
+    EXPECT_EQ(anIndex1, myOccManager->getIndex(myOccBox->getFaces()[3]));
+    EXPECT_EQ(anIndex2, myOccManager->getIndex(myOccBox->getFaces()[5]));
 }
 
