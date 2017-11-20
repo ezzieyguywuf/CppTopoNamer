@@ -29,3 +29,6 @@ target_link_libraries(testOccSolidEdgeEquality "OccObjectMaker" "PrimitiveSolid"
 
 add_executable(testPrimitiveManager "${PROJECT_SOURCE_DIR}/scratch/testPrimitiveSolid.cpp")
 target_link_libraries(testPrimitiveManager "OccObjectMaker" "PrimitiveSolid")
+
+add_executable(fixEmptyEdgeCrash "${PROJECT_SOURCE_DIR}/scratch/fixEmptyEdgeCrash.cpp")
+target_link_libraries(fixEmptyEdgeCrash "OccObjectMaker" "PrimitiveSolid")

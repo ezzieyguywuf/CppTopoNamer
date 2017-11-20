@@ -66,7 +66,7 @@ const unique_ptr<IEdge>& PrimitiveSolid::getEdgeByIndex(const EdgeIndex index) c
     const auto& face2 = mySolid->getFaces()[faceIndices.second.get()];
     for (const auto& edge1 : face1->getEdges()){
         for (const auto& edge2 : face2->getEdges()){
-            if (*edge1 == *edge2){
+            if (edge1->isFlipped(*edge2)){
                 return edge1;
             }
         }
