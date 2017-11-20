@@ -28,6 +28,13 @@ namespace Manager{
                 }
                 return index < anIndex.get();
             }
+            bool operator ==(const Index& anIndex) const{
+                if (not valid)
+                {
+                    throw std::runtime_error("Index is not valid");
+                }
+                return index == anIndex.get();
+            }
 
         protected:
             unsigned int index;

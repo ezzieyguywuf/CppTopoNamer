@@ -2,6 +2,7 @@
 #include <Managers/PrimitiveSolid.h>
 #include <OccObjectMaker.h>
 #include <Topology/ISolid.h>
+#include <OccTopology/OccFace.h>
 #include <memory>
 #include <vector>
 #include <iostream>
@@ -24,7 +25,7 @@ class PrimitiveSolidTester : public testing::Test{
 };
 
 TEST_F(PrimitiveSolidTester, occ_getIndex){
-    const vector<unique_ptr<IFace>>& boxFaces = myOccBox->getFaces();
-    EXPECT_EQ(0, 0);
+    Manager::FaceIndex anIndex(0);
+    EXPECT_EQ(anIndex, myOccManager->getIndex(myOccBox->getFaces()[0]));
 }
 
