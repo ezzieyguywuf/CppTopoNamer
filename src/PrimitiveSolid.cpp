@@ -31,8 +31,17 @@ PrimitiveSolid::PrimitiveSolid(unique_ptr<ISolid> aSolid)
                 }
             }
         }
-        if (foundFaces.size() < 2){
+
+        if (foundFaces.size() == 0){
             throw std::runtime_error("Did not find two faces for this Edge");
+        }
+        else if (foundFaces.size() == 1){
+            // TODO: Handle seam edges
+            std::clog << "Warning: Only one Edge found. Doing nothing. (Is this a seam Edge?)";
+            return;
+        }
+        else if (foundFaces.size() > 2){
+            throw std::runtime_error("Found more than two faces that share this Edge");
         }
         EdgeIndex ind(edges.size());
         edges[ind] = std::make_pair(foundFaces[0], foundFaces[1]);
