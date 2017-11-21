@@ -53,7 +53,7 @@ EdgeIndex PrimitiveSolid::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
 {
     for (const auto& pair : edges){
         const auto& checkEdge = this->getEdgeByIndex(pair.first);
-        if (*checkEdge == *anEdge)
+        if (checkEdge->isFlipped(*anEdge))
             return EdgeIndex(pair.first);
     }
     throw std::runtime_error("Was unable to find anEdge in mySolid");

@@ -9,6 +9,7 @@ project(CppTopoNamerTests)
 
 set(OCC_INCLUDE "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/inc")
 set(OCC_LIBRARIES "/home/wolfie/Program/FreeCAD_dev/opencascade-7.1.0/build/lin64/gcc/libd")
+set(FreeCAD_BASE "/home/wolfie/Program/FreeCAD_dev/FreeCAD_ezziey")
 
 include_directories(
     "include"
