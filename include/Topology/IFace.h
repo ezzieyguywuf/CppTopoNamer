@@ -2,6 +2,7 @@
 #define IFace_HEADER
 
 #include <Topology/IEdge.h>
+#include <Managers/Types.h>
 #include <vector>
 #include <memory>
 
@@ -13,6 +14,7 @@ class IFace{
         inline ~IFace(){};
         inline bool operator==(const IFace& aFace) const;
         inline bool operator!=(const IFace& aFace) const;
+        inline const IEdge& getEdge(const Manager::EdgeIndex index) const;
         inline const vector<unique_ptr<IEdge>>& getEdges() const;
     protected:
         virtual bool checkEquals_(const IFace& aFace) const = 0;
@@ -40,6 +42,11 @@ bool IFace::operator==(const IFace& aFace) const
 bool IFace::operator!=(const IFace& aFace) const
 {
     return !(this->checkEquals_(aFace));
+}
+
+const IEdge& IFace::getEdge(const Manager::EdgeIndex index) const
+{
+    return *(this->getEdgeVector()[index.get()]);
 }
 
 const vector<unique_ptr<IEdge>>& IFace::getEdges() const{

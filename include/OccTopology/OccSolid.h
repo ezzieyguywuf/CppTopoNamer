@@ -20,9 +20,7 @@ class OccSolid : public ISolid
     public:
         OccSolid(){};
         ~OccSolid(){};
-        OccSolid(TopoDS_Solid aSolid);
-        OccSolid(TopoDS_CompSolid aSolid);
-        OccSolid(TopoDS_Compound aSolid);
+        OccSolid(TopoDS_Shape aShape);
         OccSolid(const OccSolid& aSolid);
         OccSolid(OccSolid&& aSolid);
         OccSolid operator=(const OccSolid& aSolid);
@@ -42,7 +40,6 @@ class OccSolid : public ISolid
         // through every myEdges to check for duplicates, there must be more efficient
         // ways to do this.
         void updateMyEdges();
-        void initialize();
         vector<unique_ptr<IFace>> myFaces;
         vector<unique_ptr<IEdge>> myEdges;
 };

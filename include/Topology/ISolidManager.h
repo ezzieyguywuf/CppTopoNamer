@@ -18,8 +18,8 @@ using Manager::FaceIndex;
 class ISolidManager
 {
     public:
-        inline FaceIndex getIndex(const unique_ptr<IFace>& aFace) const;
-        inline EdgeIndex getIndex(const unique_ptr<IEdge>& anEdge) const;
+        inline FaceIndex getIndex(const IFace& aFace) const;
+        inline EdgeIndex getIndex(const IEdge& anEdge) const;
         inline const unique_ptr<IEdge>& getEdge(const EdgeIndex index) const;
         inline const unique_ptr<IFace>& getFace(const FaceIndex index) const;
         inline const unique_ptr<ISolid>& getManagedSolid() const;
@@ -29,8 +29,8 @@ class ISolidManager
         inline bool isValid() const;
 
     private:
-        virtual FaceIndex getFaceIndex(const unique_ptr<IFace>& aFace) const = 0;
-        virtual EdgeIndex getEdgeIndex(const unique_ptr<IEdge>& anEdge) const = 0;
+        virtual FaceIndex getFaceIndex(const IFace& aFace) const = 0;
+        virtual EdgeIndex getEdgeIndex(const IEdge& anEdge) const = 0;
         virtual const unique_ptr<IFace>& getFaceByIndex(const FaceIndex index) const = 0;
         virtual const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const = 0;
         virtual const unique_ptr<ISolid>& getSolid() const = 0;
@@ -40,12 +40,12 @@ class ISolidManager
         virtual bool checkValidity() const = 0;
 };
 
-FaceIndex ISolidManager::getIndex(const unique_ptr<IFace>& aFace) const
+FaceIndex ISolidManager::getIndex(const IFace& aFace) const
 {
     return this->getFaceIndex(aFace);
 }
 
-EdgeIndex ISolidManager::getIndex(const unique_ptr<IEdge>& anEdge) const
+EdgeIndex ISolidManager::getIndex(const IEdge& anEdge) const
 {
     return this->getEdgeIndex(anEdge);
 }

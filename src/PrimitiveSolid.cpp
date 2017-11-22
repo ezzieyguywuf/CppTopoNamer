@@ -48,21 +48,21 @@ PrimitiveSolid::PrimitiveSolid(unique_ptr<ISolid> aSolid)
     }
 }
 
-FaceIndex PrimitiveSolid::getFaceIndex(const unique_ptr<IFace>& aFace) const
+FaceIndex PrimitiveSolid::getFaceIndex(const IFace& aFace) const
 {
     for (auto pair : faces){
         const unique_ptr<IFace>& checkFace = mySolid->getFaces()[pair.second];
-        if (*checkFace == *aFace)
+        if (*checkFace == aFace)
             return FaceIndex(pair.first);
     }
     throw std::runtime_error("Was unable to find aFace in mySolid");
 }
 
-EdgeIndex PrimitiveSolid::getEdgeIndex(const unique_ptr<IEdge>& anEdge) const
+EdgeIndex PrimitiveSolid::getEdgeIndex(const IEdge& anEdge) const
 {
     for (const auto& pair : edges){
         const auto& checkEdge = this->getEdgeByIndex(pair.first);
-        if (checkEdge->isFlipped(*anEdge))
+        if (checkEdge->isFlipped(anEdge))
             return EdgeIndex(pair.first);
     }
     throw std::runtime_error("Was unable to find anEdge in mySolid");

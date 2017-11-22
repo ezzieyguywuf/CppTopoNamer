@@ -8,22 +8,21 @@
 #include <TopAbs_ShapeEnum.hxx>
 #include <TopoDS_Face.hxx>
 
-OccSolid::OccSolid(TopoDS_Solid aSolid)
-    : myShape(aSolid)
+OccSolid::OccSolid(TopoDS_Shape aShape)
+    : myShape(aShape)
 {
-    this->initialize();
-}
-
-OccSolid::OccSolid(TopoDS_CompSolid aSolid)
-    : myShape(aSolid)
-{
-    this->initialize();
-}
-
-OccSolid::OccSolid(TopoDS_Compound aSolid)
-    : myShape(aSolid)
-{
-    this->initialize();
+    if (not (myShape.ShapeType() == TopAbs_SOLID ||
+             myShape.ShapeType() == TopAbs_COMPOUND ||
+             myShape.ShapeType() == TopAbs_COMPSOLID))
+    {
+        throw std::runtime_error("aShape was not Solid, Compound, or CompSolid. Don't know what to do.");
+    }
+    for (TopExp_Explorer exp(this->myShape, TopAbs_FACE); exp.More(); exp.Next())
+    {
+        TopoDS_Face currentFace = TopoDS::Face(exp.Current());
+        myFaces.push_back(std::move(std::unique_ptr<IFace>(new OccFace(currentFace))));
+    }
+    this->updateMyEdges();
 }
 
 OccSolid::OccSolid(const OccSolid& aSolid)
@@ -122,14 +121,4 @@ void OccSolid::updateMyEdges()
             }
         }
     }
-}
-
-void OccSolid::initialize()
-{
-    for (TopExp_Explorer exp(this->myShape, TopAbs_FACE); exp.More(); exp.Next())
-    {
-        TopoDS_Face currentFace = TopoDS::Face(exp.Current());
-        myFaces.push_back(std::move(std::unique_ptr<IFace>(new OccFace(currentFace))));
-    }
-    this->updateMyEdges();
 }

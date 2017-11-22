@@ -42,15 +42,14 @@ TEST_F(PrimitiveSolidTester, occ_getIndex){
     Manager::FaceIndex anIndex0(0);
     Manager::FaceIndex anIndex1(3);
     Manager::FaceIndex anIndex2(5);
-    EXPECT_EQ(anIndex0, myOccManager->getIndex(myOccISolid->getFaces()[0]));
-    EXPECT_EQ(anIndex1, myOccManager->getIndex(myOccISolid->getFaces()[3]));
-    EXPECT_EQ(anIndex2, myOccManager->getIndex(myOccISolid->getFaces()[5]));
+    EXPECT_EQ(anIndex0, myOccManager->getIndex(myOccISolid->getFace(0)));
+    EXPECT_EQ(anIndex1, myOccManager->getIndex(myOccISolid->getFace(3)));
+    EXPECT_EQ(anIndex2, myOccManager->getIndex(myOccISolid->getFace(5)));
 }
 
 TEST_F(PrimitiveSolidTester, emptyEdgeCrash){
     TopTools_IndexedMapOfShape edges;
     TopExp::MapShapes(myOccSolid.getShape(), TopAbs_EDGE, edges);
     TopoDS_Edge anEdge = TopoDS::Edge(edges.FindKey(1));
-    std::unique_ptr<IEdge> anIEdge(new OccEdge(anEdge));
-    Manager::EdgeIndex anIndex = myOccManager->getIndex(anIEdge);
+    Manager::EdgeIndex anIndex = myOccManager->getIndex(OccEdge(anEdge));
 }
