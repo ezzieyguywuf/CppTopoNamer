@@ -25,6 +25,6 @@ class OccObjectMaker
         // As a result of this operation, origBox should have the same number of Faces,
         // however each Face should be different (per the current FreeCAD implementation)
         tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
-            increaseBoxHeight(const unique_ptr<ISolid>& origBox);
+            increaseBoxHeight(const ISolid& origBox);
 };
 #endif // OccObjectMaker_HEADER

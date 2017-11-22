@@ -15,6 +15,7 @@ class ISolid
 {
     public:
         inline ~ISolid(){};
+        inline const IEdge& getEdge(unsigned int index) const;
         inline const IFace& getFace(unsigned int index) const;
         inline const vector<unique_ptr<IFace>>& getFaces() const;
         inline const vector<unique_ptr<IEdge>>& getEdges() const;
@@ -27,6 +28,11 @@ class ISolid
         virtual const vector<unique_ptr<IFace>>& getFaceVector() const = 0;
         virtual const vector<unique_ptr<IEdge>>& getEdgeVector() const = 0;
 };
+
+const IEdge& ISolid::getEdge(unsigned int index) const
+{
+    return *(this->getEdges()[index]);
+}
 
 const IFace& ISolid::getFace(unsigned int index) const
 {

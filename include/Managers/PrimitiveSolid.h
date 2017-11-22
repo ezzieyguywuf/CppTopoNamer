@@ -23,9 +23,9 @@ namespace Manager{
             PrimitiveSolid(unique_ptr<ISolid> aSolid);
             FaceIndex getFaceIndex(const IFace& aFace) const override;
             EdgeIndex getEdgeIndex(const IEdge& anEdge) const override;
-            const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const override;
-            const unique_ptr<IFace>& getFaceByIndex(const FaceIndex index) const override;
-            const unique_ptr<ISolid>& getSolid() const override;
+            const IEdge& getEdgeByIndex(const EdgeIndex index) const override;
+            const IFace& getFaceByIndex(const FaceIndex index) const override;
+            const ISolid& getSolid() const override;
             void modifyUnderlyingSolid(
                     unique_ptr<ISolid> newSolid,
                     // each pair should be (old-face, new-face). the old-face index

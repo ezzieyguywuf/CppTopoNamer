@@ -27,14 +27,12 @@ class PrimitiveSolidTester : public testing::Test{
     protected:
         PrimitiveSolidTester()
             : myOccManager(new Manager::PrimitiveSolid(occMaker.makeBox())),
-              myOccISolid(myOccManager->getManagedSolid()),
-              myOccSolid(static_cast<const OccSolid&>(*myOccISolid))
+              myOccSolid(static_cast<const OccSolid&>(myOccManager->getManagedSolid()))
         {
         };
         
         OccObjectMaker occMaker;
         ISolidManager* myOccManager;
-        const unique_ptr<ISolid>& myOccISolid;
         const OccSolid& myOccSolid;
 };
 
@@ -42,9 +40,9 @@ TEST_F(PrimitiveSolidTester, occ_getIndex){
     Manager::FaceIndex anIndex0(0);
     Manager::FaceIndex anIndex1(3);
     Manager::FaceIndex anIndex2(5);
-    EXPECT_EQ(anIndex0, myOccManager->getIndex(myOccISolid->getFace(0)));
-    EXPECT_EQ(anIndex1, myOccManager->getIndex(myOccISolid->getFace(3)));
-    EXPECT_EQ(anIndex2, myOccManager->getIndex(myOccISolid->getFace(5)));
+    EXPECT_EQ(anIndex0, myOccManager->getIndex(myOccSolid.getFace(0)));
+    EXPECT_EQ(anIndex1, myOccManager->getIndex(myOccSolid.getFace(3)));
+    EXPECT_EQ(anIndex2, myOccManager->getIndex(myOccSolid.getFace(5)));
 }
 
 TEST_F(PrimitiveSolidTester, emptyEdgeCrash){

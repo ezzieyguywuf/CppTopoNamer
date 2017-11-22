@@ -16,6 +16,7 @@ class IFace{
         inline bool operator!=(const IFace& aFace) const;
         inline const IEdge& getEdge(const Manager::EdgeIndex index) const;
         inline const vector<unique_ptr<IEdge>>& getEdges() const;
+
     protected:
         virtual bool checkEquals_(const IFace& aFace) const = 0;
         virtual const vector<unique_ptr<IEdge>>& getEdgeVector() const = 0 ;

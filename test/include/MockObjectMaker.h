@@ -36,7 +36,7 @@ class MockObjectMaker{
         // As a result of this operation, origBox should have the same number of Faces,
         // however each Face should be different (per the current FreeCAD implementation)
         tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
-            increaseBoxHeight(const unique_ptr<ISolid>& origBox);
+            increaseBoxHeight(const ISolid& origBox);
         //unique_ptr<ISolid> filletBox(
                 //const unique_ptr<ISolid>& aBox,
                 //const unique_ptr<IEdge>& anEdge);

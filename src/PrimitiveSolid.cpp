@@ -62,13 +62,13 @@ EdgeIndex PrimitiveSolid::getEdgeIndex(const IEdge& anEdge) const
 {
     for (const auto& pair : edges){
         const auto& checkEdge = this->getEdgeByIndex(pair.first);
-        if (checkEdge->isFlipped(anEdge))
+        if (checkEdge.isFlipped(anEdge))
             return EdgeIndex(pair.first);
     }
     throw std::runtime_error("Was unable to find anEdge in mySolid");
 }
 
-const unique_ptr<IEdge>& PrimitiveSolid::getEdgeByIndex(const EdgeIndex index) const
+const IEdge& PrimitiveSolid::getEdgeByIndex(const EdgeIndex index) const
 {
     const auto& faceIndices = edges.at(index);
     const auto& face1 = mySolid->getFaces()[faceIndices.first.get()];
@@ -76,22 +76,21 @@ const unique_ptr<IEdge>& PrimitiveSolid::getEdgeByIndex(const EdgeIndex index) c
     for (const auto& edge1 : face1->getEdges()){
         for (const auto& edge2 : face2->getEdges()){
             if (edge1->isFlipped(*edge2)){
-                return edge1;
+                return *edge1;
             }
         }
     }
     throw std::runtime_error("For some reason, our two faces do not share an Edge");
 }
 
-const unique_ptr<IFace>& PrimitiveSolid::getFaceByIndex(const FaceIndex index) const
+const IFace& PrimitiveSolid::getFaceByIndex(const FaceIndex index) const
 {
-    return mySolid->getFaces()[faces.at(index)];
-    //throw std::runtime_error("For some reason, our two faces do not share an Face");
+    return mySolid->getFace(faces.at(index));
 }
 
-const unique_ptr<ISolid>& PrimitiveSolid::getSolid() const
+const ISolid& PrimitiveSolid::getSolid() const
 {
-    return this->mySolid;
+    return *(this->mySolid);
 }
 
 void PrimitiveSolid::modifyUnderlyingSolid(

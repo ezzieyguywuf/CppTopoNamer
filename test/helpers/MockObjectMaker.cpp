@@ -87,7 +87,7 @@ std::unique_ptr<ISolid> MockObjectMaker::makeBox(){
 }
 
 tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
-    MockObjectMaker::increaseBoxHeight(const unique_ptr<ISolid>& origBox)
+    MockObjectMaker::increaseBoxHeight(const ISolid& origBox)
 {
     unsigned int frt, bck, top, bot, lft, rgt;
     std::vector<Mock::Face> Faces;
@@ -99,10 +99,10 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
     lft = BoxFaces.at("left");
     rgt = BoxFaces.at("right");
 
-    const Mock::Solid& tmpSolid = static_cast<const Mock::Solid&>(*origBox);
+    const Mock::Solid& tmpSolid = static_cast<const Mock::Solid&>(origBox);
     // since all the faces should be new anyway, just make a new box
     unique_ptr<ISolid> newSolid(std::move(this->makeBox()));
-    const auto& origFaces = origBox->getFaces();
+    const auto& origFaces = origBox.getFaces();
     const auto& newFaces  = newSolid->getFaces();
     // We'll swap around some of the faces, just to challenge the toponamer.
     vector<pair<FaceIndex, FaceIndex>> modifiedFaces = {

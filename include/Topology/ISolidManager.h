@@ -20,9 +20,9 @@ class ISolidManager
     public:
         inline FaceIndex getIndex(const IFace& aFace) const;
         inline EdgeIndex getIndex(const IEdge& anEdge) const;
-        inline const unique_ptr<IEdge>& getEdge(const EdgeIndex index) const;
-        inline const unique_ptr<IFace>& getFace(const FaceIndex index) const;
-        inline const unique_ptr<ISolid>& getManagedSolid() const;
+        inline const IEdge& getEdge(const EdgeIndex index) const;
+        inline const IFace& getFace(const FaceIndex index) const;
+        inline const ISolid& getManagedSolid() const;
         inline void updateSolid(
                 unique_ptr<ISolid> newSolid, 
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces);
@@ -31,9 +31,9 @@ class ISolidManager
     private:
         virtual FaceIndex getFaceIndex(const IFace& aFace) const = 0;
         virtual EdgeIndex getEdgeIndex(const IEdge& anEdge) const = 0;
-        virtual const unique_ptr<IFace>& getFaceByIndex(const FaceIndex index) const = 0;
-        virtual const unique_ptr<IEdge>& getEdgeByIndex(const EdgeIndex index) const = 0;
-        virtual const unique_ptr<ISolid>& getSolid() const = 0;
+        virtual const IFace& getFaceByIndex(const FaceIndex index) const = 0;
+        virtual const IEdge& getEdgeByIndex(const EdgeIndex index) const = 0;
+        virtual const ISolid& getSolid() const = 0;
         virtual void modifyUnderlyingSolid(
                 unique_ptr<ISolid> newSolid,
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) = 0;
@@ -50,17 +50,17 @@ EdgeIndex ISolidManager::getIndex(const IEdge& anEdge) const
     return this->getEdgeIndex(anEdge);
 }
 
-const unique_ptr<IEdge>& ISolidManager::getEdge(const EdgeIndex index) const
+const IEdge& ISolidManager::getEdge(const EdgeIndex index) const
 {
     return this->getEdgeByIndex(index);
 }
 
-const unique_ptr<IFace>& ISolidManager::getFace(const FaceIndex index) const
+const IFace& ISolidManager::getFace(const FaceIndex index) const
 {
     return this->getFaceByIndex(index);
 }
 
-const unique_ptr<ISolid>& ISolidManager::getManagedSolid() const
+const ISolid& ISolidManager::getManagedSolid() const
 {
     return this->getSolid();
 }
