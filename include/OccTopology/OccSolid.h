@@ -6,6 +6,8 @@
 #include <Topology/IEdge.h>
 
 #include <TopoDS_Solid.hxx>
+#include <TopoDS_CompSolid.hxx>
+#include <TopoDS_Compound.hxx>
 
 #include <vector>
 #include <memory> // for unique_ptr, std::move, etc...
@@ -19,6 +21,8 @@ class OccSolid : public ISolid
         OccSolid(){};
         ~OccSolid(){};
         OccSolid(TopoDS_Solid aSolid);
+        OccSolid(TopoDS_CompSolid aSolid);
+        OccSolid(TopoDS_Compound aSolid);
         OccSolid(const OccSolid& aSolid);
         OccSolid(OccSolid&& aSolid);
         OccSolid operator=(const OccSolid& aSolid);
@@ -30,14 +34,15 @@ class OccSolid : public ISolid
         const vector<unique_ptr<IEdge>>& getEdgeVector() const;
 
         // These are unique to OccSolid
-        const TopoDS_Solid& getSolid() const;
+        const TopoDS_Shape& getShape() const;
 
     private:
-        TopoDS_Solid mySolid;
+        TopoDS_Shape myShape;
         // Note: this method is a good candidate for opitimization. It currently loops
         // through every myEdges to check for duplicates, there must be more efficient
         // ways to do this.
         void updateMyEdges();
+        void initialize();
         vector<unique_ptr<IFace>> myFaces;
         vector<unique_ptr<IEdge>> myEdges;
 };

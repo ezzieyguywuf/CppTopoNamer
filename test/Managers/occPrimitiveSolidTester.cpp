@@ -49,7 +49,7 @@ TEST_F(PrimitiveSolidTester, occ_getIndex){
 
 TEST_F(PrimitiveSolidTester, emptyEdgeCrash){
     TopTools_IndexedMapOfShape edges;
-    TopExp::MapShapes(myOccSolid.getSolid(), TopAbs_EDGE, edges);
+    TopExp::MapShapes(myOccSolid.getShape(), TopAbs_EDGE, edges);
     TopoDS_Edge anEdge = TopoDS::Edge(edges.FindKey(1));
     std::unique_ptr<IEdge> anIEdge(new OccEdge(anEdge));
     Manager::EdgeIndex anIndex = myOccManager->getIndex(anIEdge);

@@ -33,7 +33,7 @@ namespace Manager{
                     // newSolid.mySolid
                     const std::vector<std::pair<FaceIndex, FaceIndex>>& modifiedFaces) override;
 
-            bool isValid() const;
+            bool checkValidity() const override;
 
         private:
             unique_ptr<ISolid> mySolid;

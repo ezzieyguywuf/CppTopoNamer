@@ -105,7 +105,7 @@ void PrimitiveSolid::modifyUnderlyingSolid(
     }
 }
 
-bool PrimitiveSolid::isValid() const{
+bool PrimitiveSolid::checkValidity() const{
     if (mySolid == nullptr ||
         faces.empty() ||
         edges.empty())

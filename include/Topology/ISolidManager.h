@@ -26,6 +26,7 @@ class ISolidManager
         inline void updateSolid(
                 unique_ptr<ISolid> newSolid, 
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces);
+        inline bool isValid() const;
 
     private:
         virtual FaceIndex getFaceIndex(const unique_ptr<IFace>& aFace) const = 0;
@@ -36,6 +37,7 @@ class ISolidManager
         virtual void modifyUnderlyingSolid(
                 unique_ptr<ISolid> newSolid,
                 const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) = 0;
+        virtual bool checkValidity() const = 0;
 };
 
 FaceIndex ISolidManager::getIndex(const unique_ptr<IFace>& aFace) const
@@ -68,6 +70,11 @@ void ISolidManager::updateSolid(
         const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces)
 {
     this->modifyUnderlyingSolid(std::move(newSolid), modifiedFaces);
+}
+
+bool ISolidManager::isValid() const
+{
+    return this->checkValidity();
 }
 
 #endif //ISolidManager_HEADER

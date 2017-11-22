@@ -9,17 +9,25 @@
 #include <TopoDS_Face.hxx>
 
 OccSolid::OccSolid(TopoDS_Solid aSolid)
-    : mySolid(aSolid)
+    : myShape(aSolid)
 {
-    for (TopExp_Explorer exp(mySolid, TopAbs_FACE); exp.More(); exp.Next())
-    {
-        TopoDS_Face currentFace = TopoDS::Face(exp.Current());
-        myFaces.push_back(std::move(std::unique_ptr<IFace>(new OccFace(currentFace))));
-    }
-    this->updateMyEdges();
+    this->initialize();
 }
+
+OccSolid::OccSolid(TopoDS_CompSolid aSolid)
+    : myShape(aSolid)
+{
+    this->initialize();
+}
+
+OccSolid::OccSolid(TopoDS_Compound aSolid)
+    : myShape(aSolid)
+{
+    this->initialize();
+}
+
 OccSolid::OccSolid(const OccSolid& aSolid)
-    : mySolid(aSolid.mySolid)
+    : myShape(aSolid.myShape)
 {
     for (const auto& edge : aSolid.myEdges){
         const OccEdge& occEdge = static_cast<OccEdge&>(*edge.get());
@@ -32,14 +40,14 @@ OccSolid::OccSolid(const OccSolid& aSolid)
     }
 }
 OccSolid::OccSolid(OccSolid&& aSolid)
-    : mySolid(aSolid.mySolid), myFaces(std::move(aSolid.myFaces)), myEdges(std::move(aSolid.myEdges))
+    : myShape(aSolid.myShape), myFaces(std::move(aSolid.myFaces)), myEdges(std::move(aSolid.myEdges))
 {
-    aSolid.mySolid.Nullify();
+    aSolid.myShape.Nullify();
     aSolid.myFaces.clear();
     aSolid.myEdges.clear();
 }
 OccSolid OccSolid::operator=(const OccSolid& aSolid){
-    mySolid = aSolid.mySolid;
+    myShape = aSolid.myShape;
     myFaces.clear();
     myEdges.clear();
     for (const auto& aFace : aSolid.myFaces)
@@ -55,13 +63,13 @@ OccSolid OccSolid::operator=(const OccSolid& aSolid){
 }
 OccSolid OccSolid::operator=(OccSolid&& aSolid){
     if (this != &aSolid){
-        mySolid.Nullify();
-        mySolid = aSolid.mySolid;
+        myShape.Nullify();
+        myShape = aSolid.myShape;
         myFaces.clear();
         myFaces = std::move(aSolid.myFaces);
         myEdges.clear();
         myEdges = std::move(aSolid.myEdges);
-        aSolid.mySolid.Nullify();
+        aSolid.myShape.Nullify();
         aSolid.myFaces.clear();
         aSolid.myEdges.clear();
     }
@@ -70,7 +78,7 @@ OccSolid OccSolid::operator=(OccSolid&& aSolid){
 
 bool OccSolid::isValid() const
 {
-    if (mySolid.IsNull()){
+    if (myShape.IsNull()){
         return false;
     }
     return true;
@@ -85,9 +93,9 @@ const vector<unique_ptr<IEdge>>& OccSolid::getEdgeVector() const
     return this->myEdges;
 }
 
-const TopoDS_Solid& OccSolid::getSolid() const
+const TopoDS_Shape& OccSolid::getShape() const
 {
-    return this->mySolid;
+    return this->myShape;
 }
 
 // --------------- PRIVATE METHODS ----------------
@@ -114,4 +122,14 @@ void OccSolid::updateMyEdges()
             }
         }
     }
+}
+
+void OccSolid::initialize()
+{
+    for (TopExp_Explorer exp(this->myShape, TopAbs_FACE); exp.More(); exp.Next())
+    {
+        TopoDS_Face currentFace = TopoDS::Face(exp.Current());
+        myFaces.push_back(std::move(std::unique_ptr<IFace>(new OccFace(currentFace))));
+    }
+    this->updateMyEdges();
 }
