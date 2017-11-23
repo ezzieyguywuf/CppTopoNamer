@@ -22,6 +22,8 @@ class IEdge
 template <class T>
 class IEdge_ : public IEdge
 {               
+    public:
+        ~IEdge_(){};
     // This class uses the 'curiously recurring template pattern' in order to allow
     // IEdge to be used by client without having to be aware of implementation T
     protected:

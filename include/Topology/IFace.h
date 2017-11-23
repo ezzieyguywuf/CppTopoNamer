@@ -25,6 +25,8 @@ class IFace{
 template <class T>
 class IFace_ : public IFace
 {
+    public:
+        ~IFace_(){};
     protected:
         bool checkEquals_(const IFace& aFace) const override;
 

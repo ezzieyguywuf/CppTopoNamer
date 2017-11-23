@@ -18,6 +18,7 @@ using Manager::FaceIndex;
 class ISolidManager
 {
     public:
+        ~ISolidManager(){};
         inline FaceIndex getIndex(const IFace& aFace) const;
         inline EdgeIndex getIndex(const IEdge& anEdge) const;
         inline const IEdge& getEdge(const EdgeIndex index) const;
