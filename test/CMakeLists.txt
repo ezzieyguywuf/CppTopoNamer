@@ -5,4 +5,4 @@ ADD_DEFINITIONS("-DBOOST_TEST_DYN_LINK")
 add_subdirectory(googletest)
 add_subdirectory(helpers)
 add_subdirectory(Managers)
-
+add_subdirectory(Misc)

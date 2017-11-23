@@ -1,4 +1,4 @@
-include("functions.cmake")
+include("../functions.cmake")
 
 #--------------------------------------------------
 #   Build production code with mock implementations
