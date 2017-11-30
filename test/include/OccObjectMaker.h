@@ -22,6 +22,8 @@ class OccObjectMaker
 {
     public:
         unique_ptr<ISolid> makeBox();
+        unique_ptr<ISolid> makeCyl();
+        //unique_ptr<ISolid> makeFuse();
         // As a result of this operation, origBox should have the same number of Faces,
         // however each Face should be different (per the current FreeCAD implementation)
         tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 

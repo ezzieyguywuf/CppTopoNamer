@@ -19,6 +19,21 @@ const std::map<std::string, int> MockObjectMaker::BoxFaces = {
     {"left", 4},
     {"right", 5}
 }; 
+const std::map<std::string, int> MockObjectMaker::CylFaces = {
+    {"top", 0},
+    {"lateral", 1},
+    {"bot", 2}
+};
+const std::map<std::string, int> MockObjectMaker::FusTallFaces = {
+    {"front", 0},
+    {"back", 1},
+    {"top", 2},
+    {"bottom", 3},
+    {"left", 4},
+    {"right", 5},
+    {"lateral", 6},
+    {"cylinder_top", 7},
+};
 
 MockObjectMaker::MockObjectMaker()
 {
@@ -51,38 +66,23 @@ std::unique_ptr<IFace> MockObjectMaker::makeFace(std::vector<Mock::Edge> Edges){
     return std::unique_ptr<IFace>(aFace);
 }
 
-std::unique_ptr<ISolid> MockObjectMaker::makeBox(){
-    unsigned int frt, bck, top, bot, lft, rgt;
+std::unique_ptr<ISolid> MockObjectMaker::makeBox()
+{
+    return std::unique_ptr<ISolid>(new Mock::Solid(this->buildBoxFaces()));
+}
+
+std::unique_ptr<ISolid> MockObjectMaker::makeCylinder(){
+    Mock::Face topFace = this->makeMockFace(1);
+    Mock::Face latFace = this->makeMockFace(3);
+    Mock::Face botFace = this->makeMockFace(1);
+
+    latFace.changeEdge(0, topFace.getEdge(0));
+    latFace.changeEdge(1, botFace.getEdge(0));
+
     std::vector<Mock::Face> Faces;
-
-    frt = BoxFaces.at("front");
-    bck = BoxFaces.at("back");
-    top = BoxFaces.at("top");
-    bot = BoxFaces.at("bottom");
-    lft = BoxFaces.at("left");
-    rgt = BoxFaces.at("right");
-
-    for(int i=1; i<=6; i++){
-        Mock::Face aFace = this->makeMockFace();
-        Faces.push_back(aFace);
-    }
-
-    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
-    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
-    Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
-    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
-
-    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
-    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
-    Faces[lft].changeEdge(1, Faces[bck].getEdge(2));
-    Faces[rgt].changeEdge(1, Faces[bck].getEdge(3));
-
-    Faces[lft].changeEdge(2, Faces[top].getEdge(2));
-    Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
-
-    Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
-    Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
-
+    Faces.push_back(topFace);
+    Faces.push_back(latFace);
+    Faces.push_back(botFace);
     return std::unique_ptr<ISolid>(new Mock::Solid(Faces));
 }
 
@@ -90,7 +90,7 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
     MockObjectMaker::increaseBoxHeight(const ISolid& origBox)
 {
     unsigned int frt, bck, top, bot, lft, rgt;
-    std::vector<Mock::Face> Faces;
+    std::vector<Mock::Face> Faces = this->buildBoxFaces();
 
     frt = BoxFaces.at("front");
     bck = BoxFaces.at("back");
@@ -99,12 +99,15 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
     lft = BoxFaces.at("left");
     rgt = BoxFaces.at("right");
 
-    const Mock::Solid& tmpSolid = static_cast<const Mock::Solid&>(origBox);
-    // since all the faces should be new anyway, just make a new box
-    unique_ptr<ISolid> newSolid(std::move(this->makeBox()));
-    const auto& origFaces = origBox.getFaces();
-    const auto& newFaces  = newSolid->getFaces();
-    // We'll swap around some of the faces, just to challenge the toponamer.
+    // Swap some faces around to challenge the topological namer. This simulates what
+    // (usually) happens in opencascade
+    Mock::Face temp = Faces[frt];
+    Faces[frt] = Faces[bck];
+    Faces[bck] = temp;
+    temp = Faces[lft];
+    Faces[lft] = Faces[rgt];
+    Faces[rgt] = temp;
+
     vector<pair<FaceIndex, FaceIndex>> modifiedFaces = {
         {FaceIndex(frt), FaceIndex(frt)},
         {FaceIndex(bck), FaceIndex(bck)},
@@ -113,10 +116,60 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
         {FaceIndex(top), FaceIndex(top)},
         {FaceIndex(bot), FaceIndex(bot)}
     };
-    return 
-        tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
-        (std::move(newSolid), modifiedFaces);
+    return std::tuple<std::unique_ptr<ISolid>, std::vector<std::pair<FaceIndex, FaceIndex>>>
+        (std::unique_ptr<ISolid>(new Mock::Solid(Faces)), modifiedFaces);
 }
+
+//tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
+    //MockObjectMaker::fuseTallerCylinder(const ISolid& origBox)
+//{
+    //unsigned int frt, bck, top, bot, lft, rgt, lat, ctp;
+    //std::vector<Mock::Face> Faces;
+
+    //frt = FusTallFaces.at("front");
+    //bck = FusTallFaces.at("back");
+    //top = FusTallFaces.at("top");
+    //bot = FusTallFaces.at("bottom");
+    //lft = FusTallFaces.at("left");
+    //rgt = FusTallFaces.at("right");
+    //lat = FusTallFaces.at("lateral");
+    //ctp = FusTallFaces.at("cylinder_top");
+
+    //for(int i=1; i<=8; i++){
+        //Mock::Face aFace = this->makeMockFace();
+        //Faces.push_back(aFace);
+    //}
+
+    //Faces[top].changeEdge(0, Faces[frt].getEdge(0));
+    //Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
+    //Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
+    //Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
+
+    //Faces[top].changeEdge(1, Faces[bck].getEdge(0));
+    //Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
+    //Faces[rgt].changeEdge(1, Faces[bck].getEdge(2));
+    //Faces[lat].changeEdge(0, Faces[bck].getEdge(3));
+
+    //Faces[lft].changeEdge(1, Faces[lat].getEdge(1));
+    //Faces[lft].changeEdge(2, Faces[top].getEdge(2));
+    //Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
+
+    //Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
+    //Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
+    
+    //unique_ptr<ISolid> base = this->makeBox();
+    //unique_ptr<ISolid> tool = this->makeCylinder();
+    //vector<FaceIndex, FaceIndex> baseFaceChanges = {
+        //{FaceIndex(frt), FaceIndex(frt)},
+        //{FaceIndex(lft), FaceIndex(lft)},
+        //{FaceIndex(rgt), FaceIndex(rgt)},
+        //{FaceIndex(top), FaceIndex(top)},
+        //{FaceIndex(bot), FaceIndex(bot)},
+        //{FaceIndex(bck), FaceIndex(bck)},
+        //{FaceIndex(), FaceIndex(lat)}
+    //};
+//}
+
 //std::unique_ptr<ISolid> MockObjectMaker::filletBox(
         //const std::unique_ptr<ISolid>& aBox,
         //const std::unique_ptr<IEdge>& anEdge)
@@ -209,9 +262,9 @@ int MockObjectMaker::getValue(unsigned int which) const{
     }
 }
 
-Mock::Face MockObjectMaker::makeMockFace(){
+Mock::Face MockObjectMaker::makeMockFace(unsigned int num_edges){
     int name = this->getValue(FACE);
-    Mock::Face outFace(name, this->makeMockEdges());
+    Mock::Face outFace(name, this->makeMockEdges(num_edges));
     return outFace;
 }
 
@@ -220,9 +273,9 @@ Mock::Edge MockObjectMaker::makeMockEdge(){
     return Mock::Edge(name);
 }
 
-std::vector<Mock::Edge> MockObjectMaker::makeMockEdges(){
+std::vector<Mock::Edge> MockObjectMaker::makeMockEdges(unsigned int count){
     std::vector<Mock::Edge> outEdges;
-    for (int i=0; i<4 ; i++)
+    for (int i=0; i<count ; i++)
     {
         int name = this->getValue(EDGE);
         outEdges.push_back(Mock::Edge(name));
@@ -230,3 +283,38 @@ std::vector<Mock::Edge> MockObjectMaker::makeMockEdges(){
     return outEdges;
 }
 
+// ------------------- Private Methods ------------------------
+std::vector<Mock::Face> MockObjectMaker::buildBoxFaces()
+{
+    unsigned int frt, bck, top, bot, lft, rgt;
+    std::vector<Mock::Face> Faces;
+
+    frt = BoxFaces.at("front");
+    bck = BoxFaces.at("back");
+    top = BoxFaces.at("top");
+    bot = BoxFaces.at("bottom");
+    lft = BoxFaces.at("left");
+    rgt = BoxFaces.at("right");
+
+    for(int i=1; i<=6; i++){
+        Mock::Face aFace = this->makeMockFace();
+        Faces.push_back(aFace);
+    }
+
+    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
+    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
+    Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
+    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
+
+    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
+    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
+    Faces[lft].changeEdge(1, Faces[bck].getEdge(2));
+    Faces[rgt].changeEdge(1, Faces[bck].getEdge(3));
+
+    Faces[lft].changeEdge(2, Faces[top].getEdge(2));
+    Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
+
+    Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
+    Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
+    return Faces;
+}

@@ -102,3 +102,11 @@ TEST_F(PrimitiveSolidTester, changeFaces_checkEdges)
     EXPECT_NE(origEdge, myManager->getEdge(index));
     EXPECT_EQ(newEdge, myManager->getEdge(index));
 }
+
+TEST_F(PrimitiveSolidTester, AddFaces)
+{
+    // A face can be added by calling ISolidManager::updateSolid. The list of faces should
+    // include a "null" Manager::FaceIndex as the first value in the pair in order to
+    // indicate a new face.
+    //auto data = maker.fuseTallerCylinder(myBox);
+}
