@@ -120,55 +120,77 @@ tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
         (std::unique_ptr<ISolid>(new Mock::Solid(Faces)), modifiedFaces);
 }
 
-//tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
-    //MockObjectMaker::fuseTallerCylinder(const ISolid& origBox)
-//{
-    //unsigned int frt, bck, top, bot, lft, rgt, lat, ctp;
-    //std::vector<Mock::Face> Faces;
+tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
+    MockObjectMaker::fuseTallerCylinder()
+{
+    unsigned int frt, bck, top, bot, lft, rgt, lat, ctp;
+    std::vector<Mock::Face> Faces;
 
-    //frt = FusTallFaces.at("front");
-    //bck = FusTallFaces.at("back");
-    //top = FusTallFaces.at("top");
-    //bot = FusTallFaces.at("bottom");
-    //lft = FusTallFaces.at("left");
-    //rgt = FusTallFaces.at("right");
-    //lat = FusTallFaces.at("lateral");
-    //ctp = FusTallFaces.at("cylinder_top");
+    frt = FusTallFaces.at("front");
+    bck = FusTallFaces.at("back");
+    top = FusTallFaces.at("top");
+    bot = FusTallFaces.at("bottom");
+    lft = FusTallFaces.at("left");
+    rgt = FusTallFaces.at("right");
+    lat = FusTallFaces.at("lateral");
+    ctp = FusTallFaces.at("cylinder_top");
 
-    //for(int i=1; i<=8; i++){
-        //Mock::Face aFace = this->makeMockFace();
-        //Faces.push_back(aFace);
-    //}
+    for(int i=0; i<=7; i++){
+        int numFaces = 4;
+        if (i == lat || i == top || i == bot)
+        {
+            // Since the cylinder will be taller than the box, the lateral face will
+            // actually have five edges. Subsequently, the top face of the box will also
+            // have five edges.
+            //
+            // The bottom will have five edges due to the bottom portion of the cylinder,
+            // which will be co-planar to the bottom of the box. This edge will be between
+            // the lateral face of the cylinder and the (extended) bottom face of the box
+            numFaces = 5;
+        }
+        else if(i == ctp)
+        {
+            // The circular top of the cylinder only has a single edge.
+            numFaces = 1;
+        }
+        Faces.push_back(this->makeMockFace(numFaces));
+    }
 
-    //Faces[top].changeEdge(0, Faces[frt].getEdge(0));
-    //Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
-    //Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
-    //Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
+    Faces[top].changeEdge(0, Faces[frt].getEdge(0));
+    Faces[bot].changeEdge(0, Faces[frt].getEdge(1));
+    Faces[lft].changeEdge(0, Faces[frt].getEdge(2));
+    Faces[rgt].changeEdge(0, Faces[frt].getEdge(3));
 
-    //Faces[top].changeEdge(1, Faces[bck].getEdge(0));
-    //Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
-    //Faces[rgt].changeEdge(1, Faces[bck].getEdge(2));
-    //Faces[lat].changeEdge(0, Faces[bck].getEdge(3));
+    Faces[top].changeEdge(1, Faces[bck].getEdge(0));
+    Faces[bot].changeEdge(1, Faces[bck].getEdge(1));
+    Faces[rgt].changeEdge(1, Faces[bck].getEdge(2));
+    Faces[lat].changeEdge(0, Faces[bck].getEdge(3));
 
-    //Faces[lft].changeEdge(1, Faces[lat].getEdge(1));
-    //Faces[lft].changeEdge(2, Faces[top].getEdge(2));
-    //Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
+    Faces[lft].changeEdge(1, Faces[lat].getEdge(1));
+    Faces[lft].changeEdge(2, Faces[top].getEdge(2));
+    Faces[lft].changeEdge(3, Faces[bot].getEdge(2));
 
-    //Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
-    //Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
+    Faces[rgt].changeEdge(2, Faces[top].getEdge(3));
+    Faces[rgt].changeEdge(3, Faces[bot].getEdge(3));
+
+    Faces[top].changeEdge(4, Faces[lat].getEdge(2));
+    Faces[bot].changeEdge(4, Faces[lat].getEdge(3));
+
+    Faces[lat].changeEdge(4, Faces[ctp].getEdge(0));
     
-    //unique_ptr<ISolid> base = this->makeBox();
-    //unique_ptr<ISolid> tool = this->makeCylinder();
-    //vector<FaceIndex, FaceIndex> baseFaceChanges = {
-        //{FaceIndex(frt), FaceIndex(frt)},
-        //{FaceIndex(lft), FaceIndex(lft)},
-        //{FaceIndex(rgt), FaceIndex(rgt)},
-        //{FaceIndex(top), FaceIndex(top)},
-        //{FaceIndex(bot), FaceIndex(bot)},
-        //{FaceIndex(bck), FaceIndex(bck)},
-        //{FaceIndex(), FaceIndex(lat)}
-    //};
-//}
+    vector<pair<FaceIndex, FaceIndex>> modifiedFaces = {
+        {FaceIndex(frt), FaceIndex(frt)},
+        {FaceIndex(lft), FaceIndex(lft)},
+        {FaceIndex(rgt), FaceIndex(rgt)},
+        {FaceIndex(top), FaceIndex(top)},
+        {FaceIndex(bot), FaceIndex(bot)},
+        {FaceIndex(bck), FaceIndex(bck)},
+        {FaceIndex(), FaceIndex(lat)},
+        {FaceIndex(), FaceIndex(ctp)}
+    };
+    return std::tuple<std::unique_ptr<ISolid>, std::vector<std::pair<FaceIndex, FaceIndex>>>
+        (std::unique_ptr<ISolid>(new Mock::Solid(Faces)), modifiedFaces);
+}
 
 //std::unique_ptr<ISolid> MockObjectMaker::filletBox(
         //const std::unique_ptr<ISolid>& aBox,

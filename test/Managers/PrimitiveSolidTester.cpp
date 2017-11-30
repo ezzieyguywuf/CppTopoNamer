@@ -108,5 +108,9 @@ TEST_F(PrimitiveSolidTester, AddFaces)
     // A face can be added by calling ISolidManager::updateSolid. The list of faces should
     // include a "null" Manager::FaceIndex as the first value in the pair in order to
     // indicate a new face.
-    //auto data = maker.fuseTallerCylinder(myBox);
+    auto data = maker.fuseTallerCylinder();
+    unique_ptr<ISolid> newBox(std::move(std::get<0>(data)));
+    vector<pair<Manager::FaceIndex, Manager::FaceIndex>> 
+        newFaces = std::get<1>(data);
+    myManager->updateSolid(std::move(newBox), newFaces);
 }

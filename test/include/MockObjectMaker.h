@@ -38,11 +38,15 @@ class MockObjectMaker{
         // however each Face should be different (per the current FreeCAD implementation)
         tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>> 
             increaseBoxHeight(const ISolid& origBox);
-        // As a result of this operation, origBox will have one additional face and three
-        // modified faces. We should change the ordering of the faces too to match what
-        // happens in FreeCAD
-        //tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
-            //fuseTallerCylinder(const ISolid& origBox);
+        // This essentially makes a box with two extra faces. The first extra face is the
+        // lateral portion of the cylinder. The Second extra face is the top portion of
+        // the cylinder, which extends beyond the top of the box. The bottom of the
+        // cylinder is co-planar with the bottom of the box. The center of the cylinder is
+        // coincident with one of the edges of the box and the radius of the cylinder is
+        // less than the length of the edges of the box, thus the lateral face is present
+        // in the fused solid.
+        tuple<unique_ptr<ISolid>, vector<pair<FaceIndex, FaceIndex>>>
+            fuseTallerCylinder();
         //unique_ptr<ISolid> filletBox(
                 //const unique_ptr<ISolid>& aBox,
                 //const unique_ptr<IEdge>& anEdge);
