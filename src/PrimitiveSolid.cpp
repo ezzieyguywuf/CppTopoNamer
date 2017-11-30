@@ -98,9 +98,23 @@ void PrimitiveSolid::modifyUnderlyingSolid(
         const vector<pair<FaceIndex, FaceIndex>>& modifiedFaces) 
 {
     mySolid = std::move(newSolid);
+    std::vector<unsigned int> newFaces;
     for (const auto& indices : modifiedFaces)
     {
-        faces[indices.first] = indices.second.get();
+        if (indices.first.isValid())
+        {
+            // a face was modified
+            faces[indices.first] = indices.second.get();
+        }
+        else
+        {
+            // a face was added
+            newFaces.push_back(indices.second.get());
+        }
+    }
+    for (unsigned int i : newFaces)
+    {
+        faces.insert(std::make_pair(FaceIndex(faces.size()), i));
     }
 }
 
